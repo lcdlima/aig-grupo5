@@ -8,6 +8,7 @@ const productList = [
     category: 'Refrigerante',
     alcoholic: false,
     package_volume: 2,
+    quantity: 1,
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const productList = [
     category: 'Refrigerante',
     alcoholic: false,
     package_volume: 2,
+    quantity: 1,
   },
   {
     id: 3,
@@ -165,7 +167,7 @@ const productList = [
     thumbnail: 'https://cdn.shopify.com/s/files/1/0010/3150/3987/products/gua_AMA_500_ml_Garrafa_Pet_2x_98a86b67-b2ac-4593-973c-22bb61b98e65_large.png?v=1565713552?nocache=0.6142423174131668',
     originalPrice: 'R$2,00',
     discountPrice: 'R$1,00',
-    category: 'Isotônico',
+    category: 'Água/Chá',
     alcoholic: false,
     package_volume: 0.5,
   },
