@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import productList from '../services/productList';
 import '../CSS/ProductsPage.css';
+import { decrease, increase, sendToCart } from '../actions/index';
+
+export function getTotalCart(cartState) {
+  return cartState.reduce((sum, e) => sum + e.total, 0);
+}
 
 function renderFilter(selectedFilter, setSelectedFilter) {
   let filters = productList.reduce((arr, e) => {
@@ -19,42 +25,34 @@ function renderFilter(selectedFilter, setSelectedFilter) {
   );
 }
 
-function renderAddButtons(productAmount, setProductAmount, id) {
-  const total = productAmount.filter((e) => e.id === id)[0].amount;
+function renderAddButtons(id, props, setShowMessage) {
+  const {
+    initialState, decrement, increment, addToCart,
+  } = props;
+  const total = initialState.filter((e) => e.id === id)[0].amount;
   return (
-    <div className="increment-buttons">
+    <div>
+      <div className="increment-buttons">
+        <button onClick={() => decrement(id)} type="button">-</button>
+        <p>{total}</p>
+        <button onClick={() => increment(id)} type="button">+</button>
+      </div>
       <button
-        onClick={() => setProductAmount((amount) => {
-          if (amount > 0) {
-            return amount - 1;
-          }
-          return 0;
-        })}
         type="button"
-      >
-        -
-
-      </button>
-      <p>{total}</p>
-      <button
+        disabled={!((total > 0))}
         onClick={() => {
-          setProductAmount((state) => state.map((e) => {
-            if (e.id === id) {
-              return { id, amount: e.amount + 1 };
-            }
-            return e;
-          }));
+          addToCart(id, total);
+          setShowMessage(() => true);
+          setTimeout(() => { setShowMessage(false); }, 1000);
         }}
-        type="button"
       >
-        +
-
+        Adicionar ao Carrinho
       </button>
     </div>
   );
 }
 
-function filterProducts(selectedFilter, productAmount, setProductAmount) {
+function filterProducts(selectedFilter, props, setShowMessage) {
   return (
     <div className="products-container">
       {(selectedFilter === 'Todos') && productList.map((e) => (
@@ -66,7 +64,7 @@ function filterProducts(selectedFilter, productAmount, setProductAmount) {
               <p>{e.discountPrice}</p>
             </div>
           </Link>
-          {renderAddButtons(productAmount, setProductAmount, e.id)}
+          {renderAddButtons(e.id, props, setShowMessage)}
         </div>
       ))}
       {(selectedFilter !== 'Todos') && productList.filter((e) => e.category === selectedFilter)
@@ -79,25 +77,38 @@ function filterProducts(selectedFilter, productAmount, setProductAmount) {
                 <p>{e.discountPrice}</p>
               </div>
             </Link>
-            {renderAddButtons(productAmount, setProductAmount, e.id)}
+            {renderAddButtons(e.id, props, setShowMessage)}
           </div>
         ))}
     </div>
   );
 }
 
-function ProductsPage() {
-  const initialState = productList.map((e) => ({ id: e.id, amount: 0 }));
+function ProductsPage(props) {
   const [selectedFilter, setSelectedFilter] = useState('Todos');
-  const [productAmount, setProductAmount] = useState(initialState);
-  console.log(productAmount);
+  const [showMessage, setShowMessage] = useState(false);
+  const { cartState } = props;
   return (
     <div>
       <h1>Lista de Produtos</h1>
+      {showMessage && <p>Produto Adcionado</p>}
+      <Link to="/cart"><button type="button">Ir para o Carrinho</button></Link>
+      <p>{`Produtos no Carrinho: ${getTotalCart(cartState)}`}</p>
       {renderFilter(selectedFilter, setSelectedFilter)}
-      {filterProducts(selectedFilter, productAmount, setProductAmount)}
+      {filterProducts(selectedFilter, props, setShowMessage)}
     </div>
   );
 }
 
-export default ProductsPage;
+const mapStateToPros = (state) => ({
+  initialState: state.CartReducer,
+  cartState: state.FinalCartReducer,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  decrement: (id) => dispatch(decrease(id)),
+  increment: (id) => dispatch(increase(id)),
+  addToCart: (id, total) => dispatch(sendToCart(id, total)),
+});
+
+export default connect(mapStateToPros, mapDispatchToProps)(ProductsPage);
