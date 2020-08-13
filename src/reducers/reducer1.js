@@ -1,4 +1,4 @@
-import { bindActionCreators } from "redux";
+
 
 const Reducer1 = (state = [], action) => {
   switch (action.type) {

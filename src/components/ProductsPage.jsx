@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import productList from '../services/productList';
 import '../CSS/ProductsPage.css';
 
