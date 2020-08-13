@@ -1,0 +1,42 @@
+.address-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-number {
+  display: flex;
+  justify-content: space-between;
+  width: 94%;
+}
+
+.address-field  input{
+  margin: 10px 0 0 10px;
+  width: 90%;
+}
+
+.address-number input {
+  width: 45%;
+}
+
+.card-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-details {
+  display: flex;
+  width: 90%;
+}
+
+.card-field input {
+  width: 90%;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.final-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

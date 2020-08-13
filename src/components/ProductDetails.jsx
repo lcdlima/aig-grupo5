@@ -4,18 +4,32 @@ import { connect } from 'react-redux';
 import productList from '../services/productList';
 import { decrease, increase, sendToCart } from '../actions/index';
 import { getTotalCart } from './ProductsPage';
+import '../CSS/ProductDetails.css';
+import '../CSS/Footer.css';
+import cart from '../images/cart.svg';
+import BackToProductsList from './BackToProductsList';
+import { updateLocalStorage } from '../store';
 
 function renderIncrementButton(id, props) {
-  const { initialState, decrement, increment, addToCart } = props;
-  const total = initialState.filter((e) => e.id === Number(id))[0].amount;
+  const {
+    initialState, decrement, increment, addToCart, detailsInitialState,
+  } = props;
+  let total;
+  if (initialState.some((e) => e.id === Number(id))) {
+    total = initialState.filter((e) => e.id === Number(id))[0].total;
+  } else { total = 0; }
+  const detailsTotal = detailsInitialState.filter((e) => e.id === Number(id))[0].amount;
   return (
-    <div>
-      <div className="increment-buttons">
-        <button type="button" onClick={() => { console.log(id); decrement(id) }}>-</button>
-        <p>{total}</p>
-        <button type="button" onClick={() => increment(id)}>+</button>
+    <div className="add-to-cart">
+      <div className="increment-div">
+        <p>{`Você possui ${total} unidades desse produto em seu carrinho`}</p>
+        <div className="increment-buttons">
+          <button type="button" onClick={() => decrement(id)}>-</button>
+          <p>{detailsTotal}</p>
+          <button type="button" onClick={() => increment(id)}>+</button>
+        </div>
       </div>
-      <button type="button" onClick={() => addToCart(id, total)} disabled={(total > 0) ? false : true}>Adicionar ao Carrinho</button>
+      <button type="button" onClick={() => {addToCart(Number(id), detailsTotal); updateLocalStorage()}} disabled={!((detailsTotal > 0))}>Adicionar ao Carrinho</button>
     </div>
   );
 }
@@ -26,22 +40,34 @@ function ProductDetails(props) {
   return (
     <div>
       <div>
-        <p>{`Produtos no Carrinho: ${getTotalCart(cartState)}`}</p>
-        <h1>{product[0].productName}</h1>
-        <img src={product[0].thumbnail} width="300px" alt="" />
-        <p>{product[0].originalPrice}</p>
-        <p>Com a embalagem retornável você paga</p>
-        <p>{product[0].discountPrice}</p>
+        <div className="products-page-nav">
+          <p>Logo</p>
+          <div className="cart-img">
+            <p>{getTotalCart(cartState)}</p>
+            <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>
+          </div>
+        </div>
+        <div className="container">
+          <div className="products-list">
+            <h1>{product[0].productName}</h1>
+            <img src={product[0].thumbnail} width="300px" alt="" />
+            <p>{product[0].originalPrice}</p>
+            <p>Com a embalagem retornável você paga</p>
+            <p>{product[0].discountPrice}</p>
+          </div>
+          {renderIncrementButton(id, props)}
+        </div>
       </div>
-      {renderIncrementButton(id, props)}
-      <Link to="/products-list"><button type="button">Voltar</button></Link>
-      <Link to="/cart"><button type="button">Ir ao Carrinho!</button></Link>
+      <div className="footer">
+        <BackToProductsList />
+      </div>
     </div>
   );
 }
 
 const mapStateToPros = (state) => ({
-  initialState: state.CartReducer,
+  initialState: state.FinalCartReducer,
+  detailsInitialState: state.CartReducer,
   cartState: state.FinalCartReducer,
 });
 

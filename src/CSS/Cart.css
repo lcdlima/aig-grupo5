@@ -1,0 +1,14 @@
+.input-label {
+  display: flex;
+  align-items: center;
+}
+
+.input-label  p {
+  width: 200px;
+}
+
+.input-label input {
+  width: 100px;
+  margin-left: 10px;
+  height: 2rem;
+}
