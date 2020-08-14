@@ -87,6 +87,7 @@ function CreateEvent(props) {
       <h3>Local do Evento</h3>
       <label htmlFor="cep-field">CEP</label>
       <input
+        maxlength="8"
         id="cep-field"
         value={cep}
         onChange={(e) => searchCep(e.target.value, setcep, setaddress, setneighbor, setcity, setstate, setDisabledInput)}
