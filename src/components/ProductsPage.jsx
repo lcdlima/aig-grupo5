@@ -8,10 +8,13 @@ import {
 } from '../actions/index';
 import cart from '../images/cart.svg';
 import { updateLocalStorage } from '../store';
+import user from '../images/user.svg';
+import bottles from '../images/bottles.svg';
 
 let list = productList;
 
 export function getTotalCart(cartState) {
+  console.log(cartState)
   return cartState.reduce((sum, e) => sum + e.total, 0);
 }
 
@@ -132,9 +135,7 @@ function changeProductList(e) {
 
 function renderSearchInput(searchBy, setSearchBy) {
   return (
-    <div className="input-div">
-      <input placeholder="Pesquisar Produto" onChange={(e) => { setSearchBy(e.target.value); changeProductList(e.target.value); }} value={searchBy} />
-    </div>
+    <input placeholder="Pesquisar Produto" onChange={(e) => { setSearchBy(e.target.value); changeProductList(e.target.value); }} value={searchBy} />
   );
 }
 
@@ -145,7 +146,7 @@ function ProductsPage(props) {
   const [searchBy, setSearchBy] = useState('');
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const { cartState } = props;
+  const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
   return (
     <div className="products-page">
       <div className="products-page-nav">
@@ -156,13 +157,18 @@ function ProductsPage(props) {
           <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>
         </div>
       </div>
-      <div className="filter-sorter">
-        {renderFilter(selectedFilter, setSelectedFilter)}
-        {renderSortButton(orderBy, setOrderBy)}
+      <div className="container">
+        <div className="filter-sorter">
+          {renderFilter(selectedFilter, setSelectedFilter)}
+          {renderSortButton(orderBy, setOrderBy)}
+        </div>
+        {showMessage && <p className="added-product" style={{ top: `${pageHeight + 10}px`, left: `${pageWidth - 90}px` }}>Produto Adcionado</p>}
+        {filterProducts(selectedFilter, props, setShowMessage, setPageHeight, setPageWidth)}
       </div>
-      {showMessage && <p className="added-product" style={{ top: `${pageHeight + 10}px`, left: `${pageWidth - 90}px` }}>Produto Adcionado</p>}
-      {filterProducts(selectedFilter, props, setShowMessage, setPageHeight, setPageWidth)}
-      <div className="footer"><p></p></div>
+      <div className="footer">
+        <img src={bottles} alt="" width="30px" />
+        <img src={user} alt="" width="30px" />
+      </div>
     </div>
   );
 }

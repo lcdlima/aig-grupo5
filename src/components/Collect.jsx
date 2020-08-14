@@ -6,6 +6,7 @@ import '../CSS/Payment.css';
 import { purchaseFinished } from '../store';
 import BackToProductsList from './BackToProductsList';
 import user from '../images/user.svg';
+import MapComponent from './MapComponent';
 
 function Payment(props) {
   const { packageTotal, isDelivery } = props;
@@ -40,29 +41,12 @@ function Payment(props) {
               </div>
             </div>
           </div>
-          <div>
-            <h2>Detalhes da Entrega</h2>
-            <label htmlFor="address-check">
-              Usar dados de cadastro
-              <input id="address-check" type="checkbox" />
-            </label>
-            <p>Endereço</p>
-            <div className="address-field">
-              <input type="number" placeholder="cep" />
-              <input type="text" placeholder="rua" />
-              <div className="address-number">
-                <input type="number" placeholder="número" />
-                <input type="text" placeholder="complemento" />
-              </div>
-              <input type="text" placeholder="bairro" />
-              <div>
-                <input type="text" placeholder="cidade" />
-                <input type="text" placeholder="estado" />
-              </div>
-            </div>
-          </div>
         </div>
         <Link to="/confirm"><button onClick={() => purchaseFinished()} type="button">Finalizar Compra</button></Link>
+      </div>
+      <div>
+        <p>Encontre o ponto de coleta mais próximo de você</p>
+      <MapComponent />
       </div>
       <div className="footer">
         <BackToProductsList />

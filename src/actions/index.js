@@ -45,6 +45,14 @@ const sortProducts = () => ({
   type: 'SORT_PRODUCTS',
 });
 
+const selectDelivery = () => ({
+  type: 'SELECT_DELIVERY',
+});
+
+const selectCollect = () => ({
+  type: 'SELECT_COLLECT',
+});
+
 export {
-  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts,
+  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect,
 };

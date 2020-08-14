@@ -9,6 +9,7 @@ import '../CSS/Footer.css';
 import cart from '../images/cart.svg';
 import BackToProductsList from './BackToProductsList';
 import { updateLocalStorage } from '../store';
+import user from '../images/user.svg';
 
 function renderIncrementButton(id, props) {
   const {
@@ -35,7 +36,8 @@ function renderIncrementButton(id, props) {
 }
 
 function ProductDetails(props) {
-  const { props: { match: { params: { id } } }, cartState } = props;
+  const { props: { match: { params: { id } } } } = props;
+  const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
   const product = productList.filter((e) => e.id === Number(id));
   return (
     <div>
@@ -49,17 +51,18 @@ function ProductDetails(props) {
         </div>
         <div className="container">
           <div className="products-list">
-            <h1>{product[0].productName}</h1>
             <img src={product[0].thumbnail} width="300px" alt="" />
-            <p>{product[0].originalPrice}</p>
-            <p>Com a embalagem retornável você paga</p>
-            <p>{product[0].discountPrice}</p>
+            <h3>{product[0].productName}</h3>
+            <p>{`R$ ${product[0].originalPrice}`}</p>
+            <p>Com a embalagem retornável você paga:</p>
+            <p>{`R$ ${product[0].discountPrice}`}</p>
           </div>
           {renderIncrementButton(id, props)}
         </div>
       </div>
       <div className="footer">
         <BackToProductsList />
+        <img src={user} alt="" width="30px" />
       </div>
     </div>
   );

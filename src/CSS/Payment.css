@@ -40,3 +40,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.container img {
+  display: block;
+  margin: auto;
+}
+
+.map-container {
+  height: 50vh;
+  position: relative;
+  margin-bottom: 60px;
+}

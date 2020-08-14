@@ -13,8 +13,8 @@ window.addEventListener('load', () => {
   }
 });
 
-const storage = JSON.parse(localStorage.getItem('temporaryStorade'));
-if (!storage) { localStorage.setItem('temporaryStorage', JSON.stringify([{ cart: [] }])); }
+const storage = JSON.parse(localStorage.getItem('temporaryStorage'));
+if (storage === null) { localStorage.setItem('temporaryStorage', JSON.stringify([{ cart: [] }])); }
 
 export const updateLocalStorage = () => {
   const cartReducer = { cart: store.getState().FinalCartReducer };
