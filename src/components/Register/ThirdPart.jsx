@@ -5,8 +5,15 @@ import { useHistory } from 'react-router-dom';
 import { userCard } from '../../actions/index';
 import '../../CSS/ThirdPart.css';
 
-const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history) => {
+const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData) => {
   saveCard(cardName, cardNumber, dueDate, CVV);
+  localStorage.setItem('user', JSON.stringify(
+    {
+      log: temporaryData.email,
+      name: temporaryData.name,
+      id: temporaryData.id,
+    }
+  ));
   history.push("/mainPurchase");
 }
 
@@ -76,35 +83,37 @@ const renderCVVInput = (CVV, setCVV) => {
 }
 
 const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-  if (!cardName && cardNumber.length !== 12 && !dueDate && CVV.length !== 3) {
+  if (!cardName && cardNumber.length !== 16 && !dueDate && (CVV.length !== 3 || CVV.length === 4)) {
     return true;
   }
-  if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+  if (!cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
     alert("Faltando preencher o campo do nome")
   } 
-  if (cardName && cardNumber.length !== 12 && dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length !== 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
     alert("Verifique o número do cartão")
   }
-  if (cardName && cardNumber.length === 12 && !dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && !dueDate && (CVV.length === 3 || CVV.length === 4)) {
     alert("Falta preencher a data de vencimento")
   }
-  if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && dueDate && (!CVV.length === 3 || CVV.length === 4)) {
     alert("Verifir os números de segurança")
   }
-  if (cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
     return false;
   }
   return true;
 }
 
-const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, history) => {
+const renderFinishButtonInput = (
+  cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+) => {
   return (
     <div className="conteinerButtonTP">
         <button
           className="buttonTP"
           type="button"
           onClick={() => clickToRegister(
-            cardName, cardNumber, dueDate, CVV, saveCard, history
+            cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
           )}
           disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
         >
@@ -115,7 +124,7 @@ const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, h
 }
 
 function ThirdPart(props) {
-  const { saveCard } = props;
+  const { saveCard, temporaryData } = props;
   const [cardName, setCardName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -131,7 +140,7 @@ function ThirdPart(props) {
       {renderCVVInput(CVV, setCVV)}
       {renderDueDateInput(dueDate, setDueDate)}
       </div>
-      {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history)}
+      {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData)}
       <div className="footerTP"> </div>
     </div>
   );
@@ -139,12 +148,17 @@ function ThirdPart(props) {
 
 const mapDispatchToProps = (dispatch) => ({
   saveCard: (cardName, cardNumber, dueDate, CVV) => dispatch(
-    userCard(cardName, cardNumber, dueDate, CVV)
+  userCard(cardName, cardNumber, dueDate, CVV)
   ),
 });
 
-export default connect(null, mapDispatchToProps)(ThirdPart);
+const mapStateToProps = (state) => ({
+  temporaryData: state.inProgressRegister,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThirdPart);
 
 ThirdPart.propTypes = {
   saveCard: PropTypes.func.isRequired,
+  temporaryData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

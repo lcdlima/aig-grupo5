@@ -53,6 +53,7 @@ const renderCheckPasswordInput = (check, setCheck) => {
 }
 
 const clickToRegister = (email, password, saveEmailAndPassword, history) => {
+  localStorage.setItem('user', JSON.stringify({log: email}));
   saveEmailAndPassword(email, password);
   history.push("/RegisterAdress");
 }

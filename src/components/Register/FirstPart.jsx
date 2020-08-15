@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { userEmailAndPassword } from '../../actions/index';
+import { userEmailAndPassword, incrementID } from '../../actions/index';
 import '../../CSS/FirstPart.css';
 
 const renderEmailInput = (email, setEmail) => {
@@ -52,9 +52,9 @@ const renderCheckPasswordInput = (check, setCheck) => {
   );
 }
 
-const clickToRegister = (email, password, saveEmailAndPassword, history) => {
-  localStorage.setItem('user', JSON.stringify({log: email}));
-  saveEmailAndPassword(email, password);
+const clickToRegister = (email, password, saveEmailAndPassword, history, increment, actualID) => {
+  saveEmailAndPassword(email, password, actualID.id);
+  increment();
   history.push("/RegisterAdress");
 }
 
@@ -66,13 +66,17 @@ const isDisabled = (email, password, check) => {
   return true;
 }
 
-const renderNextButtonInput = (email, password, check, saveEmailAndPassword, history) => {
+const renderNextButtonInput = (
+    email, password, check, saveEmailAndPassword, history, increment, actualID,
+  ) => {
   return (
     <div className="conteinerButtonFP">
         <button
           className="buttonFP"
           type="button"
-          onClick={() => clickToRegister(email, password, saveEmailAndPassword, history)}
+          onClick={() => clickToRegister(
+            email, password, saveEmailAndPassword, history, increment, actualID,
+          )}
           disabled={isDisabled(email, password, check)}
         >
           Próximo
@@ -82,7 +86,7 @@ const renderNextButtonInput = (email, password, check, saveEmailAndPassword, his
 }
 
 function FirstPart(props) {
-  const { saveEmailAndPassword } = props;
+  const { saveEmailAndPassword, increment, actualID } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
@@ -94,18 +98,28 @@ function FirstPart(props) {
       {renderEmailInput(email, setEmail)}
       {renderPasswordInput(password, setPassword)}
       {renderCheckPasswordInput(check, setCheck)}
-      {renderNextButtonInput(email, password, check, saveEmailAndPassword, history)}
+      {renderNextButtonInput(
+        email, password, check, saveEmailAndPassword, history, increment, actualID,
+      )}
       <div className="footerFP"> </div>
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveEmailAndPassword: (email, password) => dispatch(userEmailAndPassword(email, password)),
+  saveEmailAndPassword: (email, password, id) => dispatch(
+    userEmailAndPassword(email, password, id)
+  ),
+  increment: () => dispatch(incrementID()),
 });
 
-export default connect(null, mapDispatchToProps)(FirstPart);
+const mapStateToProps = (state) => ({
+  actualID: state.IDRegister,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FirstPart);
 
 FirstPart.propTypes = {
   saveEmailAndPassword: PropTypes.func.isRequired,
+  actualID: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

@@ -5,6 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 import '../CSS/Login.css';
 import ambev from '../images/ambev.png'
 
+const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+
 function Login(props) {
   const { data } = props;
   const [email, setEmail] = useState('');
@@ -18,12 +20,17 @@ function Login(props) {
     const checkPassword = (data)
       ? data.some((elem) => (elem.email === email && elem.password === password))
       : false;
-    if (checkPassword) {
-      localStorage.setItem('user', JSON.stringify({log: email}));
+    const existLS = allDataOnLS.some((elem) => elem.email === email);
+    const checkLSPassword = allDataOnLS.some((elem) => (elem.email === email && elem.password === password));
+    if (checkPassword || checkLSPassword) {
+      const InfoUser = (checkLSPassword) 
+        ? allDataOnLS.map((elem) => elem.email === email)
+        : data.map((elem) => elem.email === email);
+      localStorage.setItem('user', JSON.stringify({log: InfoUser.email, name: InfoUser.name, id: InfoUser.id}));
       history.push("/mainPurchase");
       return;
     }
-    if (exist) {
+    if (exist || existLS) {
       alert("Senha invalida");
       return;
     }

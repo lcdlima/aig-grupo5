@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { userData, clearTemporaryData } from '../actions/index';
+const user = JSON.parse(localStorage.getItem('user'));
 
 class Perfil extends Component {
   constructor(props) {
@@ -16,6 +16,10 @@ class Perfil extends Component {
       preservedClicked: false,
       moneyClicked: false,
     };
+  }
+
+  componentDidMount() {
+    this.setState({ name: user.name, email: user.email});
   }
 
   renderPerfilHeader() {
@@ -93,8 +97,7 @@ class Perfil extends Component {
   }
 
   render() {
-    const { temporaryData } = this.props;
-    console.log(temporaryData)
+
     return (
       <div>
         {this.renderPerfilHeader()}
@@ -109,13 +112,11 @@ class Perfil extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.finishedUserData,
-  temporaryData: state.inProgressRegister,
+  data: state.finishedUserData
 });
 
 export default connect(mapStateToProps, null)(Perfil);
 
 Perfil.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  temporaryData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 };
