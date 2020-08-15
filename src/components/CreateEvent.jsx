@@ -5,10 +5,11 @@ import { getAddressByCep } from '../services/cep-api';
 import { chooseEvent } from '../actions';
 import '../CSS/CreateEvent.css';
 
-function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEvent, setRedirect) {
+function addEvent(name, date, time, cep, add, numb, comp, city, state, password, chooseEvent, setRedirect) {
   const id = Math.floor((Math.random() * 1000) + 1);
   const newEvent = {
     id,
+    password,
     name,
     date,
     time,
@@ -39,7 +40,7 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledI
     getAddressByCep(cep)
       .then((answer) => {
         if (answer.error) {
-          alert ("Cep Inválido");
+          alert("Cep Inválido");
         } else {
           setAdd(answer.logradouro);
           setNeig(answer.bairro);
@@ -52,7 +53,7 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledI
 }
 
 function CreateEvent(props) {
-  const { chooseEvent, event } = props;
+  const { chooseEvent } = props;
   const [name, setname] = useState('');
   const [date, setdate] = useState('');
   const [time, settime] = useState('');
@@ -63,26 +64,37 @@ function CreateEvent(props) {
   const [neighbor, setneighbor] = useState('');
   const [city, setcity] = useState('');
   const [state, setstate] = useState('');
+  const [password, setpassword] = useState('');
   const [redirect, setRedirect] = useState(false);
   const [disabledInput, setDisabledInput] = useState(false);
   return (
     <form class="form-div">
       <label htmlFor="name-field">Nome do Evento</label>
-      <input id="name-field" value={name} onChange={(e) => setname(e.target.value)} />
-      <label htmlFor="date-field">Data do Evento</label>
       <input
-        type="date"
-        id="date-field"
-        value={date}
-        onChange={(e) => setdate(e.target.value)}
+        id="name-field"
+        value={name}
+        onChange={(e) => setname(e.target.value)}
+        size="300"
       />
-      <label htmlFor="time-field">Horário</label>
-      <input
-        type="time"
-        id="time-field"
-        value={time}
-        onChange={(e) => settime(e.target.value)}
-      />
+      <div className="time-div">
+        <label htmlFor="date-field">Data do Evento</label>
+        <input
+          type="date"
+          id="date-field"
+          value={date}
+          onChange={(e) => setdate(e.target.value)}
+        />
+        <label htmlFor="time-field">Horário</label>
+        <input
+          type="time"
+          id="time-field"
+          value={time}
+          onChange={(e) => settime(e.target.value)}
+        />
+      </div>
+
+      <label htmlFor="password-field">Senha de Acesso</label>
+      <input id="password-field" value={password} onChange={(e) => setpassword(e.target.value)} />
 
       <h3>Local do Evento</h3>
       <label htmlFor="cep-field">CEP</label>
@@ -106,20 +118,16 @@ function CreateEvent(props) {
       <input id="state-field" value={state} onChange={(e) => setstate(e.target.value)} disabled={disabledInput} />
 
       <button
-        onClick={() => addEvent(name, date, time, cep, address, number, complement, city, state, chooseEvent, setRedirect)}
+        onClick={() => addEvent(name, date, time, cep, address, number, complement, city, state, password, chooseEvent, setRedirect)}
       >Próximo</button>
 
-      {redirect && <Redirect to={`/event-page/${event.id}`}/>}
+      {redirect && <Redirect to={`/event-confirmation`} />}
     </form>
   );
 }
-
-const mapStateToProps = (state) => ({
-  event: state.eventReducer.event,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   chooseEvent: (e) => dispatch(chooseEvent(e)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);
+export default connect(null, mapDispatchToProps)(CreateEvent);
