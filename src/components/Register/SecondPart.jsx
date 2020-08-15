@@ -210,7 +210,6 @@ const isDisabled = (CPF, code, phone, CEP) => {
   }
   if (
     CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length === 8
-    && name && birthDay && street && adressNumber && city && stateLetters
   ) {
     return false;
   }
