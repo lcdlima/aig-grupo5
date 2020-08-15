@@ -16,6 +16,7 @@ import ThirdPart from './components/Register/ThirdPart';
 import MainPurchase from './components/MainPurchase';
 import Login from './components/Login';
 import Perfil from './components/Perfil';
+import GroupProductsPage from './components/GroupProductsPage';
 import './App.css';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/Perfil" component={Perfil} />
         <Route exact path="/mainPurchase" component={MainPurchase} />
         <Route exact path="/" component={Login} />
+        <Route exact path="/group-products-list" component={GroupProductsPage} />
       </Switch>
     </BrowserRouter>
   );

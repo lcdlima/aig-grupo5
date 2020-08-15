@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import productList from '../services/productList';
 import '../CSS/ProductsPage.css';
 import {
-  decrease, increase, sendToCart,
+  decrease, increase, chooseEvent
 } from '../actions/index';
 import cart from '../images/cart.svg';
-import { updateLocalStorage } from '../store';
 import user from '../images/user.svg';
 import bottles from '../images/bottles.svg';
 import logo from '../images/logo.svg';
@@ -15,8 +14,30 @@ import logo from '../images/logo.svg';
 let list = productList;
 
 export function getTotalCart(cartState) {
-  console.log(cartState)
   return cartState.reduce((sum, e) => sum + e.total, 0);
+}
+
+function addToCart(id, qnt, props) {
+  const { event, chooseEvent } = props;
+  const user = JSON.parse(localStorage.getItem('user'));
+  const check = event.products.filter((p) => 
+    p.id === id && p.user === user
+  );
+  let newProducts = [];
+
+  if (check.length === 0) {
+    newProducts = [...event.products, {id, qnt, user: user.log}]
+  } else {
+    newProducts = check.reduce((acc, p) => {
+      if (p.id === id) {
+        acc.push({id, qnt: (p.qnt + qnt), user: user.log})
+      } else {
+        acc.push(p)
+      }
+      return acc
+    }, []);
+  }
+  chooseEvent({...event, products: newProducts});
 }
 
 function renderFilter(selectedFilter, setSelectedFilter) {
@@ -37,7 +58,7 @@ function renderFilter(selectedFilter, setSelectedFilter) {
 
 function renderAddButtons(id, props, setShowMessage, setPageHeight, setPageWidth) {
   const {
-    initialState, decrement, increment, addToCart,
+    initialState, decrement, increment
   } = props;
   const total = initialState.filter((e) => e.id === id)[0].amount;
   return (
@@ -53,8 +74,7 @@ function renderAddButtons(id, props, setShowMessage, setPageHeight, setPageWidth
         onClick={(e) => {
           setPageHeight(e.pageY);
           setPageWidth(e.pageX);
-          addToCart(id, total);
-          updateLocalStorage();
+          addToCart(id, total, props);
           setShowMessage(() => true);
           setTimeout(() => { setShowMessage(false); }, 1000);
         }}
@@ -140,7 +160,7 @@ function renderSearchInput(searchBy, setSearchBy) {
   );
 }
 
-function ProductsPage(props) {
+function GroupProductsPage(props) {
   const [selectedFilter, setSelectedFilter] = useState('Todos');
   const [showMessage, setShowMessage] = useState(false);
   const [orderBy, setOrderBy] = useState('');
@@ -148,6 +168,23 @@ function ProductsPage(props) {
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
   const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
+  const { event } = props;
+
+  useEffect(() => {
+    return () => {
+      const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
+      const newEvents = currentEvents.reduce((acc, e) => {
+        if (e.id !== event.id) {
+          acc.push(e)
+        } else {
+          acc.push(event)
+        }
+        return acc
+      }, [])
+      localStorage.setItem('storedEvents', JSON.stringify(newEvents));
+    }
+  });
+
   return (
     <div className="products-page">
       <div className="products-page-nav">
@@ -177,12 +214,13 @@ function ProductsPage(props) {
 const mapStateToPros = (state) => ({
   initialState: state.CartReducer,
   cartState: state.FinalCartReducer,
+  event: state.eventReducer.event,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   decrement: (id) => dispatch(decrease(id)),
   increment: (id) => dispatch(increase(id)),
-  addToCart: (id, total) => dispatch(sendToCart(id, total)),
+  chooseEvent: (e) => dispatch(chooseEvent(e)),
 });
 
-export default connect(mapStateToPros, mapDispatchToProps)(ProductsPage);
+export default connect(mapStateToPros, mapDispatchToProps)(GroupProductsPage);
