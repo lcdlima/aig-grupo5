@@ -1,7 +1,22 @@
 import { combineReducers } from 'redux';
-import Reducer1 from './reducer1';
+import CartReducer from './CartReducer';
+import FinalCartReducer from './FinalCartReducer';
+import PackageReducer from './PackageReducer';
+import CollectionReducer from './CollectionReducer';
+import finishedUserData from './finishedUserData';
+import inProgressRegister from './inProgressRegister';
+import inProgressGroupEvent from './inProgressGroupEvent';
 import eventReducer from './eventReducer';
 
-const rootReducer = combineReducers({ Reducer1, eventReducer });
+const rootReducer = combineReducers({
+  CartReducer,
+  FinalCartReducer,
+  PackageReducer,
+  CollectionReducer,
+  finishedUserData,
+  inProgressRegister,
+  inProgressGroupEvent,
+  eventReducer,
+});
 
 export default rootReducer;
