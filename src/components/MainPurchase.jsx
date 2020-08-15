@@ -61,7 +61,7 @@ class MainPurchase extends Component {
     const objInLocalStorage = allDataOnLS.some((elem) => elem.email === user.log);
     const objInStore = data.some((elem) => elem.email === user.log);
     if (!temporaryData) this.setUserSellDataWithRedux(temporaryData);
-    if (data) this.setUserSellDataWithLS(temporaryData);
+    if (temporaryData) this.setUserSellDataWithLS(temporaryData);
     if (!objInLocalStorage && !objInStore && allDataOnLS.length === 0) {
       localStorage.setItem('usersData', JSON.stringify([temporaryData]));
       saveUserData(temporaryData);
