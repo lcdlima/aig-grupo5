@@ -50,7 +50,6 @@ function Confirm(props) {
           <p>{`Você economizou R$ ${discount}`}</p>
           <p>{`Você reduziu seu consumo de plástico em ${plasticSaved} g`}</p>
           <p>Obrigado por fazer um mundo melhor!</p>
-          <p>Apresente o QR Code abaixo para fazer a retirada</p>
         </div>
         <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${id}`} alt="" />
         {(discount > 10) && renderGift()}

@@ -22,7 +22,7 @@ function Payment(props) {
         <div />
       </div>
       <div className="container">
-        <div className="payment-div">
+        <div>
           <div>
             <h2>Detalhes do Pagamento</h2>
             <div className="price">

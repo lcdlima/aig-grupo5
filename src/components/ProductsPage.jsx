@@ -163,7 +163,7 @@ function ProductsPage(props) {
           {renderFilter(selectedFilter, setSelectedFilter)}
           {renderSortButton(orderBy, setOrderBy)}
         </div>
-        {showMessage && <p className="added-product" style={{ top: `${pageHeight + 10}px`, left: `${pageWidth - 90}px` }}>Produto Adicionado</p>}
+        {showMessage && <p className="added-product" style={{ top: `${pageHeight + 10}px`, left: `${pageWidth - 90}px` }}>Produto Adcionado</p>}
         {filterProducts(selectedFilter, props, setShowMessage, setPageHeight, setPageWidth)}
       </div>
       <div className="footer">

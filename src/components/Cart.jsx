@@ -30,9 +30,11 @@ function renderIncrementButton(id, props) {
     decrement, increment,
   } = props;
   return (
-    <div className="increment-buttons-cart">
-      <button type="button" onClick={() => { decrement(id); updateLocalStorage(); }}>-</button>
-      <button type="button" onClick={() => { increment(id); updateLocalStorage(); }}>+</button>
+    <div>
+      <div className="increment-buttons">
+        <button type="button" onClick={() => { decrement(id); updateLocalStorage(); }}>-</button>
+        <button type="button" onClick={() => { increment(id); updateLocalStorage(); }}>+</button>
+      </div>
     </div>
   );
 }
@@ -86,7 +88,7 @@ function renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal) {
 
 function renderCollectionOptions(changeToDelivery, changeToCollect) {
   return (
-    <div className="collection-options">
+    <div>
       <p>Retirada do Produto</p>
       <div className="collection-options">
         <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
