@@ -68,27 +68,27 @@ const renderCVVInput = (CVV, setCVV) => (
   </div>
 );
 
-const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-  if (!cardName && cardNumber.length !== 16 && !dueDate && (CVV.length !== 3 || CVV.length === 4)) {
-    return true;
-  }
-  if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
-    alert('Faltando preencher o campo do nome');
-  }
-  if (cardName && cardNumber.length !== 12 && dueDate && CVV.length === 3) {
-    alert('Verifique o número do cartão');
-  }
-  if (cardName && cardNumber.length === 12 && !dueDate && CVV.length === 3) {
-    alert('Falta preencher a data de vencimento');
-  }
-  if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
-    alert('Verifir os números de segurança');
-  }
-  if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
-    return false;
-  }
-  return true;
-};
+// const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
+//   if (!cardName && cardNumber.length !== 16 && !dueDate && (CVV.length !== 3 || CVV.length === 4)) {
+//     return true;
+//   }
+//   if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+//     alert('Faltando preencher o campo do nome');
+//   }
+//   if (cardName && cardNumber.length !== 12 && dueDate && CVV.length === 3) {
+//     alert('Verifique o número do cartão');
+//   }
+//   if (cardName && cardNumber.length === 12 && !dueDate && CVV.length === 3) {
+//     alert('Falta preencher a data de vencimento');
+//   }
+//   if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
+//     alert('Verifir os números de segurança');
+//   }
+//   if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
+//     return false;
+//   }
+//   return true;
+// };
 
 const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, history) => (
   <div className="conteinerButtonTP">
@@ -98,7 +98,7 @@ const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, h
       onClick={() => clickToRegister(
         cardName, cardNumber, dueDate, CVV, saveCard, history,
       )}
-      disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
+      // disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
     >
       Próximo
     </button>

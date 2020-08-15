@@ -192,29 +192,29 @@ const renderStateInput = (stateLetters, setStateLetters) => (
   </div>
 );
 
-const isDisabled = (CPF, code, phone, CEP) => {
-  if (CPF.length !== 11 && code.length !== 2 && phone.length !== 9 && CEP.length !== 8) {
-    return true;
-  }
-  if (CPF.length !== 11 && code.length === 2 && phone.length === 9 && CEP.length === 8) {
-    alert('Verifique seu CPF');
-  }
-  if (CPF.length === 11 && code.length !== 2 && phone.length === 9 && CEP.length === 8) {
-    alert('Verifique o seu DDD');
-  }
-  if (CPF.length === 11 && code.length === 2 && phone.length !== 9 && CEP.length === 8) {
-    alert('Verifique seu Telefone');
-  }
-  if (CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length !== 8) {
-    alert('Verifique seu CEP');
-  }
-  if (
-    CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length === 8
-  ) {
-    return false;
-  }
-  return true;
-};
+// const isDisabled = (CPF, code, phone, CEP) => {
+//   if (CPF.length !== 11 && code.length !== 2 && phone.length !== 9 && CEP.length !== 8) {
+//     return true;
+//   }
+//   if (CPF.length !== 11 && code.length === 2 && phone.length === 9 && CEP.length === 8) {
+//     alert('Verifique seu CPF');
+//   }
+//   if (CPF.length === 11 && code.length !== 2 && phone.length === 9 && CEP.length === 8) {
+//     alert('Verifique o seu DDD');
+//   }
+//   if (CPF.length === 11 && code.length === 2 && phone.length !== 9 && CEP.length === 8) {
+//     alert('Verifique seu Telefone');
+//   }
+//   if (CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length !== 8) {
+//     alert('Verifique seu CEP');
+//   }
+//   if (
+//     CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length === 8
+//   ) {
+//     return false;
+//   }
+//   return true;
+// };
 
 const renderNextButtonInput = (
   name, CPF, birthDay, code, phone, CEP, street, adressNumber,
@@ -228,7 +228,7 @@ const renderNextButtonInput = (
           name, CPF, birthDay, code, phone, CEP, street, adressNumber,
           complement, city, stateLetters, saveUserRegistryAndAdress, history,
         )}
-        disabled={isDisabled(CPF, code, phone, CEP)}
+        // disabled={isDisabled(CPF, code, phone, CEP)}
       >
         Próximo
     </button>

@@ -41,6 +41,10 @@ class MainPurchase extends Component {
         cep: temporaryData.CEP,
         number: temporaryData.adressNumber,
         complement: temporaryData.complement,
+        city: temporaryData.city,
+        street: temporaryData.street,
+        stateLetter: temporaryData.stateLetter,
+
       },
       card: {
         number: temporaryData.cardName,

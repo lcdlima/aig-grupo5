@@ -88,12 +88,10 @@ function renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal) {
 
 function renderCollectionOptions(changeToDelivery, changeToCollect) {
   return (
-    <div>
+    <div className="collection-options">
       <p>Retirada do Produto</p>
-      <div className="collection-options">
-        <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
-        <button type="button" onClick={() => changeToCollect()}>Retirada</button>
-      </div>
+      <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
+      <button type="button" onClick={() => changeToCollect()}>Retirada</button>
     </div>
   );
 }
