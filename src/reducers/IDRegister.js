@@ -4,7 +4,7 @@ const INITIAL_STATE = {
  id: 1,
 };
 
-const inProgressRegister = (state = INITIAL_STATE, action) => {
+const IDRegister = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_ID:
       return {
@@ -15,4 +15,4 @@ const inProgressRegister = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default inProgressRegister;
+export default IDRegister;
