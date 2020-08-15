@@ -10,6 +10,7 @@ import cart from '../images/cart.svg';
 import { updateLocalStorage } from '../store';
 import user from '../images/user.svg';
 import bottles from '../images/bottles.svg';
+import logo from '../images/logo.svg';
 
 let list = productList;
 
@@ -150,7 +151,7 @@ function ProductsPage(props) {
   return (
     <div className="products-page">
       <div className="products-page-nav">
-        <p>Logo</p>
+      <div><img src={logo} alt="" width="100px" /></div>
         {renderSearchInput(searchBy, setSearchBy)}
         <div className="cart-img">
           <p>{getTotalCart(cartState)}</p>

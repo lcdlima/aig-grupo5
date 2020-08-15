@@ -67,7 +67,7 @@ class MapComponent extends React.Component {
     );
   }
 }
-
+const auth_token = process.env.AUTH_TOKEN;
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyBXE3CMr8bnXQzP9yHsSqB-5gSZ1ZpfpXI'),
+  apiKey: (auth_token),
 })(MapComponent);

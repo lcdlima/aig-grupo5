@@ -10,6 +10,7 @@ import cart from '../images/cart.svg';
 import BackToProductsList from './BackToProductsList';
 import { updateLocalStorage } from '../store';
 import user from '../images/user.svg';
+import logo from '../images/logo.svg';
 
 function renderIncrementButton(id, props) {
   const {
@@ -43,7 +44,7 @@ function ProductDetails(props) {
     <div>
       <div>
         <div className="products-page-nav">
-          <p>Logo</p>
+        <div><img src={logo} alt="" width="100px" /></div>
           <div className="cart-img">
             <p>{getTotalCart(cartState)}</p>
             <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>

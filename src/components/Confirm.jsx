@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import BackToProductsList from './BackToProductsList';
 import { calculateDiscount, calculatePlasticSaved } from './Cart';
 import productList from '../services/productList';
+import logo from '../images/logo.svg';
 
 function getNewDrink() {
   const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
@@ -37,7 +38,8 @@ function Confirm(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <div />
+        <div><img src={logo} alt="" width="100px" /></div>
+        <h1>Obrigado!</h1>
         <div />
       </div>
       <div className="container">

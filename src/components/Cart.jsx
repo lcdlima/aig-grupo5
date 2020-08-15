@@ -11,6 +11,7 @@ import BackToProductsList from './BackToProductsList';
 import { updateLocalStorage } from '../store';
 import user from '../images/user.svg';
 import rubish from '../images/rubish.svg';
+import logo from '../images/logo.svg';
 
 export function calculateDiscount(packageTotal) {
   return packageTotal.reduce((sum, e) => sum + packageList.filter((el) => e.id === el.id)[0].price * e.total, 0);
@@ -110,8 +111,8 @@ function renderCartItensSection(items, props) {
               <p>{product[0].productName}</p>
             </div>
             <div className="product-cart-info">
-              <p>{`${e.total} X ${product[0].originalPrice}`}</p>
-              <p>{`Total: ${e.total * product[0].originalPrice}`}</p>
+              <p>{`${e.total} X R$${product[0].originalPrice}`}</p>
+              <p>{`Total: R$${e.total * product[0].originalPrice}`}</p>
               {renderIncrementButton(e.id, props)}
             </div>
             <button onClick={() => { deleteProduct(e.id); updateLocalStorage(); }} type="button"><img src={rubish} alt="" /></button>
@@ -133,7 +134,7 @@ function Cart(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <div>logo</div>
+        <div><img src={logo} alt="" width="100px" /></div>
         <h1>Carrinho</h1>
         <div />
       </div>

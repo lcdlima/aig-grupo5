@@ -6,6 +6,7 @@ import '../CSS/Payment.css';
 import { purchaseFinished } from '../store';
 import BackToProductsList from './BackToProductsList';
 import user from '../images/user.svg';
+import logo from '../images/logo.svg';
 
 function Payment(props) {
   const { packageTotal, isDelivery } = props;
@@ -16,15 +17,18 @@ function Payment(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <p>logo</p>
+        <div><img src={logo} alt="" width="100px" /></div>
         <h1>Pagamento</h1>
         <div />
       </div>
       <div className="container">
-        <p>{`Valor a pagar ${finalValue(items) - discount + deliverfee}`}</p>
         <div>
           <div>
             <h2>Detalhes do Pagamento</h2>
+            <div className="price">
+              <p>Valor a pagar </p>
+              <p>{`${(finalValue(items) - discount + deliverfee).toFixed(2)}`}</p>
+            </div>
             <p>Dados do Cartão</p>
             <label htmlFor="card-check">
               Usar dados de cadastro
@@ -66,7 +70,7 @@ function Payment(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="20px" />
+        <img src={user} alt="" width="30px" />
       </div>
     </div>
   );
