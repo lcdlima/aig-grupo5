@@ -80,7 +80,7 @@ function Login(props) {
       {renderPasswordInput(password, setPassword)}
       {renderButtonInput(data, email, password, history)}
       <Link to="/register" className="registeLink"> Ainda não sou cadastrado</Link>
-      <div className="footer">
+      <div className="footerL">
         <img src={ambev} alt="ambevLogo" />
       </div>
     </div>

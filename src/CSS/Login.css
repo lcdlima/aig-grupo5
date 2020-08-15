@@ -73,7 +73,7 @@ button:focus {
   margin-bottom: 80px;
 }
 
-.footer{
+.footerL{
   height: 130px;
   margin: 0;
   position:absolute;
@@ -84,7 +84,7 @@ button:focus {
   background-position: bottom;
 }
 
-.footer img {
+.footerL img {
   width: 26%;
   height: 24%;
   margin-top: 68px;

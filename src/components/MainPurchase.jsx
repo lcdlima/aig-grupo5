@@ -47,7 +47,7 @@ class MainPurchase extends Component {
   renderGroupButton() {
     return (
       <div className="conteinerButtonMP">
-        <Link to="/eventRegister">
+        <Link to="/event-choice">
           <button
             className="ButtonMainPurchase"
             type="button"

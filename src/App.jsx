@@ -16,8 +16,6 @@ import ThirdPart from './components/Register/ThirdPart';
 import MainPurchase from './components/MainPurchase';
 import Login from './components/Login';
 import Perfil from './components/Perfil';
-import MainEventRegister from './components/EventRegister/MainEventRegister';
-import EventRegisterTerms from './components/EventRegister/EventRegisterTerms';
 import './App.css';
 
 function App() {
@@ -39,8 +37,6 @@ function App() {
         <Route exact path="/RegisterCard" component={ThirdPart} />
         <Route exact path="/Perfil" component={Perfil} />
         <Route exact path="/mainPurchase" component={MainPurchase} />
-        <Route exact path="/eventRegister" component={MainEventRegister} />
-        <Route exact path="/eventTerms" component={EventRegisterTerms} />
         <Route exact path="/" component={Login} />
       </Switch>
     </BrowserRouter>

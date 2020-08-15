@@ -6,37 +6,45 @@ import '../CSS/EventPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 
+const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
+
 function copyToClipboard(setHide) {
   navigator.clipboard.writeText(window.location.href);
   setHide(false);
 }
 
+function deleteEvent(event, setRedirect) {
+  const newEventsList = storedEvents.reduce((acc, e) => {
+    if (event.id !== e.id) acc.push(e)
+    return acc
+  }, []);
+  localStorage.setItem('storedEvents', JSON.stringify(newEventsList));
+  setRedirect(true);
+}
+
 function EventPage(props) {
-  const { event } = props;
+  const { event, chooseEvent } = props;
   const [isParticipant, setIsParticipant] = useState(false);
-  const [deleteE, setDeleteE] = useState(false);
   const [open, setOpen] = useState(false);
   const [hide, setHide] = useState(true);
-  /* useEffect(() => {
+  const [redirect, setRedirect] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  useEffect(() => {
     if (isParticipant) {
-      const newEvent = {...event, participants: [...event.participants, currentUser]};
+      const newEvent = { ...event, participants: [...event.participants, user.log] };
       localStorage.setItem('storedEvents', JSON.stringify(newEvent));
+      chooseEvent(newEvent);
     } else {
       const newParticipants = event.participants.reduce((acc, participant) => {
-        if (participant !== currentUser) acc.push(participant)
+        if (participant !== user.log) acc.push(participant)
         return acc
       }, []);
-      const newEvent = {...event, participants: newParticipants};
+      const newEvent = { ...event, participants: newParticipants };
       localStorage.setItem('storedEvents', JSON.stringify(newEvent));
+      chooseEvent(newEvent);
     }
-  }, [isParticipant]);*/
-  /* useEffect(() => {
-    const newEventsList = storedEvents.reduce((acc, event) => {
-        if (event.id !== id) acc.push(event)
-        return acc
-      }, []);
-    localStorage.setItem('storedEvents', JSON.stringify(newEventsList));
-  }, [deleteE]);*/
+  }, [isParticipant]);
 
   return (
     <div className="event-page-div">
@@ -58,9 +66,9 @@ function EventPage(props) {
 
       {open && <div className="participants-div">
         <p>Roi</p>
-        {/*event.participants.map((person) => 
+        {event.participants.map((person) =>
           <p>{person.name}</p>
-        )*/}
+        )}
       </div>}
 
       <Link><h3>Carrinho do Evento</h3></Link>
@@ -70,8 +78,8 @@ function EventPage(props) {
         {isParticipant && <button onClick={() => setIsParticipant(false)}>Deixar Evento</button>}
         <Link><button>Adicionar Itens</button></Link>
         <Link><button>Finalizar Compra</button></Link>
-        <button onClick={() => setDeleteE(true)}>Excluir Evento</button>
-        {deleteE && <Redirect />}
+        <button onClick={() => deleteEvent(event, setRedirect)}>Excluir Evento</button>
+        {redirect && <Redirect to="/mainPurchase" />}
       </div>
 
     </div>

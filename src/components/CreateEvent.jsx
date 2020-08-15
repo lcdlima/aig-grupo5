@@ -5,11 +5,31 @@ import { getAddressByCep } from '../services/cep-api';
 import { chooseEvent } from '../actions';
 import '../CSS/CreateEvent.css';
 
-function addEvent(name, date, time, cep, add, numb, comp, city, state, password, chooseEvent, setRedirect) {
-  const id = Math.floor((Math.random() * 1000) + 1);
+const arrStates = [
+  "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA",
+  "PB", "PE", "PI", "PR", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "SP", "TO",
+];
+
+const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
+
+const generateCode = () => {
+  const simbolo = `0123456789ABCDEFGHIJKLMNOPQRSTUVXZ`;
+  let temporaryID = ``;
+  for(var i=0;i<5;i++){
+    temporaryID += simbolo[Math.ceil(Math.random()*34)];
+  }
+  //const IDexists = currentEvents.some((event) => event.id === temporaryID);
+  /*while (IDexists) {
+    generateCode()
+  };*/
+  return temporaryID;
+}
+
+function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEvent, setRedirect) {
+  const user = JSON.parse(localStorage.getItem('user'));
   const newEvent = {
-    id,
-    password,
+    id: generateCode(),
+    password: generateCode(),
     name,
     date,
     time,
@@ -21,10 +41,9 @@ function addEvent(name, date, time, cep, add, numb, comp, city, state, password,
       city,
       state
     },
-    participants: [],
+    participants: [user.log],
     products: []
   }
-  const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   if (currentEvents !== null) {
     localStorage.setItem('storedEvents', JSON.stringify([...currentEvents, newEvent]));
   } else {
@@ -64,7 +83,6 @@ function CreateEvent(props) {
   const [neighbor, setneighbor] = useState('');
   const [city, setcity] = useState('');
   const [state, setstate] = useState('');
-  const [password, setpassword] = useState('');
   const [redirect, setRedirect] = useState(false);
   const [disabledInput, setDisabledInput] = useState(false);
   return (
@@ -93,9 +111,6 @@ function CreateEvent(props) {
         />
       </div>
 
-      <label htmlFor="password-field">Senha de Acesso</label>
-      <input id="password-field" value={password} onChange={(e) => setpassword(e.target.value)} />
-
       <h3>Local do Evento</h3>
       <label htmlFor="cep-field">CEP</label>
       <input
@@ -115,10 +130,22 @@ function CreateEvent(props) {
       <label htmlFor="city-field">Cidade</label>
       <input id="city-field" value={city} onChange={(e) => setcity(e.target.value)} disabled={disabledInput} />
       <label htmlFor="state-field">Estado</label>
-      <input id="state-field" value={state} onChange={(e) => setstate(e.target.value)} disabled={disabledInput} />
+      <select
+        id="state-field"
+        value={state}
+        onChange={(e) => setstate(e.target.value)}
+        disabled={disabledInput}
+        required
+        >
+        {
+          arrStates.map((elem) => (
+            <option key={elem} value={elem}>{elem}</option>
+          ))
+        }
+      </select>
 
       <button
-        onClick={() => addEvent(name, date, time, cep, address, number, complement, city, state, password, chooseEvent, setRedirect)}
+        onClick={() => addEvent(name, date, time, cep, address, number, complement, city, state, chooseEvent, setRedirect)}
       >Próximo</button>
 
       {redirect && <Redirect to={`/event-confirmation`} />}
