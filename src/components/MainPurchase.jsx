@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import logo from '../images/logo.svg';
+import user from '../images/user.svg';
 
 import '../CSS/MainPurchase.css';
 import { userData, clearTemporaryData } from '../actions/index';
 
-
 class MainPurchase extends Component {
   componentDidMount() {
-    const { data, temporaryData, saveUserData, clearInProgress } = this.props;
+    const {
+      data, temporaryData, saveUserData, clearInProgress,
+    } = this.props;
     const user = JSON.parse(localStorage.getItem('user'));
     const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
     const objInLocalStorage = allDataOnLS.some((elem) => elem.email === user.log);
@@ -17,16 +20,16 @@ class MainPurchase extends Component {
     if (!objInLocalStorage && !objInStore && allDataOnLS.length === 0) {
       localStorage.setItem('usersData', JSON.stringify([temporaryData]));
       saveUserData(temporaryData);
-      this.setState({ name: temporaryData.name, email: temporaryData.email});
+      this.setState({ name: temporaryData.name, email: temporaryData.email });
     }
     if (!objInLocalStorage && !objInStore && allDataOnLS.length > 0) {
       const newData = [...allDataOnLS, temporaryData];
       localStorage.setItem('usersData', JSON.stringify(newData));
       saveUserData(temporaryData);
-      this.setState({ name: temporaryData.name, email: temporaryData.email});
+      this.setState({ name: temporaryData.name, email: temporaryData.email });
     }
     clearInProgress();
-    this.setState({ name: data.name, email: data.email});
+    this.setState({ name: data.name, email: data.email });
   }
 
   renderindividualButton() {
@@ -59,27 +62,22 @@ class MainPurchase extends Component {
     );
   }
 
-  renderBackToPerfilButton() {
-    return (
-      <div className="conteinerButtonMP">
-        <Link to="/Perfil">
-          <button
-            className="ButtonMainPurchase"
-            type="button"
-          >
-            Ir Para Perfil
-          </button>
-        </Link>
-      </div>
-    );
-  }
-
   render() {
     return (
-      <div className="conteinerMainPurchase">
-        {this.renderindividualButton()}
-        {this.renderGroupButton()}
-        {this.renderBackToPerfilButton()}
+      <div>
+        <div className="products-page-nav">
+          <div><img src={logo} alt="" width="100px" /></div>
+          <h1 />
+          <div />
+        </div>
+        <div className="conteinerMainPurchase">
+          {this.renderindividualButton()}
+          {this.renderGroupButton()}
+        </div>
+        <div className="footer">
+          <div />
+          <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        </div>
       </div>
     );
   }

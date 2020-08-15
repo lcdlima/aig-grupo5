@@ -4,59 +4,54 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { userEmailAndPassword } from '../../actions/index';
 import '../../CSS/FirstPart.css';
+import logo from '../../images/logo.svg';
 
-const renderEmailInput = (email, setEmail) => {
-  return (
-    <div className="conteinerEmailFP">
-      <label htmlFor="email">E-mail</label>
-      <input
-        type="email"
-        id="email"
-        value={email}
-        onChange={(elem) => setEmail(elem.target.value)}
-        required
-      />
-    </div>
-  );
-}
+const renderEmailInput = (email, setEmail) => (
+  <div className="conteinerEmailFP">
+    <label htmlFor="email">E-mail</label>
+    <input
+      type="email"
+      id="email"
+      value={email}
+      onChange={(elem) => setEmail(elem.target.value)}
+      required
+    />
+  </div>
+);
 
-const renderPasswordInput = (password, setPassword) => {
-  return (
-    <div className="conteinerPasswordFP">
-      <label htmlFor="password">Senha</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={(elem) => setPassword(elem.target.value)}
-        required
-        minlength="8"
-      />
-    </div>
-  );
-}
+const renderPasswordInput = (password, setPassword) => (
+  <div className="conteinerPasswordFP">
+    <label htmlFor="password">Senha</label>
+    <input
+      type="password"
+      id="password"
+      value={password}
+      onChange={(elem) => setPassword(elem.target.value)}
+      required
+      minLength="8"
+    />
+  </div>
+);
 
-const renderCheckPasswordInput = (check, setCheck) => {
-  return (
-    <div className="conteinerCheckFP">
-      <label htmlFor="check">Confirme a Senha</label>
-      <input
-        type="password"
-        id="check"
-        value={check}
-        onChange={(elem) => setCheck(elem.target.value)}
-        required
-        minlength="8"
-      />
-    </div>
-  );
-}
+const renderCheckPasswordInput = (check, setCheck) => (
+  <div className="conteinerCheckFP">
+    <label htmlFor="check">Confirme a Senha</label>
+    <input
+      type="password"
+      id="check"
+      value={check}
+      onChange={(elem) => setCheck(elem.target.value)}
+      required
+      minLength="8"
+    />
+  </div>
+);
 
 const clickToRegister = (email, password, saveEmailAndPassword, history) => {
-  localStorage.setItem('user', JSON.stringify({log: email}));
+  localStorage.setItem('user', JSON.stringify({ log: email }));
   saveEmailAndPassword(email, password);
-  history.push("/RegisterAdress");
-}
+  history.push('/RegisterAdress');
+};
 
 const isDisabled = (email, password, check) => {
   const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -64,22 +59,20 @@ const isDisabled = (email, password, check) => {
     return false;
   }
   return true;
-}
+};
 
-const renderNextButtonInput = (email, password, check, saveEmailAndPassword, history) => {
-  return (
-    <div className="conteinerButtonFP">
-        <button
-          className="buttonFP"
-          type="button"
-          onClick={() => clickToRegister(email, password, saveEmailAndPassword, history)}
-          disabled={isDisabled(email, password, check)}
-        >
-          Próximo
-        </button>
-    </div>
-  );
-}
+const renderNextButtonInput = (email, password, check, saveEmailAndPassword, history) => (
+  <div className="conteinerButtonFP">
+    <button
+      className="buttonFP"
+      type="button"
+      onClick={() => clickToRegister(email, password, saveEmailAndPassword, history)}
+      disabled={isDisabled(email, password, check)}
+    >
+      Próximo
+    </button>
+  </div>
+);
 
 function FirstPart(props) {
   const { saveEmailAndPassword } = props;
@@ -89,13 +82,17 @@ function FirstPart(props) {
   const history = useHistory();
 
   return (
-    <div className="conteinerCadastro1">
-      <div className="headerFP"></div>
-      {renderEmailInput(email, setEmail)}
-      {renderPasswordInput(password, setPassword)}
-      {renderCheckPasswordInput(check, setCheck)}
-      {renderNextButtonInput(email, password, check, saveEmailAndPassword, history)}
-      <div className="footerFP"> </div>
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
+      </div>
+      <div className="conteinerCadastro1">
+        {renderEmailInput(email, setEmail)}
+        {renderPasswordInput(password, setPassword)}
+        {renderCheckPasswordInput(check, setCheck)}
+        {renderNextButtonInput(email, password, check, saveEmailAndPassword, history)}
+        <div className="footerFP"> </div>
+      </div>
     </div>
   );
 }

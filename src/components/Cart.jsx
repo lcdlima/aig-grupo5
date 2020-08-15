@@ -112,7 +112,7 @@ function renderCartItensSection(items, props) {
             </div>
             <div className="product-cart-info">
               <p>{`${e.total} X R$${product[0].originalPrice}`}</p>
-              <p>{`Total: R$${e.total * product[0].originalPrice}`}</p>
+              <p>{`Total: R$${(e.total * product[0].originalPrice).toFixed(2)}`}</p>
               {renderIncrementButton(e.id, props)}
             </div>
             <button onClick={() => { deleteProduct(e.id); updateLocalStorage(); }} type="button"><img src={rubish} alt="" /></button>
@@ -150,7 +150,7 @@ function Cart(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="20px" />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

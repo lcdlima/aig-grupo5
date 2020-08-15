@@ -70,7 +70,7 @@ function Payment(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="30px" />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

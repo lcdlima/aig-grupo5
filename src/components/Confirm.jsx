@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import BackToProductsList from './BackToProductsList';
 import { calculateDiscount, calculatePlasticSaved } from './Cart';
 import productList from '../services/productList';
 import logo from '../images/logo.svg';
+import user from '../images/user.svg';
 
 function getNewDrink() {
   const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
@@ -54,6 +56,7 @@ function Confirm(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

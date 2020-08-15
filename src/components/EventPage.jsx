@@ -5,6 +5,8 @@ import { chooseEvent } from '../actions';
 import '../CSS/EventPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import logo from '../images/logo.svg';
+import user from '../images/user.svg';
 
 const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
 
@@ -15,8 +17,8 @@ function copyToClipboard(setHide) {
 
 function deleteEvent(event, setRedirect) {
   const newEventsList = storedEvents.reduce((acc, e) => {
-    if (event.id !== e.id) acc.push(e)
-    return acc
+    if (event.id !== e.id) acc.push(e);
+    return acc;
   }, []);
   localStorage.setItem('storedEvents', JSON.stringify(newEventsList));
   setRedirect(true);
@@ -37,8 +39,8 @@ function EventPage(props) {
       chooseEvent(newEvent);
     } else {
       const newParticipants = event.participants.reduce((acc, participant) => {
-        if (participant !== user.log) acc.push(participant)
-        return acc
+        if (participant !== user.log) acc.push(participant);
+        return acc;
       }, []);
       const newEvent = { ...event, participants: newParticipants };
       localStorage.setItem('storedEvents', JSON.stringify(newEvent));
@@ -47,43 +49,53 @@ function EventPage(props) {
   }, [isParticipant]);
 
   return (
-    <div className="event-page-div">
-      <h2>{event.name}</h2>
-
-      <div className="info-div">
-        <h3>Informações do Evento</h3>
-        <p>Data: {event.date}</p>
-        <p>Horário: {event.time}</p>
-        <p>{`${event.address.address}, ${event.address.number}, ${event.address.complement}`}</p>
-        <p>{`${event.address.city}, ${event.address.state}`}</p>
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
       </div>
+      <div className="container">
+        <div className="event-page-div">
+          <h2>{event.name}</h2>
 
-      <div className="icon-text-div">
-        {open && <FontAwesomeIcon icon={faAngleUp} onClick={() => setOpen(false)} size="1x" />}
-        {!open && <FontAwesomeIcon icon={faAngleDown} onClick={() => setOpen(true)} size="1x" />}
-        <h3>Participantes</h3>
+          <div className="info-div">
+            <h3>Informações do Evento</h3>
+            <p>{`Data: ${event.date}`}</p>
+            <p>{`Horário: ${event.time}`}</p>
+            <p>{`${event.address.address}, ${event.address.number}, ${event.address.complement}`}</p>
+            <p>{`${event.address.city}, ${event.address.state}`}</p>
+          </div>
+
+          <div className="icon-text-div">
+            {open && <FontAwesomeIcon icon={faAngleUp} onClick={() => setOpen(false)} size="1x" />}
+            {!open && <FontAwesomeIcon icon={faAngleDown} onClick={() => setOpen(true)} size="1x" />}
+            <h3>Participantes</h3>
+          </div>
+
+          {open && (
+            <div className="participants-div">
+              <p>Roi</p>
+              {event.participants.map((person) => <p>{person.name}</p>)}
+            </div>
+          )}
+
+          <Link><h3>Carrinho do Evento</h3></Link>
+
+          <div className="buttons-div">
+            {!isParticipant && <button onClick={() => setIsParticipant(true)}>Participar do Evento</button>}
+            {isParticipant && <button onClick={() => setIsParticipant(false)}>Deixar Evento</button>}
+            <Link><button>Adicionar Itens</button></Link>
+            <Link><button>Finalizar Compra</button></Link>
+            <button onClick={() => deleteEvent(event, setRedirect)}>Excluir Evento</button>
+            {redirect && <Redirect to="/mainPurchase" />}
+          </div>
+        </div>
+        <div className="footer">
+          <div />
+          <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        </div>
       </div>
-
-      {open && <div className="participants-div">
-        <p>Roi</p>
-        {event.participants.map((person) =>
-          <p>{person.name}</p>
-        )}
-      </div>}
-
-      <Link><h3>Carrinho do Evento</h3></Link>
-
-      <div className="buttons-div">
-        {!isParticipant && <button onClick={() => setIsParticipant(true)}>Participar do Evento</button>}
-        {isParticipant && <button onClick={() => setIsParticipant(false)}>Deixar Evento</button>}
-        <Link><button>Adicionar Itens</button></Link>
-        <Link><button>Finalizar Compra</button></Link>
-        <button onClick={() => deleteEvent(event, setRedirect)}>Excluir Evento</button>
-        {redirect && <Redirect to="/mainPurchase" />}
-      </div>
-
     </div>
-  )
+  );
 }
 
 const mapStateToProps = (state) => ({

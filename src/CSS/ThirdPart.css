@@ -17,13 +17,14 @@ input[type="number"]::-webkit-inner-spin-button {
   font-family: "Roboto";
   justify-content: center;
   width: 100%;
+  margin-top: 100px;
 }
 
 .conteinerCadastro3 input {
   border: #999999 solid 2px;
   border-radius: 5px;
   height: 25px;
-  width: 40vh;
+  width: 100%;
   text-align: center;
   font-size: 15px;
   color: #999999;
@@ -35,6 +36,7 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: column;
   font-size: 20px;
   margin-top: 18px;
+  width: 100%;
 }
 
 .conteinerCardNumberTP {
@@ -52,10 +54,11 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 18px;
   margin-top: 18px;
   margin-right: 10px;
+  width: 30%;
 }
 
 .conteinerCVVTP input {
-  width: 7vh;
+  width: 100%;
 }
 
 .conteinerDueDateTP {
@@ -65,11 +68,12 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 18px;
   margin-top: 18px;
   margin-left: 10px;
+  width: 60%;
 }
 
 .conteinerDueDateTP input {
   height: 28px;
-  width: 20vh;
+  width: 100%;
 }
 
 .buttonTP {
@@ -104,3 +108,13 @@ input[type="number"]::-webkit-inner-spin-button {
   background-position: bottom;
   transform: scaleX(-1);
 }
+
+.card-form {
+  width: 90%;
+}
+
+.card-form input{
+  border-radius: 30px;
+  padding: 0;
+}
+

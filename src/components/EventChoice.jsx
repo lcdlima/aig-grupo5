@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { chooseEvent } from '../actions';
-import "../CSS/EventChoice.css";
+import '../CSS/EventChoice.css';
+import logo from '../images/logo.svg';
+import user from '../images/user.svg';
 
 function searchEvent(id, password, setRedirect, chooseEvent) {
   const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   let eventExist = [];
   if (currentEvents !== null) {
-    eventExist = currentEvents.filter(event => event.id === parseInt(id));
+    eventExist = currentEvents.filter((event) => event.id === parseInt(id));
   }
   if (eventExist.length === 0 || parseInt(eventExist[0].password) !== parseInt(password)) {
-    alert("Id ou Senha inválida");
+    alert('Id ou Senha inválida');
   } else {
     chooseEvent(eventExist[0]);
     setRedirect(true);
@@ -27,6 +29,9 @@ function EventChoice(props) {
   return (
     <div className="overall-div">
       <div className="choive-div">
+        <div className="products-page-nav">
+          <img src={logo} alt="" width="100px" />
+        </div>
         <label htmlFor="id-field">ID do Evento</label>
         <input
           id="id-field"
@@ -43,10 +48,19 @@ function EventChoice(props) {
         />
         <button
           onClick={() => searchEvent(searchedID, password, setRedirect, chooseEvent)}
-        >Buscar</button>
+        >
+          Buscar
+
+        </button>
         <Link className="new-event" to="/create-event">
-          <p>Cadastrar Novo Evento</p></Link>
+          <p>Cadastrar Novo Evento</p>
+
+        </Link>
         {redirect && <Redirect to={`/event-page/${searchedID}`} />}
+      </div>
+      <div className="footer">
+        <div />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
 

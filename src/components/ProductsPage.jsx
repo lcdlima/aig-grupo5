@@ -9,7 +9,7 @@ import {
 import cart from '../images/cart.svg';
 import { updateLocalStorage } from '../store';
 import user from '../images/user.svg';
-import bottles from '../images/bottles.svg';
+import BackToProductsList from './BackToProductsList';
 import logo from '../images/logo.svg';
 
 let list = productList;
@@ -167,8 +167,8 @@ function ProductsPage(props) {
         {filterProducts(selectedFilter, props, setShowMessage, setPageHeight, setPageWidth)}
       </div>
       <div className="footer">
-        <img src={bottles} alt="" width="30px" />
-        <img src={user} alt="" width="30px" />
+        <BackToProductsList />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

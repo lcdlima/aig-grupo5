@@ -3,8 +3,7 @@
   src: url(../fonte/Roboto-LightItalic.ttf);
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -17,6 +16,7 @@ input[type="number"]::-webkit-inner-spin-button {
   font-family: "Roboto";
   justify-content: center;
   width: 100%;
+  margin-top: 100px
 }
 
 .conteinerCadastro2 input {
@@ -35,6 +35,7 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: column;
   font-size: 20px;
   margin-top: 8px;
+  width: 100%;
 }
 
 .conteinerCPFSP {
@@ -47,7 +48,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .conteinerCPFSP input {
-  width: 20vh;
+  width: 90%;
 }
 
 .conteinerBirthDaySP {
@@ -61,7 +62,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .conteinerBirthDaySP input {
   height: 28px;
-  width: 20vh;
+  width: 90%;
 }
 
 .conteinerDDDSP {
@@ -69,11 +70,11 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   margin-top: 8px;
-  margin-right: 10px;
+  width: 30%;
 }
 
 .conteinerDDDSP input {
-  width: 7vh;
+  width: 90%;
 }
 
 .conteinerPhoneSP {
@@ -82,11 +83,11 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: column;
   font-size: 20px;
   margin-top: 8px;
-  margin-left: 10px;
+  width: 60%;
 }
 
 .conteinerPhoneSP input {
-  width: 26vh;
+  width: 90%;
 }
 
 .conteinerCEPSP {
@@ -96,23 +97,26 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
   margin-top: 8px;
   margin-right: 10px;
+  width: 30%;
 }
 
 .conteinerCEPSP input {
-  width: 20vh;
+  width: 90%;
 }
 
 .conteinerStreetSP {
   align-items: center;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   font-size: 20px;
   margin-top: 8px;
   margin-left: 10px;
+  width: 60%;
 }
 
 .conteinerStreetSP input {
-  width: 26vh;
+  width: 100%;
 }
 
 .conteinerAdressNumberSP {
@@ -122,10 +126,11 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
   margin-top: 8px;
   margin-right: 10px;
+  width: 20%;
 }
 
 .conteinerAdressNumberSP input {
-  width: 7vh;
+  width: 90%;
 }
 
 .conteinerComplementSP {
@@ -135,10 +140,11 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
   margin-top: 8px;
   margin-left: 10px;
+  width: 70%;
 }
 
 .conteinerComplementSP input {
-  width: 26vh;
+  width: 100%;
 }
 
 .conteinerCitySP {
@@ -148,10 +154,11 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
   margin-top: 8px;
   margin-right: 10px;
+  width: 45%;
 }
 
 .conteinerCitySP input {
-  width: 22vh;
+  width: 90%;
 }
 
 .conteinerStateSP {
@@ -161,10 +168,11 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
   margin-top: 8px;
   margin-left: 10px;
+  width: 45%;
 }
 
 .conteinerStateSP input {
-  width: 22vh;
+  width: 90%;
 }
 
 .BirthDayAndCPF {
@@ -173,14 +181,17 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: row;
   font-size: 20px;
   margin-top: 8px;
+  width: 100%;
 }
 
 .conteinerCompletCellphoneSP {
   align-items: center;
+  justify-content: space-between;
   display: flex;
   flex-direction: row;
   font-size: 20px;
   margin-top: 8px;
+  width: 100%;
 }
 
 .StreetAndCEP {
@@ -189,6 +200,8 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: row;
   font-size: 20px;
   margin-top: 8px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .adressAndComplement {
@@ -197,6 +210,8 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: row;
   font-size: 20px;
   margin-top: 8px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .cityAndState {
@@ -205,6 +220,8 @@ input[type="number"]::-webkit-inner-spin-button {
   flex-direction: row;
   font-size: 20px;
   margin-top: 8px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .buttonSP {
@@ -218,7 +235,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .conteinerButtonSP {
   margin-top: 40px;
-  width: 35vh;
+  width: 50%;
 }
 
 .headerSP {
@@ -228,13 +245,25 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-bottom: 1px;
 }
 
-.footerSP{
+.footerSP {
   height: 90px;
   margin: 0;
-  position:absolute;
-  bottom:0;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background-image: url('../images/tela2R.png');
-  background-size:110% 100%;
+  background-size: 110% 100%;
   background-position: bottom;
+}
+
+.register-form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.conteinerCadastro2 input {
+  border-radius: 30px;
 }
