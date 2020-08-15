@@ -18,27 +18,6 @@ class Perfil extends Component {
     };
   }
 
-  componentDidMount() {
-    const { data, temporaryData, saveUserData, clearInProgress } = this.props;
-    const user = JSON.parse(localStorage.getItem('user'));
-    const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
-    const objInLocalStorage = allDataOnLS.some((elem) => elem.email === user.log);
-    const objInStore = data.some((elem) => elem.email === user.log);
-    if (!objInLocalStorage && !objInStore && allDataOnLS.length === 0) {
-      localStorage.setItem('usersData', JSON.stringify([temporaryData]));
-      saveUserData(temporaryData);
-      this.setState({ name: temporaryData.name, email: temporaryData.email});
-    }
-    if (!objInLocalStorage && !objInStore && allDataOnLS.length > 0) {
-      const newData = [...allDataOnLS, temporaryData];
-      localStorage.setItem('usersData', JSON.stringify(newData));
-      saveUserData(temporaryData);
-      this.setState({ name: temporaryData.name, email: temporaryData.email});
-    }
-    clearInProgress();
-    this.setState({ name: data.name, email: data.email});
-  }
-
   renderPerfilHeader() {
     const { name } = this.state;
     return (
@@ -129,17 +108,12 @@ class Perfil extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  saveUserData: (obj) => dispatch(userData(obj)),
-  clearInProgress: () => dispatch(clearTemporaryData()),
-});
-
 const mapStateToProps = (state) => ({
   data: state.finishedUserData,
   temporaryData: state.inProgressRegister,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Perfil);
+export default connect(mapStateToProps, null)(Perfil);
 
 Perfil.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
