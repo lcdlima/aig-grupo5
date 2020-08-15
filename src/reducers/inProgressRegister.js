@@ -29,6 +29,7 @@ const inProgressRegister = (state = INITIAL_STATE, action) => {
         ...state,
         email: action.email,
         password: action.password,
+        id: action.id,
       };
     case SAVE_USER_REGISTRY_AND_ADRESS:
       return {

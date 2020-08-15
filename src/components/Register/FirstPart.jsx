@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { userEmailAndPassword } from '../../actions/index';
+import { userEmailAndPassword, incrementID } from '../../actions/index';
 import '../../CSS/FirstPart.css';
 import logo from '../../images/logo.svg';
 
@@ -75,7 +75,7 @@ const renderNextButtonInput = (email, password, check, saveEmailAndPassword, his
 );
 
 function FirstPart(props) {
-  const { saveEmailAndPassword } = props;
+  const { saveEmailAndPassword, increment, actualID } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
@@ -98,11 +98,19 @@ function FirstPart(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveEmailAndPassword: (email, password) => dispatch(userEmailAndPassword(email, password)),
+  saveEmailAndPassword: (email, password, id) => dispatch(
+    userEmailAndPassword(email, password, id)
+  ),
+  increment: () => dispatch(incrementID()),
 });
 
-export default connect(null, mapDispatchToProps)(FirstPart);
+const mapStateToProps = (state) => ({
+  actualID: state.IDRegister,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FirstPart);
 
 FirstPart.propTypes = {
   saveEmailAndPassword: PropTypes.func.isRequired,
+  actualID: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

@@ -6,6 +6,8 @@ import '../CSS/Login.css';
 import ambev from '../images/ambev.png';
 import logo from '../images/logo.svg';
 
+const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+
 function Login(props) {
   const { data } = props;
   const [email, setEmail] = useState('');

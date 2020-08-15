@@ -3,8 +3,32 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { userRegisterAndPassword } from '../../actions/index';
+import { getAddressByCep } from '../../services/cep-api';
 import '../../CSS/SecondPart.css';
 import logo from '../../images/logo.svg';
+
+const arrStates = [
+  "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA",
+  "PB", "PE", "PI", "PR", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "SP", "TO",
+];
+
+function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledInput) {
+  setCep(cep);
+  if (cep.toString().length === 8) {
+    getAddressByCep(cep)
+      .then((answer) => {
+        if (answer.error) {
+          alert("Cep Inválido");
+        } else {
+          setAdd(answer.logradouro);
+          setNeig(answer.bairro);
+          setCity(answer.localidade);
+          setState(answer.uf);
+          setDisabledInput(true);
+        }
+      });
+  }
+}
 
 const clickToRegister = (
   name, CPF, birthDay, code, phone, CEP, street, adressNumber,
@@ -184,7 +208,10 @@ const isDisabled = (CPF, code, phone, CEP) => {
   if (CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length !== 8) {
     alert('Verifique seu CEP');
   }
-  if (CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length === 8) {
+  if (
+    CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length === 8
+    && name && birthDay && street && adressNumber && city && stateLetters
+  ) {
     return false;
   }
   return true;
@@ -218,10 +245,12 @@ function SecondPart(props) {
   const [phone, setPhone] = useState('');
   const [CEP, setCEP] = useState('');
   const [street, setStreet] = useState('');
+  const [neighbor, setNeighbor] = useState('');
   const [adressNumber, setAdressNumber] = useState('');
   const [complement, setComplement] = useState('');
   const [city, setCity] = useState('');
   const [stateLetters, setStateLetters] = useState('');
+  const [disabledInput, setDisabledInput] = useState(false);
   const history = useHistory();
 
   return (

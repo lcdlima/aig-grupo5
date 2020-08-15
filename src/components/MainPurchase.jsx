@@ -9,6 +9,49 @@ import '../CSS/MainPurchase.css';
 import { userData, clearTemporaryData } from '../actions/index';
 
 class MainPurchase extends Component {
+  setUserSellDataWithRedux(data) {
+    const UserInfo = data.map((elem) => elem.email === user.email)
+    const objTolocalStorage = {
+      id: UserInfo.id,
+      email: UserInfo.email,
+      nome: UserInfo.name,
+      birth: UserInfo.birthDay,
+      address: {
+        cep: UserInfo.CEP,
+        number: UserInfo.adressNumber,
+        complement: UserInfo.complement,
+      },
+      card: {
+        number: UserInfo.cardName,
+        cvv: UserInfo.cardNumber,
+        cardHolder: UserInfo.CVV,
+        dueDate: UserInfo.dueDate,
+      },
+    };
+    localStorage.setItem('dataToPurchase', JSON.stringify([objTolocalStorage]));
+  }
+
+  setUserSellDataWithLS(temporaryData) {
+    const objTolocalStorage = {
+      id: user.id,
+      email: temporaryData.email,
+      nome: temporaryData.name,
+      birth: temporaryData.birthDay,
+      address: {
+        cep: temporaryData.CEP,
+        number: temporaryData.adressNumber,
+        complement: temporaryData.complement,
+      },
+      card: {
+        number: temporaryData.cardName,
+        cvv: temporaryData.cardNumber,
+        cardHolder: temporaryData.CVV,
+        dueDate: temporaryData.dueDate,
+      },
+    };
+    localStorage.setItem('dataToPurchase', JSON.stringify([objTolocalStorage]));
+  }
+
   componentDidMount() {
     const {
       data, temporaryData, saveUserData, clearInProgress,
@@ -17,6 +60,8 @@ class MainPurchase extends Component {
     const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
     const objInLocalStorage = allDataOnLS.some((elem) => elem.email === user.log);
     const objInStore = data.some((elem) => elem.email === user.log);
+    if (!temporaryData) this.setUserSellDataWithRedux(temporaryData);
+    if (data) this.setUserSellDataWithLS(temporaryData);
     if (!objInLocalStorage && !objInStore && allDataOnLS.length === 0) {
       localStorage.setItem('usersData', JSON.stringify([temporaryData]));
       saveUserData(temporaryData);

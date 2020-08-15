@@ -6,7 +6,7 @@ import { userCard } from '../../actions/index';
 import '../../CSS/ThirdPart.css';
 import logo from '../../images/logo.svg';
 
-const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history) => {
+const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData) => {
   saveCard(cardName, cardNumber, dueDate, CVV);
   history.push('/mainPurchase');
 };
@@ -69,7 +69,7 @@ const renderCVVInput = (CVV, setCVV) => (
 );
 
 const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-  if (!cardName && cardNumber.length !== 12 && !dueDate && CVV.length !== 3) {
+  if (!cardName && cardNumber.length !== 16 && !dueDate && (CVV.length !== 3 || CVV.length === 4)) {
     return true;
   }
   if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
@@ -84,7 +84,7 @@ const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
   if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
     alert('Verifir os números de segurança');
   }
-  if (cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
     return false;
   }
   return true;
@@ -106,7 +106,7 @@ const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, h
 );
 
 function ThirdPart(props) {
-  const { saveCard } = props;
+  const { saveCard, temporaryData } = props;
   const [cardName, setCardName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -140,8 +140,13 @@ const mapDispatchToProps = (dispatch) => ({
   ),
 });
 
-export default connect(null, mapDispatchToProps)(ThirdPart);
+const mapStateToProps = (state) => ({
+  temporaryData: state.inProgressRegister,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThirdPart);
 
 ThirdPart.propTypes = {
   saveCard: PropTypes.func.isRequired,
+  temporaryData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

@@ -14,6 +14,8 @@ export const CLEAR_TEMPORARY_EVENT = 'CLEAR_TEMPORARY_EVENT';
 
 export const EVENT_CHOOSED = 'EVENT_CHOOSED';
 
+export const ADD_ID = 'ADD_ID';
+
 const increase = (id) => ({
   type: 'INCREASE_CART',
   id,
@@ -79,10 +81,11 @@ export const userData = (obj) => ({
   obj,
 });
 
-export const userEmailAndPassword = (email, password) => ({
+export const userEmailAndPassword = (email, password, id) => ({
   type: SAVE_USER_EMAIL_AND_PASSWORD,
   email,
   password,
+  id,
 });
 
 export const userRegisterAndPassword = (
@@ -121,6 +124,11 @@ export const temporaryEventData = (obj) => ({
 export const clearTemporaryEvent = () => ({
   type: CLEAR_TEMPORARY_EVENT,
 });
+
+export const incrementID = () => ({
+  type: ADD_ID,
+});
+
 
 export {
   increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect,
