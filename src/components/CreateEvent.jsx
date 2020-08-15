@@ -12,23 +12,18 @@ const arrStates = [
   'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SE', 'SP', 'TO',
 ];
 
-const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
-
 const generateCode = () => {
   const simbolo = '0123456789ABCDEFGHIJKLMNOPQRSTUVXZ';
   let temporaryID = '';
   for (let i = 0; i < 5; i++) {
     temporaryID += simbolo[Math.ceil(Math.random() * 34)];
   }
-  // const IDexists = currentEvents.some((event) => event.id === temporaryID);
-  /* while (IDexists) {
-    generateCode()
-  }; */
   return temporaryID;
 };
 
 function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEvent, setRedirect) {
   const user = JSON.parse(localStorage.getItem('user'));
+  const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   const newEvent = {
     id: generateCode(),
     password: generateCode(),
@@ -43,9 +38,9 @@ function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEve
       city,
       state,
     },
-    participants: [user.log],
-    products: [],
-  };
+    participants: [user],
+    products: []
+  }
   if (currentEvents !== null) {
     localStorage.setItem('storedEvents', JSON.stringify([...currentEvents, newEvent]));
   } else {
@@ -101,7 +96,7 @@ function CreateEvent(props) {
           onChange={(e) => setname(e.target.value)}
           size="300"
         />
-        <div className="date-and-time">
+        <div className="make-flex">
           <div className="time-div">
             <label htmlFor="date-field">Data do Evento</label>
             <input

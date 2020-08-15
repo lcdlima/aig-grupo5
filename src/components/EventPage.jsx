@@ -1,27 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { chooseEvent } from '../actions';
 import '../CSS/EventPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { chooseEvent } from '../actions';
 import logo from '../images/logo.svg';
-import user from '../images/user.svg';
+import userchar from '../images/user.svg';
 
-const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
+function updateLocalStorage(props) {
+  const { event } = props;
+  const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
+  const newEvents = storedEvents.reduce((acc, e) => {
+    if (e.id !== event.id) {
+      acc.push(e);
+    } else {
+      acc.push(event);
+    }
+    return acc;
+  }, []);
+  localStorage.setItem('storedEvents', JSON.stringify(newEvents));
+}
 
-function copyToClipboard(setHide) {
-  navigator.clipboard.writeText(window.location.href);
+function copyToClipboard(setHide, props) {
+  const { event } = props;
+  navigator.clipboard.writeText(`Participe de ${event.nome}. Entre em Jao, selecione Grupo e digite as seguintes informações: ID: ${event.ID} e Senha: ${event.password}`);
   setHide(false);
 }
 
 function deleteEvent(event, setRedirect) {
+  const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
   const newEventsList = storedEvents.reduce((acc, e) => {
     if (event.id !== e.id) acc.push(e);
     return acc;
   }, []);
   localStorage.setItem('storedEvents', JSON.stringify(newEventsList));
   setRedirect(true);
+}
+
+function EventParticipation(isParticipant, setIsParticipant, props) {
+  const { event, chooseEvent } = props;
+  const user = JSON.parse(localStorage.getItem('user'));
+  let newParticipants = [];
+
+  if (isParticipant) {
+    newParticipants = [...event.participants, user];
+  } else {
+    newParticipants = event.participants.reduce((acc, p) => {
+      if (p.log !== user.log) {
+        acc.push(p);
+      }
+      return acc;
+    }, []);
+  }
+  chooseEvent({ ...event, participants: newParticipants });
+  updateLocalStorage(props);
+  setIsParticipant(!isParticipant);
 }
 
 function EventPage(props) {
@@ -33,20 +67,12 @@ function EventPage(props) {
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    if (isParticipant) {
-      const newEvent = { ...event, participants: [...event.participants, user.log] };
-      localStorage.setItem('storedEvents', JSON.stringify(newEvent));
-      chooseEvent(newEvent);
-    } else {
-      const newParticipants = event.participants.reduce((acc, participant) => {
-        if (participant !== user.log) acc.push(participant);
-        return acc;
-      }, []);
-      const newEvent = { ...event, participants: newParticipants };
-      localStorage.setItem('storedEvents', JSON.stringify(newEvent));
-      chooseEvent(newEvent);
-    }
-  }, [isParticipant]);
+    event.participants.forEach((p) => {
+      if (p.log === user.log) {
+        setIsParticipant(true);
+      }
+    });
+  }, []);
 
   return (
     <div>
@@ -55,10 +81,9 @@ function EventPage(props) {
       </div>
       <div className="container">
         <div className="event-page-div">
-          <h2>{event.name}</h2>
-
           <div className="info-div">
             <h3>Informações do Evento</h3>
+            <h2>{event.name}</h2>
             <p>{`Data: ${event.date}`}</p>
             <p>{`Horário: ${event.time}`}</p>
             <p>{`${event.address.address}, ${event.address.number}, ${event.address.complement}`}</p>
@@ -78,21 +103,20 @@ function EventPage(props) {
             </div>
           )}
 
-          <Link><h3>Carrinho do Evento</h3></Link>
-
           <div className="buttons-div">
-            {!isParticipant && <button onClick={() => setIsParticipant(true)}>Participar do Evento</button>}
-            {isParticipant && <button onClick={() => setIsParticipant(false)}>Deixar Evento</button>}
-            <Link><button>Adicionar Itens</button></Link>
+            {!isParticipant && <button onClick={() => EventParticipation(isParticipant, setIsParticipant, props)}>Participar do Evento</button>}
+            {isParticipant && <button onClick={() => EventParticipation(isParticipant, setIsParticipant, props)}>Deixar Evento</button>}
+            <Link to="/group-products-list"><button>Adicionar Itens</button></Link>
+            <button>Compartilhar Evento</button>
             <Link><button>Finalizar Compra</button></Link>
             <button onClick={() => deleteEvent(event, setRedirect)}>Excluir Evento</button>
             {redirect && <Redirect to="/mainPurchase" />}
           </div>
         </div>
-        <div className="footer">
-          <div />
-          <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
-        </div>
+      </div>
+      <div className="footer">
+        <div />
+        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

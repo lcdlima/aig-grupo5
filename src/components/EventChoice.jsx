@@ -11,10 +11,10 @@ function searchEvent(id, password, setRedirect, chooseEvent) {
   const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   let eventExist = [];
   if (currentEvents !== null) {
-    eventExist = currentEvents.filter((event) => event.id === parseInt(id));
+    eventExist = currentEvents.filter(event => event.id === id);
   }
-  if (eventExist.length === 0 || parseInt(eventExist[0].password) !== parseInt(password)) {
-    alert('Id ou Senha inválida');
+  if (eventExist.length === 0 || eventExist[0].password !== password) {
+    alert("Id ou Senha inválida");
   } else {
     chooseEvent(eventExist[0]);
     setRedirect(true);

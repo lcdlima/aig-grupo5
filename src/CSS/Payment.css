@@ -6,12 +6,15 @@
 .address-number {
   display: flex;
   justify-content: space-between;
-  width: 94%;
+  width: 97%;
 }
 
 .address-field  input{
-  margin: 10px 0 0 10px;
-  width: 90%;
+  margin: 10px 0 0;
+  width: 95%;
+  border-radius: 30px;
+  height: 30px;
+  padding: px;
 }
 
 .address-number input {
@@ -27,7 +30,7 @@
 
 .card-details {
   display: flex;
-  width: 90%;
+  width: 97%;
   justify-content: space-between;
 }
 
@@ -39,7 +42,7 @@
 }
 
 .card-field > input {
-  width: 90%;
+  width: 95%;
   margin-top: 10px;
   height: 30px;
   border-radius: 30px;

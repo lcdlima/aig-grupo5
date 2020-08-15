@@ -92,6 +92,7 @@ padding: 0;
   display: flex;
   width: 90%;
   margin: 20px auto;
+  align-items: center;
   justify-content: space-around;
 }
 
@@ -105,4 +106,26 @@ padding: 0;
   background-color: #4D4D4D;
   color: white;
   outline: none;
+}
+
+.increment-buttons-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.increment-buttons-cart button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.payment-div {
+  width: 90%;
+  margin: auto;
 }
