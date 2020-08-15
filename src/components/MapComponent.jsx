@@ -10,10 +10,8 @@ const mapStyles = {
   position: 'relative',
 };
 
-
 // how to use geolocation quert: https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API/Using_the_Permissions_API
 // navigator.permissions.query({ name: 'geolocation' }).then((data) => console.log(data));
-
 
 class MapComponent extends React.Component {
   constructor(props) {
