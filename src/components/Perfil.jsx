@@ -21,6 +21,7 @@ class Perfil extends Component {
       moneyClicked: false,
       purchase: [],
       shopstore: [],
+      obj: {},
     };
   }
 
@@ -32,7 +33,9 @@ class Perfil extends Component {
         return [...arr, e.id_compra];
       } return arr;
     }, []);
-    this.setState({ purchase, shopstore });
+    let obj = {};
+    purchase.forEach((e) => obj = { ...obj, [e]: false });
+    this.setState({ purchase, shopstore, obj });
   }
 
   renderPerfilHeader() {
@@ -44,29 +47,34 @@ class Perfil extends Component {
   }
 
   renderIndividualPurchase() {
-    const { individualClicked, purchase, shopstore } = this.state;
+    const {
+      individualClicked, purchase, shopstore, obj,
+    } = this.state;
+    console.log(obj);
     return (
-      <div
-        onClick={() => this.setState({ individualClicked: !individualClicked })}
-      >
+      <div>
         {/* <img src={} alt="arrow" /> */}
         <h2>{(individualClicked) ? '⌄' : '›'}</h2>
-        <h2>Meus Pedidos</h2>
+        <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
         {individualClicked && purchase.map((e, i) => (
           <div>
-            <h2>{`Compra ${i + 1}`}</h2>
-            <div>
-              {shopstore.filter((el) => el.id_compra === e)[0].cart.map((ell) => {
-                const products = (productList.filter((elll) => elll.id === ell.id)[0]);
-                return (
-                  <div className="make-flex">
-                    <p>{`${products.productName} ${products.package_volume}L`}</p>
+            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
+            {
+              obj[e] && (
+                <div>
+                  {shopstore.filter((el) => el.id_compra === e)[0].cart.map((ell) => {
+                    const products = (productList.filter((elll) => elll.id === ell.id)[0]);
+                    return (
+                      <div className="make-flex">
+                        <p>{`${products.productName} ${products.package_volume}L`}</p>
 
-                    <p>{`x ${ell.total}`}</p>
-                  </div>
-                );
-              })}
-            </div>
+                        <p>{`x ${ell.total}`}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )
+            }
           </div>
         ))}
         {}
