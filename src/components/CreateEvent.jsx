@@ -38,8 +38,10 @@ function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEve
       city,
       state,
     },
+    owner: user,
     participants: [user],
-    products: []
+    products: [],
+    delivery: {date, time: ""}, pickup: {date: "", time: ""}
   }
   if (currentEvents !== null) {
     localStorage.setItem('storedEvents', JSON.stringify([...currentEvents, newEvent]));

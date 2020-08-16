@@ -6,10 +6,11 @@ import '../CSS/ProductsPage.css';
 import {
   decrease, increase, chooseEvent
 } from '../actions/index';
-import cart from '../images/cart.svg';
 import user from '../images/user.svg';
 import bottles from '../images/bottles.svg';
 import logo from '../images/logo.svg';
+import GroupCartIcon from './GroupCartIncon';
+import GroupBackToProductsList from './GroupBackToProductsList';
 
 let list = productList;
 
@@ -20,24 +21,25 @@ export function getTotalCart(cartState) {
 function addToCart(id, qnt, props) {
   const { event, chooseEvent } = props;
   const user = JSON.parse(localStorage.getItem('user'));
-  const check = event.products.filter((p) => 
-    p.id === id && p.user === user
-  );
-  let newProducts = [];
-
-  if (check.length === 0) {
-    newProducts = [...event.products, {id, qnt, user: user.log}]
-  } else {
-    newProducts = check.reduce((acc, p) => {
-      if (p.id === id) {
-        acc.push({id, qnt: (p.qnt + qnt), user: user.log})
+  const answer = event.products.some((product) => parseInt(product.id) === parseInt(id) && product.user.log === user.log);
+  if (answer) {
+    const newCart = event.products.reduce((acc, product) => {
+      if (parseInt(product.id) === parseInt(id) && product.user.log === user.log) {
+        acc.push({
+          id,
+          qnt: product.qnt + qnt,
+          user,
+        })
+        return acc;
       } else {
-        acc.push(p)
+        acc.push(product);
+        return acc;
       }
-      return acc
-    }, []);
+    }, [])
+    chooseEvent({...event, products: newCart});
+  } else {
+    chooseEvent({...event, products: [...event.products, {id, qnt, user}]});
   }
-  chooseEvent({...event, products: newProducts});
 }
 
 function renderFilter(selectedFilter, setSelectedFilter) {
@@ -90,7 +92,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
     <div className="products-container">
       {(selectedFilter === 'Todos') && list.map((e) => (
         <div>
-          <Link to={`/productdetails/${e.id}`}>
+          <Link to={`/group-products-details/${e.id}`}>
             <div className="products-list">
               <img src={e.thumbnail} width="100px" alt="" />
               <p>{e.productName}</p>
@@ -103,7 +105,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
       {(selectedFilter !== 'Todos') && list.filter((e) => e.category === selectedFilter)
         .map((e) => (
           <div>
-            <Link to={`/productdetails/${e.id}`}>
+            <Link to={`/group-products-details/${e.id}`}>
               <div className="products-list">
                 <img src={e.thumbnail} width="100px" alt="" />
                 <p>{e.productName}</p>
@@ -167,7 +169,6 @@ function GroupProductsPage(props) {
   const [searchBy, setSearchBy] = useState('');
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
   const { event } = props;
 
   useEffect(() => {
@@ -190,10 +191,7 @@ function GroupProductsPage(props) {
       <div className="products-page-nav">
       <div><img src={logo} alt="" width="100px" /></div>
         {renderSearchInput(searchBy, setSearchBy)}
-        <div className="cart-img">
-          <p>{getTotalCart(cartState)}</p>
-          <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>
-        </div>
+        <GroupCartIcon />
       </div>
       <div className="container">
         <div className="filter-sorter">
@@ -204,8 +202,9 @@ function GroupProductsPage(props) {
         {filterProducts(selectedFilter, props, setShowMessage, setPageHeight, setPageWidth)}
       </div>
       <div className="footer">
-        <img src={bottles} alt="" width="30px" />
-        <img src={user} alt="" width="30px" />
+        <GroupBackToProductsList />
+        <Link to={`/event-page/${event.id}`}><h3>{event.name}</h3></Link>
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

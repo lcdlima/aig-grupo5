@@ -17,6 +17,9 @@ import MainPurchase from './components/MainPurchase';
 import Login from './components/Login';
 import Perfil from './components/Perfil';
 import GroupProductsPage from './components/GroupProductsPage';
+import GroupProductsDetails from './components/GroupProductDetails';
+import GroupCart from './components/GroupCart';
+import GroupFinishOrder from './components/GroupFinishOrder';
 import './App.css';
 
 function App() {
@@ -40,6 +43,9 @@ function App() {
         <Route exact path="/mainPurchase" component={MainPurchase} />
         <Route exact path="/" component={Login} />
         <Route exact path="/group-products-list" component={GroupProductsPage} />
+        <Route exact path="/group-products-details/:id" render={(props) => <GroupProductsDetails props={props} />} />
+        <Route exact path="/group-cart" component={GroupCart} />
+        <Route exact path="/group-finish-order" component={GroupFinishOrder} />
       </Switch>
     </BrowserRouter>
   );
