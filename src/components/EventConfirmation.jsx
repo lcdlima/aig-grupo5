@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
-import user from '../images/user.svg';
+import userchar from '../images/user.svg';
 
 function deleteEvent(event) {
   const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
@@ -39,7 +39,7 @@ function EventConfirmation(props) {
       </div>
       <div className="footer">
         <div />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

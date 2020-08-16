@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import productList from '../services/productList';
-import '../CSS/Cart.css';
+import '../CSS/GroupCart.css';
 import GroupBackToProductsList from './GroupBackToProductsList';
-import user from '../images/user.svg';
+import userchar from '../images/user.svg';
 import rubish from '../images/rubish.svg';
 import logo from '../images/logo.svg';
 import { chooseEvent } from '../actions/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 export function finalValue(cartItems) {
   return cartItems.reduce((sum, e) => sum + productList.filter((el) => el.id === Number(e.id))[0].originalPrice * e.total, 0);
@@ -17,27 +19,27 @@ function decrement(id, props) {
   const { event, chooseEvent } = props;
   const updateProducts = event.products.reduce((acc, p) => {
     if (parseInt(p.id) === parseInt(id) && p.qnt > 0) {
-      acc.push({...p, qnt: p.qnt - 1})
+      acc.push({ ...p, qnt: p.qnt - 1 })
     }
     else {
-      acc.push(p) 
+      acc.push(p)
     }
     return acc
   }, []);
-  chooseEvent({...event, products: updateProducts});
+  chooseEvent({ ...event, products: updateProducts });
 }
 
 function increment(id, props) {
   const { event, chooseEvent } = props;
   const updateProducts = event.products.reduce((acc, p) => {
     if (parseInt(p.id) === parseInt(id)) {
-      acc.push({...p, qnt: p.qnt + 1})
+      acc.push({ ...p, qnt: p.qnt + 1 })
     } else {
       acc.push(p)
     }
     return acc
   }, []);
-  chooseEvent({...event, products: updateProducts});
+  chooseEvent({ ...event, products: updateProducts });
 }
 
 
@@ -86,7 +88,37 @@ function deleteProduct(product, props) {
     }
     return acc
   }, []);
-  chooseEvent({...event, products: newCart});
+  chooseEvent({ ...event, products: newCart });
+}
+
+function renderOthersCart(props, open, setOpen) {
+  const { event } = props;
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  return (
+    <div>
+      <div className="icon-text-cart-div">
+        {open && <FontAwesomeIcon icon={faAngleUp} onClick={() => setOpen(false)} size="1x" />}
+        {!open && <FontAwesomeIcon icon={faAngleDown} onClick={() => setOpen(true)} size="1x" />}
+        <h3>Produtos de Outros Participantes</h3>
+      </div>
+      {open && <div className="products">
+        {event.products.map((e) => {
+          const product = productList.filter((el) => el.id === Number(e.id));
+          if (e.user.log !== user.log) {
+            return (
+              <div className="others-product">
+                <div>
+                  <img src={product[0].thumbnail} width="50px" alt="" />
+                  <p>{product[0].productName}</p>
+                </div>
+              </div>
+            );
+          }
+        })}
+      </div>}
+    </div>
+  );
 }
 
 function renderCartItensSection(props) {
@@ -98,21 +130,6 @@ function renderCartItensSection(props) {
         const product = productList.filter((el) => el.id === Number(e.id));
         if (e.user.log === user.log) {
           return (
-          <div className="products-cart-list">
-            <div>
-              <img src={product[0].thumbnail} width="50px" alt="" />
-              <p>{product[0].productName}</p>
-            </div>
-            <div className="product-cart-info">
-              <p>{`${e.qnt} X R$${product[0].originalPrice}`}</p>
-              <p>{`Total: R$${(e.qnt * product[0].originalPrice).toFixed(2)}`}</p>
-              {renderIncrementButton(e.id, props)}
-            </div>
-            <button onClick={() => {deleteProduct(e, props)}} type="button"><img src={rubish} alt="" /></button>
-          </div>
-          );
-        } else {
-          return (
             <div className="products-cart-list">
               <div>
                 <img src={product[0].thumbnail} width="50px" alt="" />
@@ -121,9 +138,11 @@ function renderCartItensSection(props) {
               <div className="product-cart-info">
                 <p>{`${e.qnt} X R$${product[0].originalPrice}`}</p>
                 <p>{`Total: R$${(e.qnt * product[0].originalPrice).toFixed(2)}`}</p>
+                {renderIncrementButton(e.id, props)}
               </div>
+              <button onClick={() => { deleteProduct(e, props) }} type="button"><img src={rubish} alt="" /></button>
             </div>
-            );
+          );
         }
       })}
     </div>
@@ -132,7 +151,7 @@ function renderCartItensSection(props) {
 
 function changeDates(deliveryTime, pickupDate, pickupTime, props) {
   const { event, chooseEvent } = props;
-  const updateEvent = {...event, delivery: {date: event.date, time: deliveryTime}, pickup: {date: pickupDate, time: pickupTime}};
+  const updateEvent = { ...event, delivery: { date: event.date, time: deliveryTime }, pickup: { date: pickupDate, time: pickupTime } };
 
   chooseEvent(updateEvent);
 }
@@ -143,6 +162,7 @@ function GroupCart(props) {
   const [deliveryTime, setDeliveryTime] = useState(event.delivery.time);
   const [pickupDate, setPickupDate] = useState(event.pickup.date);
   const [pickupTime, setPickupTime] = useState(event.pickup.time);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -169,26 +189,31 @@ function GroupCart(props) {
       {(event.products.length === 0) && <div className="container"><p>Nenhum produto adicionado</p></div>}
       {(event.products.length !== 0) && <div className="container">
         {renderCartItensSection(props)}
+        {renderOthersCart(props, open, setOpen)}
         {renderFinalValues(props)}
-        {user.log === event.owner.log && 
-        <div>
-          <label htmlFor="delivery-date">Agende a Entrega:</label>
-          <div id="delivery-date">
-            <input type="date" value={event.date} disabled/>
-            <input type="time" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)}/>
-          </div>
-          <label htmlFor="pickup-date">Agende a Busca das Embalagens:</label>
-          <div id="pickup-date">
-            <input type="date" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} />
-            <input type="time" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}/>
-          </div>
-        </div>}
+        {user.log === event.owner.log &&
+          <div className="date-time-div">
+            <div>
+              <label htmlFor="delivery-date">Agende a Entrega:</label>
+              <div id="delivery-date">
+                <input type="date" value={event.date} disabled />
+                <input type="time" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)} />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="pickup-date">Agende a Busca das Embalagens:</label>
+              <div id="pickup-date">
+                <input type="date" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} />
+                <input type="time" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} />
+              </div>
+            </div>
+          </div>}
         {user.log === event.owner.log && <Link to="group-finish-order"><button className="finish-order" disabled={(event.products.length === 0)} type="button" onClick={() => changeDates(deliveryTime, pickupDate, pickupTime, props)}>Finalizar Pedido</button></Link>}
       </div>}
       <div className="footer">
         <GroupBackToProductsList />
         <Link to={`/event-page/${event.id}`}><h3>{event.name}</h3></Link>
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

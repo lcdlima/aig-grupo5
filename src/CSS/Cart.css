@@ -28,7 +28,6 @@
   font-size: 1.0rem;
 }
 
-
 .products-cart-list {
   display: flex;
   border: 1px solid black;
@@ -128,4 +127,10 @@ padding: 0;
 .payment-div {
   width: 90%;
   margin: auto;
+}
+
+.date-time-div {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
 }

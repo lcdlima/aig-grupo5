@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import productList from '../services/productList';
-import { decrease, increase, chooseEvent } from '../actions/index';
+import { decrease, increase, chooseEvent, sendToCart } from '../actions/index';
 import '../CSS/ProductDetails.css';
 import '../CSS/Footer.css';
 import GroupBackToProductsList from './GroupBackToProductsList';
-import user from '../images/user.svg';
+import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
 import GroupCartIcon from './GroupCartIncon';
 
 function addToCart(id, qnt, props) {
-  const { event, chooseEvent } = props;
+  const { event, chooseEvent, sendToCart } = props;
   const user = JSON.parse(localStorage.getItem('user'));
   const answer = event.products.some((product) => parseInt(product.id) === parseInt(id) && product.user === user);
   if (answer) {
@@ -32,6 +32,7 @@ function addToCart(id, qnt, props) {
   } else {
     chooseEvent({...event, products: [...event.products, {id, qnt, user}]});
   }
+  sendToCart(id, qnt);
 }
 
 function renderIncrementButton(id, props) {
@@ -100,7 +101,7 @@ function GroupProductDetails(props) {
       <div className="footer">
         <GroupBackToProductsList />
         <Link to={`/event-page/${event.id}`}><h3>{event.name}</h3></Link>
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );
@@ -117,6 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
   decrement: (id) => dispatch(decrease(id)),
   increment: (id) => dispatch(increase(id)),
   chooseEvent: (e) => dispatch(chooseEvent(e)),
+  sendToCart: (id, total) => dispatch(sendToCart(id, total)),
 });
 
 export default connect(mapStateToPros, mapDispatchToProps)(GroupProductDetails);

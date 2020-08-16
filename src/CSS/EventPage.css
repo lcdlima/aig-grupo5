@@ -4,7 +4,6 @@
 
 .buttons-div button {
   margin: auto;
-  display: block;
   width: 50%;
   border-radius: 30px;
   height: 50px;
@@ -18,10 +17,18 @@
   color: white;
 }
 
+.event-page-div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .buttons-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 50px;
   width: 300px;
 }
 
@@ -33,6 +40,11 @@
   height: 200px;
 }
 
+.share-div{
+  text-align: center;
+  margin: 70px 0 20px 0;
+}
+
 .icon-text-div {
   align-items: center;
   display: flex;
@@ -40,5 +52,5 @@
 }
 
 .icon-text-div h3 {
-  margin-left: 5px;
+  margin: 0 0 0 10px;
 }

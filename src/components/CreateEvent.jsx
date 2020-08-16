@@ -57,7 +57,7 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledI
   if (cep.toString().length === 8) {
     getAddressByCep(cep)
       .then((answer) => {
-        if (answer.error) {
+        if (answer.erro === true) {
           alert('Cep Inválido');
         } else {
           setAdd(answer.logradouro);
@@ -97,6 +97,7 @@ function CreateEvent(props) {
           value={name}
           onChange={(e) => setname(e.target.value)}
           size="300"
+          required
         />
         <div className="make-flex">
           <div className="time-div">
@@ -106,6 +107,7 @@ function CreateEvent(props) {
               id="date-field"
               value={date}
               onChange={(e) => setdate(e.target.value)}
+              required
             />
           </div>
           <div className="time-div">
@@ -115,6 +117,7 @@ function CreateEvent(props) {
               id="time-field"
               value={time}
               onChange={(e) => settime(e.target.value)}
+              required
             />
           </div>
         </div>
@@ -125,19 +128,20 @@ function CreateEvent(props) {
           id="cep-field"
           value={cep}
           onChange={(e) => searchCep(e.target.value, setcep, setaddress, setneighbor, setcity, setstate, setDisabledInput)}
+          required
         />
         <label htmlFor="address-field">Endereço</label>
-        <input id="address-field" value={address} onChange={(e) => setaddress(e.target.value)} disabled={disabledInput} />
+        <input id="address-field" value={address} onChange={(e) => setaddress(e.target.value)} disabled={disabledInput} required />
         <label htmlFor="number-field">Número</label>
-        <input id="number-field" value={number} onChange={(e) => setnumber(e.target.value)} />
+        <input id="number-field" value={number} onChange={(e) => setnumber(e.target.value)} required />
         <label htmlFor="complement-field">Complemento</label>
         <input id="complement-field" value={complement} onChange={(e) => setcomplement(e.target.value)} />
         <label htmlFor="neighbor-field">Bairro</label>
-        <input id="neighbor-field" value={neighbor} onChange={(e) => setneighbor(e.target.value)} disabled={disabledInput} />
+        <input id="neighbor-field" value={neighbor} onChange={(e) => setneighbor(e.target.value)} disabled={disabledInput} required />
         <div className="make-flex">
           <div className="make-flex-column">
             <label htmlFor="city-field">Cidade</label>
-            <input id="city-field" value={city} onChange={(e) => setcity(e.target.value)} disabled={disabledInput} />
+            <input id="city-field" value={city} onChange={(e) => setcity(e.target.value)} disabled={disabledInput} required />
           </div>
           <div className="make-flex-column">
             <label htmlFor="state-field">Estado</label>
