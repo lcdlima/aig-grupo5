@@ -52,7 +52,7 @@ function EventPage(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
       <div className="container">
         <div className="event-page-div">

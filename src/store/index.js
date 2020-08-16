@@ -7,8 +7,6 @@ const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(thunk),
 ));
 
-const storage = JSON.parse(localStorage.getItem('temporaryStorage'));
-if (storage === null) { localStorage.setItem('temporaryStorage', JSON.stringify([{ cart: [] }])); }
 
 export const updateLocalStorage = () => {
   const cartReducer = { cart: store.getState().FinalCartReducer };
@@ -16,6 +14,9 @@ export const updateLocalStorage = () => {
 };
 
 export const purchaseFinished = () => {
+  const storage = JSON.parse(localStorage.getItem('temporaryStorage'));
+  localStorage.setItem('temporaryStorage', JSON.stringify([{ cart: [] }]));
+  if (storage === null) { localStorage.setItem('temporaryStorage', JSON.stringify([{ cart: [] }])); }
   let id = JSON.parse(localStorage.getItem('userID'));
   if (id === '' || id === undefined) {
     localStorage.setItem('userID', 0);
@@ -24,7 +25,7 @@ export const purchaseFinished = () => {
     localStorage.setItem('userID', id);
   }
   const purchaseId = JSON.parse(localStorage.getItem('userID'));
-  const buyerId = JSON.parse(localStorage.getItem('dataToPurchase'))[0].email;
+  const buyerId = JSON.parse(localStorage.getItem('user')).log;
   const cartReducer = { id_compra: purchaseId, buyerId, cart: store.getState().FinalCartReducer, pack: store.getState().PackageReducer, collection: store.getState().CollectionReducer };
   let cartLocalStorage = JSON.parse(localStorage.getItem('purchaseFineshed'));
   if (cartLocalStorage === '' || !cartLocalStorage) {
@@ -33,7 +34,6 @@ export const purchaseFinished = () => {
     cartLocalStorage = cartLocalStorage.filter((e) => e.id_compra !== purchaseId);
     localStorage.setItem('purchaseFineshed', JSON.stringify([...cartLocalStorage, cartReducer]));
   }
-
 };
 
 export default store;

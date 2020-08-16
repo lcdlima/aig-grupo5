@@ -150,7 +150,7 @@ function ProductsPage(props) {
   return (
     <div className="products-page">
       <div className="products-page-nav">
-      <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         {renderSearchInput(searchBy, setSearchBy)}
         <div className="cart-img">
           <p>{getTotalCart(cartState)}</p>

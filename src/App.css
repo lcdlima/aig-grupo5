@@ -2,3 +2,21 @@ a, a:visited {
   text-decoration: none;
   color: black;
 }
+
+
+h3 {
+  color: #FFCD00;
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+h4 {
+  padding-top: 10px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #FFCD00;
+}
+
+select:focus {
+  outline: none;
+}

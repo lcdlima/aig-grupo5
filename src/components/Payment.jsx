@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { calculateDiscount, finalValue } from './Cart';
@@ -8,14 +8,55 @@ import BackToProductsList from './BackToProductsList';
 import user from '../images/user.svg';
 import logo from '../images/logo.svg';
 
-function getCardInfo(setName, setNumber, setDate, setCvv) {
-  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
-  setName(storage.card.cardHolder); setNumber(storage.card.number); setDate(storage.card.dueDate); setCvv(storage.card.cvv);
+let today = new Date();
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const year = today.getFullYear();
+today = `${day} / ${month} / ${year}`;
+
+const finishThePurchaser = (
+  addressStreet, addressNumber, items, discount, deliverfee,
+  addressCity, addressState, purchaseFinished,
+) => {
+  purchaseFinished();
+  const getID = JSON.parse(localStorage.getItem('temporaryStorage'));
+  const totalValue = (finalValue(items) - discount + deliverfee).toFixed(2);
+  const extraData = JSON.parse(localStorage.getItem('extraPurchaseData'));
+  const newObj = {
+    id: getID[0].cart.id,
+    day: today,
+    adress: addressStreet,
+    number: addressNumber,
+    total: totalValue,
+    city: addressCity, 
+    state: addressState,
+  }
+  if (extraData === '' || !extraData) {
+    localStorage.setItem('extraPurchaseData', JSON.stringify([newObj]));
+  } else {
+    localStorage.setItem('extraPurchaseData', JSON.stringify([...extraData, newObj]));
+  }
 }
 
-function getAddressInfo(setAddressCep, setAddressComplement, setAddressNumber, setAddressState, setAddressStreet, setAddressCity) {
+function getCardInfo(setName, setNumber, setDate, setCvv) {
   const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
-  setAddressCep(storage.address.cep); setAddressComplement(storage.address.complement); setAddressNumber(storage.address.addressNumber); setAddressState(storage.address.stateLetters); setAddressStreet(storage.address.street); setAddressCity(storage.address.city);
+  setName(storage.card.cardHolder);
+  setNumber(storage.card.number);
+  setDate(storage.card.dueDate);
+  setCvv(storage.card.cvv);
+}
+
+function getAddressInfo(
+    setAddressCep, setAddressComplement, setAddressNumber,
+    setAddressState, setAddressStreet, setAddressCity,
+  ) {
+  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
+  setAddressCep(storage.address.cep);
+  setAddressComplement(storage.address.complement);
+  setAddressNumber(storage.address.number);
+  setAddressState(storage.address.stateLetters);
+  setAddressStreet(storage.address.street);
+  setAddressCity(storage.address.city);
 }
 
 function Payment(props) {
@@ -34,10 +75,11 @@ function Payment(props) {
   const discount = calculateDiscount(packageTotal);
   let deliverfee;
   if (isDelivery) { deliverfee = 3; } else { deliverfee = 0; }
+  console.log(JSON.parse(localStorage.getItem('temporaryStorage')));
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Pagamento</h1>
         <div />
       </div>
@@ -50,35 +92,108 @@ function Payment(props) {
               <p>{`${(finalValue(items) - discount + deliverfee).toFixed(2)}`}</p>
             </div>
             <p>Dados do Cartão</p>
-            <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
+            <button
+              type="button"
+              onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}
+            >
+              Usar dados de cadastro
+            </button>
             <div className="card-field">
-              <input type="text" placeholder="nome do comprador" onChange={(e) => setName(e.target.value)} value={name} />
-              <input type="number" placeholder="numero do cartao" onChange={(e) => setNumber(e.target.value)} value={number} />
+              <input
+                type="text"
+                placeholder="nome do comprador"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+              <input type="number"
+                placeholder="numero do cartao"
+                onChange={(e) => setNumber(e.target.value)}
+                value={number}
+              />
               <div className="card-details">
-                <input type="month" min="2020-08" placeholder="data de vencimento" onChange={(e) => setDate(e.target.value)} value={date} />
-                <input type="text" placeholder="cvv" onChange={(e) => setCvv(e.target.value)} value={cvv} />
+                <input
+                  type="month"
+                  min="2020-08"
+                  placeholder="data de vencimento"
+                  onChange={(e) => setDate(e.target.value)}
+                  value={date}
+                />
+                <input
+                  type="text"
+                  placeholder="cvv"
+                  onChange={(e) => setCvv(e.target.value)}
+                  value={cvv}
+                />
               </div>
             </div>
           </div>
           <div>
             <h2>Detalhes da Entrega</h2>
-            <button type="button" onClick={() => getAddressInfo(setAddressCep, setAddressComplement, setAddressNumber, setAddressState, setAddressStreet, setAddressCity)}>Usar dados de cadastro</button>
+            <button
+              type="button"
+              onClick={() => getAddressInfo(
+                setAddressCep, setAddressComplement, setAddressNumber,
+                setAddressState, setAddressStreet, setAddressCity,
+              )}
+            >
+              Usar dados de cadastro
+            </button>
             <p>Endereço</p>
             <div className="address-field">
-              <input type="number" placeholder="cep" onChange={(e) => setAddressCep(e.target.value)} value={addressCep}/>
-              <input type="text" placeholder="rua" onChange={(e) => setAddressStreet(e.target.value)} value={addressStreet}/>
+              <input
+                type="number"
+                placeholder="cep"
+                onChange={(e) => setAddressCep(e.target.value)}
+                value={addressCep}
+              />
+              <input
+                type="text"
+                placeholder="rua"
+                onChange={(e) => setAddressStreet(e.target.value)}
+                value={addressStreet}
+              />
               <div className="address-number">
-                <input type="number" placeholder="número" onChange={(e) => setAddressNumber(e.target.value)} value={addressNumber}/>
-                <input type="text" placeholder="complemento" onChange={(e) => setAddressComplement(e.target.value)} value={addressComplement}/>
+                <input
+                  type="number"
+                  placeholder="número"
+                  onChange={(e) => setAddressNumber(e.target.value)}
+                  value={addressNumber}
+                />
+                <input
+                  type="text"
+                  placeholder="complemento"
+                  onChange={(e) => setAddressComplement(e.target.value)}
+                  value={addressComplement}
+                />
               </div>
               <div>
-                <input type="text" placeholder="cidade" onChange={(e) => setAddressCity(e.target.value)} value={addressCity}/>
-                <input type="text" placeholder="estado" onChange={(e) => setAddressState(e.target.value)} value={addressState}/>
+                <input
+                  type="text"
+                  placeholder="cidade"
+                  onChange={(e) => setAddressCity(e.target.value)}
+                  value={addressCity}
+                />
+                <input
+                  type="text"
+                  placeholder="estado"
+                  onChange={(e) => setAddressState(e.target.value)}
+                  value={addressState}
+                />
               </div>
             </div>
           </div>
         </div>
-        <Link to="/confirm"><button onClick={() => purchaseFinished()} type="button">Finalizar Compra</button></Link>
+        <Link to="/confirm">
+          <button
+            onClick={() => finishThePurchaser(
+              addressStreet, addressNumber, items, discount, deliverfee,
+              addressCity, addressState, purchaseFinished,
+            )}
+            type="button"
+          >
+            Finalizar Compra
+          </button>
+        </Link>
       </div>
       <div className="footer">
         <BackToProductsList />

@@ -132,15 +132,15 @@ function Cart(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Carrinho</h1>
         <div />
       </div>
       <div className="container">
-        {(items[0].cart.length < 1) && <p>Nenhum produto adicionado</p>}
+        {(items[0].cart.length < 1) && <p className="p-container">Nenhum produto adicionado</p>}
         {renderCartItensSection(items, props)}
-        {renderPackageSection(packageTotal, changeInput)}
-        {renderCollectionOptions(changeToDelivery, changeToCollect)}
+        {(items[0].cart.length > 0) && renderPackageSection(packageTotal, changeInput)}
+        {(items[0].cart.length > 0) && renderCollectionOptions(changeToDelivery, changeToCollect)}
         {renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal)}
         {isDelivery
           ? <Link to="/payment"><button className="finish-order" disabled={((finalPrice < 0.01))} type="button">Finalizar Pedido</button></Link>

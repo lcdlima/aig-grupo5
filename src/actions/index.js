@@ -71,6 +71,14 @@ const selectCollect = () => ({
   type: 'SELECT_COLLECT',
 });
 
+const finishShopping = () => ({
+  type: 'FINISH_SHOPPING',
+});
+
+const finishShoppingFor = () => ({
+  type: 'FINISH_SHOPPING',
+});
+
 export const chooseEvent = (event) => ({
   type: EVENT_CHOOSED,
   event,
@@ -94,7 +102,7 @@ export const userPessoalInfo = (email, password, id, name, CPF, birthDay, code, 
 });
 
 export const userAdress = (
-  CEP, street, adressNumber, complement, city,
+  CEP, street, adressNumber, complement, city, stateLetters,
 ) => ({
   type: SAVE_USER_REGISTRY_AND_ADRESS,
   CEP,
@@ -102,6 +110,7 @@ export const userAdress = (
   adressNumber,
   complement,
   city,
+  stateLetters,
 });
 
 export const userCard = (cardName, cardNumber, dueDate, CVV) => ({
@@ -129,7 +138,6 @@ export const incrementID = () => ({
   type: ADD_ID,
 });
 
-
 export {
-  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect,
+  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect, finishShopping,
 };

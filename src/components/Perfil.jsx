@@ -42,7 +42,7 @@ class Perfil extends Component {
   renderPerfilHeader() {
     return (
       <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
     );
   }
@@ -51,11 +51,23 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
+    // if (purchase.length > 4) {
+    //   const arrResume = purchase.reduce((elem, index) => {
+    //     if(index > (purchase.length - 5)) {
+    //       return [...elem, elem.id_compra];
+    //     }
+    //     return arr;
+    //   },[]);
+    // } else {
+    //   const arrResume = purchase;
+    // }
     return (
       <div>
         {/* <img src={} alt="arrow" /> */}
         <h2>{(individualClicked) ? '⌄' : '›'}</h2>
         <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
+        {/* {individualClicked && <ResumeCard purchaseList={arrResume} />} */}
+
         {individualClicked && purchase.map((e, i) => (
           <div>
             <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
@@ -148,8 +160,8 @@ class Perfil extends Component {
     return (
       <div>
         {this.renderPerfilHeader()}
-        <div className="container">
-          <h3>{`Olá ${name}`}</h3>
+        <div className="sub-container">
+          <h4>{`Olá ${name}`}</h4>
           {this.renderIndividualPurchase()}
           {this.renderGroupPurchase()}
           {this.renderPreservedNature()}
