@@ -52,9 +52,11 @@ const renderCheckPasswordInput = (check, setCheck) => {
   );
 }
 
-const clickToRegister = (email, password, saveEmailAndPassword, history, increment, actualID) => {
-  saveEmailAndPassword(email, password, actualID.id);
-  increment();
+const clickToRegister = (email, password, saveEmailAndPassword, history) => {
+  // increment();
+  const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+  const newId = ( allDataOnLS.length +1 )
+  saveEmailAndPassword(email, password, newId);
   history.push("/RegisterAdress");
 }
 
@@ -67,7 +69,7 @@ const isDisabled = (email, password, check) => {
 }
 
 const renderNextButtonInput = (
-    email, password, check, saveEmailAndPassword, history, increment, actualID,
+    email, password, check, saveEmailAndPassword, history, increment,
   ) => {
   return (
     <div className="conteinerButtonFP">
@@ -75,7 +77,7 @@ const renderNextButtonInput = (
           className="buttonFP"
           type="button"
           onClick={() => clickToRegister(
-            email, password, saveEmailAndPassword, history, increment, actualID,
+            email, password, saveEmailAndPassword, history, increment,
           )}
           disabled={isDisabled(email, password, check)}
         >
@@ -86,7 +88,7 @@ const renderNextButtonInput = (
 }
 
 function FirstPart(props) {
-  const { saveEmailAndPassword, increment, actualID } = props;
+  const { saveEmailAndPassword, increment } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
@@ -99,7 +101,7 @@ function FirstPart(props) {
       {renderPasswordInput(password, setPassword)}
       {renderCheckPasswordInput(check, setCheck)}
       {renderNextButtonInput(
-        email, password, check, saveEmailAndPassword, history, increment, actualID,
+        email, password, check, saveEmailAndPassword, history, increment,
       )}
       <div className="footerFP"> </div>
     </div>

@@ -8,7 +8,8 @@ const IDRegister = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_ID:
       return {
-        id: state +1,
+        ...state,
+        id: (state + 1),
       };
     default:
       return state;

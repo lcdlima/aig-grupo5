@@ -14,23 +14,24 @@ function Login(props) {
   const history = useHistory();
 
   const clickToEnter = (data, email, password, history) => {
-    const exist = (data)
-      ? data.some((elem) => elem.email === email)
-      : false;
-    const checkPassword = (data)
-      ? data.some((elem) => (elem.email === email && elem.password === password))
-      : false;
+    // const exist = (data)
+    //   ? data.some((elem) => elem.email === email)
+    //   : false;
+    // const checkPassword = (data)
+    //   ? data.some((elem) => (elem.email === email && elem.password === password))
+    //   : false;
     const existLS = allDataOnLS.some((elem) => elem.email === email);
     const checkLSPassword = allDataOnLS.some((elem) => (elem.email === email && elem.password === password));
-    if (checkPassword || checkLSPassword) {
-      const InfoUser = (checkLSPassword) 
-        ? allDataOnLS.map((elem) => elem.email === email)
-        : data.map((elem) => elem.email === email);
+    if (checkLSPassword) {
+      // const InfoUser = (checkLSPassword) 
+      //   ? allDataOnLS.map((elem) => elem.email === email)
+      //   : data.map((elem) => elem.email === email);
+      const InfoUser = allDataOnLS.map((elem) => elem.email === email);
       localStorage.setItem('user', JSON.stringify({log: InfoUser.email, name: InfoUser.name, id: InfoUser.id}));
       history.push("/mainPurchase");
       return;
     }
-    if (exist || existLS) {
+    if (existLS) {
       alert("Senha invalida");
       return;
     }

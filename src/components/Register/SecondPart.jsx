@@ -11,7 +11,7 @@ const arrStates = [
   "PB", "PE", "PI", "PR", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "SP", "TO",
 ];
 
-function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledInput) {
+function searchCep(cep, setCep, setAdd, setNeig, setCity, setState) {
   setCep(cep);
   if (cep.toString().length === 8) {
     getAddressByCep(cep)
@@ -23,7 +23,6 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledI
           setNeig(answer.bairro);
           setCity(answer.localidade);
           setState(answer.uf);
-          setDisabledInput(true);
         }
       });
   }
@@ -121,7 +120,7 @@ const renderPhoneInput = (code, setCode, phone, setPhone) => {
 }
 
 const renderCEPInput = (
-  CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters, setDisabledInput,
+  CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters,
 ) => {
   return (
     <div className="conteinerCEPSP">
@@ -132,14 +131,14 @@ const renderCEPInput = (
         value={CEP}
         onChange={(elem) => searchCep(
           elem.target.value, setCEP, setStreet, setNeighbor,
-          setCity, setStateLetters, setDisabledInput,
+          setCity, setStateLetters,
         )}
       />
     </div>
   );
 }
 
-const renderStreetInput = (street, setStreet, disabledInput) => {
+const renderStreetInput = (street, setStreet) => {
   return (
     <div className="conteinerStreetSP">
       <label htmlFor="street">Rua</label>
@@ -148,14 +147,13 @@ const renderStreetInput = (street, setStreet, disabledInput) => {
         id="street"
         value={street}
         onChange={(elem) => setStreet(elem.target.value)}
-        disabled={disabledInput}
         required
       />
     </div>
   );
 }
 
-const renderNeighborInput = (neighbor, setNeighbor, disabledInput) => {
+const renderNeighborInput = (neighbor, setNeighbor) => {
   return (
     <div className="conteinerNeighborSP">
       <label htmlFor="neighbor">Bairro</label>
@@ -164,7 +162,6 @@ const renderNeighborInput = (neighbor, setNeighbor, disabledInput) => {
         id="neighbor"
         value={neighbor}
         onChange={(elem) => setNeighbor(elem.target.value)}
-        disabled={disabledInput}
         required
       />
     </div>
@@ -200,7 +197,7 @@ const renderComplementInput = (complement, setComplement) => {
   );
 }
 
-const renderCityInput = (city, setCity, disabledInput) => {
+const renderCityInput = (city, setCity) => {
   return (
     <div className="conteinerCitySP">
       <label htmlFor="city">Cidade</label>
@@ -209,14 +206,13 @@ const renderCityInput = (city, setCity, disabledInput) => {
         id="city"
         value={city}
         onChange={(elem) => setCity(elem.target.value)}
-        disabled={disabledInput}
         required
       />
     </div>
   );
 }
 
-const renderStateInput = (stateLetters, setStateLetters, disabledInput) => {
+const renderStateInput = (stateLetters, setStateLetters) => {
   return (
     <div className="conteinerStateSP">
       <label htmlFor="stateLetters">Estado</label>
@@ -225,7 +221,6 @@ const renderStateInput = (stateLetters, setStateLetters, disabledInput) => {
         value={stateLetters}
         onChange={(elem) => setStateLetters(elem.target.value)}
         required
-        disabled={disabledInput}
       >
         {
           arrStates.map((elem) => (
@@ -240,12 +235,12 @@ const renderStateInput = (stateLetters, setStateLetters, disabledInput) => {
 const isDisabled = (
   name, CPF, birthDay, code, phone, CEP, street, adressNumber, city, stateLetters,
 ) => {
-  if (
-    CPF.length !== 11 && code.length !== 2 && phone.length !== 9 && CEP.length !== 8
-    && name && birthDay && street && adressNumber && city && stateLetters
-  ) {
-    alert('Verifique o CPF, DDD, Telefone e CEP')
-  }
+  // if (
+  //   CPF.length !== 11 && code.length !== 2 && phone.length !== 9 && CEP.length !== 8
+  //   && name && birthDay && street && adressNumber && city && stateLetters
+  // ) {
+  //   alert('Verifique o CPF, DDD, Telefone e CEP')
+  // }
   if (
     CPF.length === 11 && code.length === 2 && phone.length === 9 && CEP.length === 8
     && name && birthDay && street && adressNumber && city && stateLetters
@@ -292,7 +287,6 @@ function SecondPart(props) {
   const [complement, setComplement] = useState('');
   const [city, setCity] = useState('');
   const [stateLetters, setStateLetters] = useState('');
-  const [disabledInput, setDisabledInput] = useState(false);
   const history = useHistory();
 
   return (
@@ -306,18 +300,18 @@ function SecondPart(props) {
       {renderPhoneInput(code, setCode, phone, setPhone)}
       <div className="StreetAndCEP">
         {renderCEPInput(
-          CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters, setDisabledInput,
+          CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters,
         )}
         {renderNeighborInput(neighbor, setNeighbor)}
       </div>
-      {renderStreetInput(street, setStreet, disabledInput)}
+      {renderStreetInput(street, setStreet)}
       <div className="adressAndComplement">
-        {renderNumberInput(adressNumber, setAdressNumber, disabledInput)}
+        {renderNumberInput(adressNumber, setAdressNumber)}
         {renderComplementInput(complement, setComplement)}
       </div>
       <div className="cityAndState">
-        {renderCityInput(city, setCity, disabledInput)}
-        {renderStateInput(stateLetters, setStateLetters, disabledInput)}
+        {renderCityInput(city, setCity)}
+        {renderStateInput(stateLetters, setStateLetters)}
       </div>
       {renderNextButtonInput(
         name, CPF, birthDay, code, phone, CEP, street, adressNumber,

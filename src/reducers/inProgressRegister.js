@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   cardNumber: '',
   dueDate: '',
   CVV: '',
+  id: '',
 };
 
 const inProgressRegister = (state = INITIAL_STATE, action) => {
