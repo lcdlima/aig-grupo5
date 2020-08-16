@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { getAddressByCep } from '../services/cep-api';
 import { chooseEvent } from '../actions';
 import '../CSS/CreateEvent.css';
+import user from '../images/user.svg';
+import logo from '../images/logo.svg';
 
 const arrStates = [
-  "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA",
-  "PB", "PE", "PI", "PR", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "SP", "TO",
+  'AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA',
+  'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SE', 'SP', 'TO',
 ];
 
 const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
 
 const generateCode = () => {
-  const simbolo = `0123456789ABCDEFGHIJKLMNOPQRSTUVXZ`;
-  let temporaryID = ``;
-  for(var i=0;i<5;i++){
-    temporaryID += simbolo[Math.ceil(Math.random()*34)];
+  const simbolo = '0123456789ABCDEFGHIJKLMNOPQRSTUVXZ';
+  let temporaryID = '';
+  for (let i = 0; i < 5; i++) {
+    temporaryID += simbolo[Math.ceil(Math.random() * 34)];
   }
-  //const IDexists = currentEvents.some((event) => event.id === temporaryID);
-  /*while (IDexists) {
+  // const IDexists = currentEvents.some((event) => event.id === temporaryID);
+  /* while (IDexists) {
     generateCode()
-  };*/
+  }; */
   return temporaryID;
-}
+};
 
 function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEvent, setRedirect) {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -39,11 +41,11 @@ function addEvent(name, date, time, cep, add, numb, comp, city, state, chooseEve
       number: numb,
       complement: comp,
       city,
-      state
+      state,
     },
     participants: [user.log],
-    products: []
-  }
+    products: [],
+  };
   if (currentEvents !== null) {
     localStorage.setItem('storedEvents', JSON.stringify([...currentEvents, newEvent]));
   } else {
@@ -59,7 +61,7 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState, setDisabledI
     getAddressByCep(cep)
       .then((answer) => {
         if (answer.error) {
-          alert("Cep Inválido");
+          alert('Cep Inválido');
         } else {
           setAdd(answer.logradouro);
           setNeig(answer.bairro);
@@ -86,70 +88,90 @@ function CreateEvent(props) {
   const [redirect, setRedirect] = useState(false);
   const [disabledInput, setDisabledInput] = useState(false);
   return (
-    <form class="form-div">
-      <label htmlFor="name-field">Nome do Evento</label>
-      <input
-        id="name-field"
-        value={name}
-        onChange={(e) => setname(e.target.value)}
-        size="300"
-      />
-      <div className="time-div">
-        <label htmlFor="date-field">Data do Evento</label>
-        <input
-          type="date"
-          id="date-field"
-          value={date}
-          onChange={(e) => setdate(e.target.value)}
-        />
-        <label htmlFor="time-field">Horário</label>
-        <input
-          type="time"
-          id="time-field"
-          value={time}
-          onChange={(e) => settime(e.target.value)}
-        />
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
       </div>
 
-      <h3>Local do Evento</h3>
-      <label htmlFor="cep-field">CEP</label>
-      <input
-        maxlength="8"
-        id="cep-field"
-        value={cep}
-        onChange={(e) => searchCep(e.target.value, setcep, setaddress, setneighbor, setcity, setstate, setDisabledInput)}
-      />
-      <label htmlFor="address-field">Endereço</label>
-      <input id="address-field" value={address} onChange={(e) => setaddress(e.target.value)} disabled={disabledInput} />
-      <label htmlFor="number-field">Número</label>
-      <input id="number-field" value={number} onChange={(e) => setnumber(e.target.value)} />
-      <label htmlFor="complement-field">Complemento</label>
-      <input id="complement-field" value={complement} onChange={(e) => setcomplement(e.target.value)} />
-      <label htmlFor="neighbor-field">Bairro</label>
-      <input id="neighbor-field" value={neighbor} onChange={(e) => setneighbor(e.target.value)} disabled={disabledInput} />
-      <label htmlFor="city-field">Cidade</label>
-      <input id="city-field" value={city} onChange={(e) => setcity(e.target.value)} disabled={disabledInput} />
-      <label htmlFor="state-field">Estado</label>
-      <select
-        id="state-field"
-        value={state}
-        onChange={(e) => setstate(e.target.value)}
-        disabled={disabledInput}
-        required
+      <form className="form-div">
+        <label htmlFor="name-field">Nome do Evento</label>
+        <input
+          id="name-field"
+          value={name}
+          onChange={(e) => setname(e.target.value)}
+          size="300"
+        />
+        <div className="make-flex">
+          <div className="time-div">
+            <label htmlFor="date-field">Data do Evento</label>
+            <input
+              type="date"
+              id="date-field"
+              value={date}
+              onChange={(e) => setdate(e.target.value)}
+            />
+          </div>
+          <div className="time-div">
+            <label htmlFor="time-field">Horário</label>
+            <input
+              type="time"
+              id="time-field"
+              value={time}
+              onChange={(e) => settime(e.target.value)}
+            />
+          </div>
+        </div>
+        <h3>Local do Evento</h3>
+        <label htmlFor="cep-field">CEP</label>
+        <input
+          maxLength="8"
+          id="cep-field"
+          value={cep}
+          onChange={(e) => searchCep(e.target.value, setcep, setaddress, setneighbor, setcity, setstate, setDisabledInput)}
+        />
+        <label htmlFor="address-field">Endereço</label>
+        <input id="address-field" value={address} onChange={(e) => setaddress(e.target.value)} disabled={disabledInput} />
+        <label htmlFor="number-field">Número</label>
+        <input id="number-field" value={number} onChange={(e) => setnumber(e.target.value)} />
+        <label htmlFor="complement-field">Complemento</label>
+        <input id="complement-field" value={complement} onChange={(e) => setcomplement(e.target.value)} />
+        <label htmlFor="neighbor-field">Bairro</label>
+        <input id="neighbor-field" value={neighbor} onChange={(e) => setneighbor(e.target.value)} disabled={disabledInput} />
+        <div className="make-flex">
+          <div className="make-flex-column">
+            <label htmlFor="city-field">Cidade</label>
+            <input id="city-field" value={city} onChange={(e) => setcity(e.target.value)} disabled={disabledInput} />
+          </div>
+          <div className="make-flex-column">
+            <label htmlFor="state-field">Estado</label>
+            <select
+              id="state-field"
+              value={state}
+              onChange={(e) => setstate(e.target.value)}
+              disabled={disabledInput}
+              required
+            >
+              {
+                arrStates.map((elem) => (
+                  <option key={elem} value={elem}>{elem}</option>
+                ))
+              }
+            </select>
+          </div>
+        </div>
+        <button
+          onClick={() => addEvent(name, date, time, cep, address, number, complement, city, state, chooseEvent, setRedirect)}
         >
-        {
-          arrStates.map((elem) => (
-            <option key={elem} value={elem}>{elem}</option>
-          ))
-        }
-      </select>
+          Próximo
+        </button>
+        {redirect && <Redirect to="/event-confirmation" />}
 
-      <button
-        onClick={() => addEvent(name, date, time, cep, address, number, complement, city, state, chooseEvent, setRedirect)}
-      >Próximo</button>
-
-      {redirect && <Redirect to={`/event-confirmation`} />}
-    </form>
+      </form>
+      <div className="footer">
+        <div />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+      </div>
+    </div>
   );
 }
 

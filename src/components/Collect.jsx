@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { calculateDiscount, finalValue } from './Cart';
@@ -9,8 +9,17 @@ import user from '../images/user.svg';
 import MapComponent from './MapComponent';
 import logo from '../images/logo.svg';
 
+function getCardInfo(setName, setNumber, setDate, setCvv) {
+  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
+  setName(storage.card.cardHolder); setNumber(storage.card.number); setDate(storage.card.dueDate); setCvv(storage.card.cvv);
+}
+
 function Payment(props) {
   const { packageTotal, isDelivery } = props;
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [date, setDate] = useState('');
   const items = JSON.parse(localStorage.getItem('temporaryStorage'))[0].cart;
   const discount = calculateDiscount(packageTotal);
   let deliverfee;
@@ -31,17 +40,13 @@ function Payment(props) {
               <p>{`${(finalValue(items) - discount + deliverfee).toFixed(2)}`}</p>
             </div>
             <p>Dados do Cartão</p>
-            <label htmlFor="card-check">
-              Usar dados de cadastro
-              <input id="card-check" type="checkbox" />
-            </label>
-            <br />
+            <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
             <div className="card-field">
-              <input type="text" placeholder="nome do comprador" />
-              <input type="number" placeholder="numero do cartao" />
+              <input type="text" placeholder="nome do comprador" onChange={(e) => setName(e.target.value)} value={name} />
+              <input type="number" placeholder="numero do cartao" onChange={(e) => setNumber(e.target.value)} value={number} />
               <div className="card-details">
-                <input type="month" min="2020-08" placeholder="data de vencimento" />
-                <input type="text" placeholder="cvv" />
+                <input type="month" min="2020-08" placeholder="data de vencimento" onChange={(e) => setDate(e.target.value)} value={date} />
+                <input type="text" placeholder="cvv" onChange={(e) => setCvv(e.target.value)} value={cvv} />
               </div>
             </div>
           </div>
@@ -54,7 +59,7 @@ function Payment(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="20px" />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

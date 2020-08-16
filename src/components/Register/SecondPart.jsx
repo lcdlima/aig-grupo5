@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { userRegisterAndPassword } from '../../actions/index';
 import { getAddressByCep } from '../../services/cep-api';
 import '../../CSS/SecondPart.css';
+import logo from '../../images/logo.svg';
 
 const arrStates = [
   "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA",
@@ -36,93 +37,84 @@ const clickToRegister = (
     name, CPF, birthDay, code, phone, CEP, street,
     adressNumber, complement, city, stateLetters,
   );
-  history.push("/RegisterCard");
-}
+  history.push('/RegisterCard');
+};
 
-const renderNameInput = (name, setName) => {
-  return (
-    <div className="conteinerNameSP">
-      <label htmlFor="name">Nome Completo</label>
-      <input
-        type="text"
-        id="name"
-        value={name}
-        onChange={(elem) => setName(elem.target.value)}
-        required
-      />
-    </div>
-  );
-}
+const renderNameInput = (name, setName) => (
+  <div className="conteinerNameSP">
+    <label htmlFor="name">Nome Completo</label>
+    <input
+      type="text"
+      id="name"
+      value={name}
+      onChange={(elem) => setName(elem.target.value)}
+      required
+    />
+  </div>
+);
 
-const renderCPFInput = (CPF, setCPF) => {
-  return (
-    <div className="conteinerCPFSP">
-      <label htmlFor="CPF">CPF</label>
+const renderCPFInput = (CPF, setCPF) => (
+  <div className="conteinerCPFSP">
+    <label htmlFor="CPF">CPF</label>
+    <input
+      type="number"
+      id="CPF"
+      value={CPF}
+      onChange={(elem) => setCPF(elem.target.value)}
+      required
+      max="99999999999"
+      minLength="10000000000"
+    />
+  </div>
+);
+
+const renderBirthDayInput = (birthDay, setBirthDay) => (
+  <div className="conteinerBirthDaySP">
+    <label htmlFor="birthDay">Nascimento</label>
+    <input
+      type="date"
+      id="birthDay"
+      value={birthDay}
+      onChange={(elem) => setBirthDay(elem.target.value)}
+      required
+      min="1920-01-01"
+      max="2020-01-01"
+    />
+  </div>
+);
+
+const renderPhoneInput = (code, setCode, phone, setPhone) => (
+  <div className="conteinerCompletCellphoneSP">
+    <div className="conteinerDDDSP">
+      <label htmlFor="code">DDD</label>
       <input
         type="number"
-        id="CPF"
-        value={CPF}
-        onChange={(elem) => setCPF(elem.target.value)}
+        id="code"
+        value={code}
+        onChange={(elem) => setCode(elem.target.value)}
         required
-        max="99999999999"
-        minlength="10000000000"
+        max="99"
+        min="10"
       />
     </div>
-  );
-}
-
-const renderBirthDayInput = (birthDay, setBirthDay) => {
-  return (
-    <div className="conteinerBirthDaySP">
-      <label htmlFor="birthDay">Nascimento</label>
+    <div className="conteinerPhoneSP">
+      <label htmlFor="phone">Celular</label>
       <input
-        type="date"
-        id="birthDay"
-        value={birthDay}
-        onChange={(elem) => setBirthDay(elem.target.value)}
+        type="number"
+        id="phone"
+        value={phone}
+        onChange={(elem) => setPhone(elem.target.value)}
         required
-        min="1920-01-01"
-        max="2020-01-01"
+        max="999999999"
+        minlength="100000000"
       />
     </div>
-  );
-}
-
-const renderPhoneInput = (code, setCode, phone, setPhone) => {
-  return (
-    <div className="conteinerCompletCellphoneSP">
-      <div className="conteinerDDDSP">
-        <label htmlFor="code">DDD</label>
-        <input
-          type="number"
-          id="code"
-          value={code}
-          onChange={(elem) => setCode(elem.target.value)}
-          required
-          max="99"
-          min="10"
-        />
-      </div>
-      <div className="conteinerPhoneSP">
-        <label htmlFor="phone">Celular</label>
-        <input
-          type="number"
-          id="phone"
-          value={phone}
-          onChange={(elem) => setPhone(elem.target.value)}
-          required
-          max="999999999"
-          minlength="100000000"
-        />
-      </div>
-    </div>
-  );
-}
+  </div>
+);
 
 const renderCEPInput = (
   CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters,
-) => {
-  return (
+) => (
     <div className="conteinerCEPSP">
       <label htmlFor="CEP">CEP</label>
       <input
@@ -136,7 +128,6 @@ const renderCEPInput = (
       />
     </div>
   );
-}
 
 const renderStreetInput = (street, setStreet) => {
   return (
@@ -168,69 +159,61 @@ const renderNeighborInput = (neighbor, setNeighbor) => {
   );
 }
 
-const renderNumberInput = (adressNumber, setAdressNumber) => {
-  return (
-    <div className="conteinerAdressNumberSP">
-      <label htmlFor="adressNumber">Número</label>
-      <input
-        type="number"
-        id="adressNumber"
-        value={adressNumber}
-        onChange={(elem) => setAdressNumber(elem.target.value)}
-        required
-      />
-    </div>
-  );
-}
+const renderNumberInput = (adressNumber, setAdressNumber) => (
+  <div className="conteinerAdressNumberSP">
+    <label htmlFor="adressNumber">Número</label>
+    <input
+      type="number"
+      id="adressNumber"
+      value={adressNumber}
+      onChange={(elem) => setAdressNumber(elem.target.value)}
+      required
+    />
+  </div>
+);
 
-const renderComplementInput = (complement, setComplement) => {
-  return (
-    <div className="conteinerComplementSP">
-      <label htmlFor="complement">Complemento</label>
-      <input
-        type="text"
-        id="complement"
-        value={complement}
-        onChange={(elem) => setComplement(elem.target.value)}
-      />
-    </div>
-  );
-}
+const renderComplementInput = (complement, setComplement) => (
+  <div className="conteinerComplementSP">
+    <label htmlFor="complement">Complemento</label>
+    <input
+      type="text"
+      id="complement"
+      value={complement}
+      onChange={(elem) => setComplement(elem.target.value)}
+    />
+  </div>
+);
 
-const renderCityInput = (city, setCity) => {
-  return (
-    <div className="conteinerCitySP">
-      <label htmlFor="city">Cidade</label>
-      <input
-        type="text"
-        id="city"
-        value={city}
-        onChange={(elem) => setCity(elem.target.value)}
-        required
-      />
-    </div>
-  );
-}
+const renderCityInput = (city, setCity) => (
+  <div className="conteinerCitySP">
+    <label htmlFor="city">Cidade</label>
+    <input
+      type="text"
+      id="city"
+      value={city}
+      onChange={(elem) => setCity(elem.target.value)}
+      required
+    />
+  </div>
+);
 
-const renderStateInput = (stateLetters, setStateLetters) => {
-  return (
-    <div className="conteinerStateSP">
-      <label htmlFor="stateLetters">Estado</label>
-      <select
-        id="stateLetters"
-        value={stateLetters}
-        onChange={(elem) => setStateLetters(elem.target.value)}
-        required
-      >
-        {
-          arrStates.map((elem) => (
-            <option key={elem} value={elem}>{elem}</option>
-          ))
-        }
-      </select>
-    </div>
-  );
-}
+const renderStateInput = (stateLetters, setStateLetters) => (
+  <div className="conteinerStateSP">
+    <label htmlFor="stateLetters">Estado</label>
+    <select
+      id="stateLetters"
+      value={stateLetters}
+      onChange={(elem) => setStateLetters(elem.target.value)}
+      required
+    >
+      {
+        arrStates.map((elem) => (
+          <option key={elem} value={elem}>{elem}</option>
+        ))
+      }
+    </select>
+  </div>
+);
 
 const isDisabled = (
   name, CPF, birthDay, code, phone, CEP, street, adressNumber, city, stateLetters,
@@ -253,8 +236,7 @@ const isDisabled = (
 const renderNextButtonInput = (
   name, CPF, birthDay, code, phone, CEP, street, adressNumber,
   complement, city, stateLetters, saveUserRegistryAndAdress, history,
-) => {
-  return (
+) => (
     <div className="conteinerButtonSP">
       <button
         className="buttonSP"
@@ -263,15 +245,12 @@ const renderNextButtonInput = (
           name, CPF, birthDay, code, phone, CEP, street, adressNumber,
           complement, city, stateLetters, saveUserRegistryAndAdress, history,
         )}
-        disabled={isDisabled(
-          name, CPF, birthDay, code, phone, CEP, street, adressNumber, city, stateLetters,
-        )}
+        disabled={isDisabled(CPF, code, phone, CEP)}
       >
         Próximo
-        </button>
+    </button>
     </div>
   );
-}
 
 function SecondPart(props) {
   const { saveUserRegistryAndAdress } = props;
@@ -290,33 +269,37 @@ function SecondPart(props) {
   const history = useHistory();
 
   return (
-    <div className="conteinerCadastro2">
-      <div className="headerSP"></div>
-      {renderNameInput(name, setName)}
-      <div className="BirthDayAndCPF">
-        {renderCPFInput(CPF, setCPF)}
-        {renderBirthDayInput(birthDay, setBirthDay)}
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
       </div>
-      {renderPhoneInput(code, setCode, phone, setPhone)}
-      <div className="StreetAndCEP">
-        {renderCEPInput(
-          CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters,
+      <div className="conteinerCadastro2">
+        {renderNameInput(name, setName)}
+        <div className="BirthDayAndCPF">
+          {renderCPFInput(CPF, setCPF)}
+          {renderBirthDayInput(birthDay, setBirthDay)}
+        </div>
+        {renderPhoneInput(code, setCode, phone, setPhone)}
+        <div className="StreetAndCEP">
+          {renderCEPInput(
+            CEP, setCEP, setStreet, setNeighbor, setCity, setStateLetters,
+          )}
+          {renderStreetInput(street, setStreet)}
+        </div>
+        <div className="adressAndComplement">
+          {renderNumberInput(adressNumber, setAdressNumber)}
+          {renderNeighborInput(neighbor, setNeighbor)}
+          {renderComplementInput(complement, setComplement)}
+        </div>
+        <div className="cityAndState">
+          {renderCityInput(city, setCity)}
+          {renderStateInput(stateLetters, setStateLetters)}
+        </div>
+        {renderNextButtonInput(
+          name, CPF, birthDay, code, phone, CEP, street, adressNumber,
+          complement, city, stateLetters, saveUserRegistryAndAdress, history,
         )}
-        {renderNeighborInput(neighbor, setNeighbor)}
       </div>
-      {renderStreetInput(street, setStreet)}
-      <div className="adressAndComplement">
-        {renderNumberInput(adressNumber, setAdressNumber)}
-        {renderComplementInput(complement, setComplement)}
-      </div>
-      <div className="cityAndState">
-        {renderCityInput(city, setCity)}
-        {renderStateInput(stateLetters, setStateLetters)}
-      </div>
-      {renderNextButtonInput(
-        name, CPF, birthDay, code, phone, CEP, street, adressNumber,
-        complement, city, stateLetters, saveUserRegistryAndAdress, history,
-      )}
       <div className="footerSP"> </div>
     </div>
   );
@@ -330,7 +313,7 @@ const mapDispatchToProps = (dispatch) => ({
     userRegisterAndPassword(
       name, CPF, birthDay, code, phone, CEP, street,
       adressNumber, complement, city, stateLetters,
-    )
+    ),
   ),
 });
 

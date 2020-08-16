@@ -88,12 +88,10 @@ function renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal) {
 
 function renderCollectionOptions(changeToDelivery, changeToCollect) {
   return (
-    <div>
+    <div className="collection-options">
       <p>Retirada do Produto</p>
-      <div className="collection-options">
-        <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
-        <button type="button" onClick={() => changeToCollect()}>Retirada</button>
-      </div>
+      <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
+      <button type="button" onClick={() => changeToCollect()}>Retirada</button>
     </div>
   );
 }
@@ -112,7 +110,7 @@ function renderCartItensSection(items, props) {
             </div>
             <div className="product-cart-info">
               <p>{`${e.total} X R$${product[0].originalPrice}`}</p>
-              <p>{`Total: R$${e.total * product[0].originalPrice}`}</p>
+              <p>{`Total: R$${(e.total * product[0].originalPrice).toFixed(2)}`}</p>
               {renderIncrementButton(e.id, props)}
             </div>
             <button onClick={() => { deleteProduct(e.id); updateLocalStorage(); }} type="button"><img src={rubish} alt="" /></button>
@@ -150,7 +148,7 @@ function Cart(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="20px" />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import '../CSS/Login.css';
-import ambev from '../images/ambev.png'
+import ambev from '../images/ambev.png';
+import logo from '../images/logo.svg';
 
 const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
 
@@ -35,61 +36,59 @@ function Login(props) {
       alert("Senha invalida");
       return;
     }
-    alert("Email não cadastrado!");
-  }
+    alert('Email não cadastrado!');
+  };
 
-  const renderPasswordInput = (password, setPassword) => {
-    return (
-      <div className="conteinerPassword">
-        <label htmlFor="password">Senha</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(elem) => setPassword(elem.target.value)}
-          min="8"
-        />
-      </div>
-    );
-  }
+  const renderPasswordInput = (password, setPassword) => (
+    <div className="conteinerPassword">
+      <label htmlFor="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        value={password}
+        onChange={(elem) => setPassword(elem.target.value)}
+        min="8"
+      />
+    </div>
+  );
 
-  const renderEmailInput = (email, setEmail) => {
-    return (
-      <div className="conteinerEmail" >
-        <label htmlFor="email" >E-mail</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(elem) => setEmail(elem.target.value)}
-        />
-      </div>
-    );
-  }
+  const renderEmailInput = (email, setEmail) => (
+    <div className="conteinerEmail">
+      <label htmlFor="email">E-mail</label>
+      <input
+        type="email"
+        id="email"
+        value={email}
+        onChange={(elem) => setEmail(elem.target.value)}
+      />
+    </div>
+  );
 
-  const renderButtonInput = (data, email, password) => {
-    return (
-        <div className="conteinerButton" >
-          <button
-            className="ButtonInput" 
-            type="button"
-            onClick={() => clickToEnter(data, email, password, history)}
-          >
-            ENTRAR
-          </button>
-      </div>
-    );
-  }
+  const renderButtonInput = (data, email, password) => (
+    <div className="conteinerButton">
+      <button
+        className="ButtonInput"
+        type="button"
+        onClick={() => clickToEnter(data, email, password, history)}
+      >
+        ENTRAR
+      </button>
+    </div>
+  );
 
   return (
-    <div className="conteinerLogin">
-      <div className="header"></div>
-      {renderEmailInput(email, setEmail)}
-      {renderPasswordInput(password, setPassword)}
-      {renderButtonInput(data, email, password, history)}
-      <Link to="/register" className="registeLink"> Ainda não sou cadastrado</Link>
-      <div className="footerL">
-        <img src={ambev} alt="ambevLogo" />
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
+      </div>
+      <div className="conteinerLogin">
+        {renderEmailInput(email, setEmail)}
+        {renderPasswordInput(password, setPassword)}
+        {renderButtonInput(data, email, password, history)}
+        <Link to="/register" className="registeLink"> Ainda não sou cadastrado</Link>
+        <div className="footerL">
+          <img src={ambev} alt="ambevLogo" />
+        </div>
       </div>
     </div>
   );

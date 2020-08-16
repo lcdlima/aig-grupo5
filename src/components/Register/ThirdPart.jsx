@@ -4,83 +4,69 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { userCard } from '../../actions/index';
 import '../../CSS/ThirdPart.css';
+import logo from '../../images/logo.svg';
 
 const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData) => {
   saveCard(cardName, cardNumber, dueDate, CVV);
-  localStorage.setItem('user', JSON.stringify(
-    {
-      log: temporaryData.email,
-      name: temporaryData.name,
-      id: temporaryData.id,
-    }
-  ));
-  history.push("/mainPurchase");
-}
+  history.push('/mainPurchase');
+};
 
-const renderCardNameInput = (cardName, setCardName) => {
-  return (
-    <div className="conteinerCardNameTP">
-      <label htmlFor="cardName">Nome</label>
-      <input
-        type="text"
-        id="cardName"
-        value={cardName}
-        onChange={(elem) => setCardName(elem.target.value)}
-        required
-      />
-    </div>
-  );
-}
+const renderCardNameInput = (cardName, setCardName) => (
+  <div className="conteinerCardNameTP">
+    <label htmlFor="cardName">Nome</label>
+    <input
+      type="text"
+      id="cardName"
+      value={cardName}
+      onChange={(elem) => setCardName(elem.target.value)}
+      required
+    />
+  </div>
+);
 
-const renderCardNumberInput = (cardNumber, setCardNumber) => {
-  return (
-    <div className="conteinerCardNumberTP">
-      <label htmlFor="cardNumber">Numero do Cartão</label>
-      <input
-        type="number"
-        id="cardNumber"
-        value={cardNumber}
-        onChange={(elem) => setCardNumber(elem.target.value)}
-        required
-        minlength="12"
-        maxlength="12"
-      />
-    </div>
-  );
-}
+const renderCardNumberInput = (cardNumber, setCardNumber) => (
+  <div className="conteinerCardNumberTP">
+    <label htmlFor="cardNumber">Numero do Cartão</label>
+    <input
+      type="number"
+      id="cardNumber"
+      value={cardNumber}
+      onChange={(elem) => setCardNumber(elem.target.value)}
+      required
+      minLength="12"
+      maxLength="12"
+    />
+  </div>
+);
 
-const renderDueDateInput = (dueDate, setDueDate) => {
-  return (
-    <div className="conteinerDueDateTP">
-      <label htmlFor="dueDate">Vencimento</label>
-      <input
-        type="date"
-        id="dueDate"
-        value={dueDate}
-        onChange={(elem) => setDueDate(elem.target.value)}
-        required
-        min="2020-10-01"
-      />
-    </div>
-  );
-}
+const renderDueDateInput = (dueDate, setDueDate) => (
+  <div className="conteinerDueDateTP">
+    <label htmlFor="dueDate">Vencimento</label>
+    <input
+      type="date"
+      id="dueDate"
+      value={dueDate}
+      onChange={(elem) => setDueDate(elem.target.value)}
+      required
+      min="2020-10-01"
+    />
+  </div>
+);
 
-const renderCVVInput = (CVV, setCVV) => {
-  return (
-    <div className="conteinerCVVTP">
-      <label htmlFor="CVV">CVV</label>
-      <input
-        type="number"
-        id="CVV"
-        value={CVV}
-        onChange={(elem) => setCVV(elem.target.value)}
-        required
-        maxlength="3"
-        minlength="3"
-      />
-    </div>
-  );
-}
+const renderCVVInput = (CVV, setCVV) => (
+  <div className="conteinerCVVTP">
+    <label htmlFor="CVV">CVV</label>
+    <input
+      type="number"
+      id="CVV"
+      value={CVV}
+      onChange={(elem) => setCVV(elem.target.value)}
+      required
+      maxLength="3"
+      minLength="3"
+    />
+  </div>
+);
 
 const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
   if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
@@ -89,24 +75,20 @@ const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
   return true;
 }
 
-const renderFinishButtonInput = (
-  cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
-) => {
-  return (
-    <div className="conteinerButtonTP">
-        <button
-          className="buttonTP"
-          type="button"
-          onClick={() => clickToRegister(
-            cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
-          )}
-          disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
-        >
-          Próximo
-        </button>
-    </div>
-  );
-}
+const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, history) => (
+  <div className="conteinerButtonTP">
+    <button
+      className="buttonTP"
+      type="button"
+      onClick={() => clickToRegister(
+        cardName, cardNumber, dueDate, CVV, saveCard, history,
+      )}
+      disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
+    >
+      Próximo
+    </button>
+  </div>
+);
 
 function ThirdPart(props) {
   const { saveCard, temporaryData } = props;
@@ -117,23 +99,29 @@ function ThirdPart(props) {
   const history = useHistory();
 
   return (
-    <div className="conteinerCadastro3">
-      <div className="headerTP"></div>
-      {renderCardNameInput(cardName, setCardName)}
-      {renderCardNumberInput(cardNumber, setCardNumber)}
-      <div className="cityAndState">
-      {renderCVVInput(CVV, setCVV)}
-      {renderDueDateInput(dueDate, setDueDate)}
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
       </div>
-      {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData)}
-      <div className="footerTP"> </div>
+      <div className="conteinerCadastro3">
+        <div className="card-form">
+          {renderCardNameInput(cardName, setCardName)}
+          {renderCardNumberInput(cardNumber, setCardNumber)}
+          <div className="cityAndState">
+            {renderCVVInput(CVV, setCVV)}
+            {renderDueDateInput(dueDate, setDueDate)}
+          </div>
+        </div>
+        {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history)}
+        <div className="footerTP"> </div>
+      </div>
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
   saveCard: (cardName, cardNumber, dueDate, CVV) => dispatch(
-  userCard(cardName, cardNumber, dueDate, CVV)
+    userCard(cardName, cardNumber, dueDate, CVV),
   ),
 });
 

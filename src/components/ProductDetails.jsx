@@ -31,7 +31,7 @@ function renderIncrementButton(id, props) {
           <button type="button" onClick={() => increment(id)}>+</button>
         </div>
       </div>
-      <button type="button" onClick={() => {addToCart(Number(id), detailsTotal); updateLocalStorage()}} disabled={!((detailsTotal > 0))}>Adicionar ao Carrinho</button>
+      <button type="button" onClick={() => { addToCart(Number(id), detailsTotal); updateLocalStorage(); }} disabled={!((detailsTotal > 0))}>Adicionar ao Carrinho</button>
     </div>
   );
 }
@@ -44,7 +44,7 @@ function ProductDetails(props) {
     <div>
       <div>
         <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+          <div><img src={logo} alt="" width="100px" /></div>
           <div className="cart-img">
             <p>{getTotalCart(cartState)}</p>
             <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>
@@ -54,6 +54,7 @@ function ProductDetails(props) {
           <div className="products-list">
             <img src={product[0].thumbnail} width="300px" alt="" />
             <h3>{product[0].productName}</h3>
+            <p>{`${product[0].package_volume}L`}</p>
             <p>{`R$ ${product[0].originalPrice}`}</p>
             <p>Com a embalagem retornável você paga:</p>
             <p>{`R$ ${product[0].discountPrice}`}</p>
@@ -63,7 +64,7 @@ function ProductDetails(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="30px" />
+        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );
