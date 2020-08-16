@@ -62,7 +62,11 @@ const clickToRegister = (email, password, saveEmailAndPassword, history) => {
 
 const isDisabled = (email, password, check) => {
   const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-  if (password === check && password !== '' && password.length > 7 && email.match(emailTest)) {
+  const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+  const test = allDataOnLS.some((e) => e.email === email)
+  if (
+    password === check && password !== '' && password.length > 7 && email.match(emailTest) && !test
+  ) {
     return false;
   }
   return true;
