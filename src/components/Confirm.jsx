@@ -19,7 +19,7 @@ function getNewDrink() {
     <div className="products-list">
       <p>{randomProduct.productName}</p>
       <img src={randomProduct.thumbnail} width="100px" alt="" />
-      <p>Seu brinde estará disponível em sua próxima compra</p>
+      <p style={{textAlign: 'center'}}>Seu brinde estará disponível em sua próxima compra</p>
     </div>
   );
 }
@@ -27,7 +27,7 @@ function getNewDrink() {
 function renderGift() {
   return (
     <div className="products-list">
-      <p>Parabéns! Você já deixou de gerar 1kg de plástico! Que tal um brinde pra comemorar?</p>
+      <p style={{textAlign: 'center'}}>Parabéns! Você já deixou de gerar 1kg de plástico! Que tal um brinde pra comemorar?</p>
       {getNewDrink()}
     </div>
   );

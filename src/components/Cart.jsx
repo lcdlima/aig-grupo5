@@ -82,6 +82,7 @@ function renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal) {
         <p>Total</p>
         <p>{`R$${(purchaseTotal - discount + deliveryFee).toFixed(2)}`}</p>
       </div>
+      {((purchaseTotal - discount + deliveryFee) < 0) && <p style={{ textAlign: 'center', color: 'red' }}>Valor da Compra não pode ser negativo. Adicione mais produtos para retornar suas embalagens</p>}
     </div>
   );
 }

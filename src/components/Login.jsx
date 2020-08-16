@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import '../CSS/Login.css';
 import ambev from '../images/ambev.png';
-import logo from '../images/logo.svg';
+import logo from '../images/biglogo.png';
 
-const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
 
 function Login(props) {
   const { data } = props;
@@ -61,6 +61,7 @@ function Login(props) {
   const renderButtonInput = (data, email, password) => (
     <div className="conteinerButton">
       <button
+        style={{ marginBottom: '30px' }}
         className="ButtonInput"
         type="button"
         onClick={() => clickToEnter(data, email, password, history)}
@@ -72,10 +73,9 @@ function Login(props) {
 
   return (
     <div>
-      <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
-      </div>
+      <div className="products-page-nav" />
       <div className="conteinerLogin">
+        <img src={logo} width="150px" style={{ marginBottom: '30px' }} alt="" />
         {renderEmailInput(email, setEmail)}
         {renderPasswordInput(password, setPassword)}
         {renderButtonInput(data, email, password, history)}
