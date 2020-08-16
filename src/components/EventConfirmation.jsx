@@ -27,10 +27,7 @@ function EventConfirmation(props) {
         <p>Mé faiz elementum girarzis, nisi eros vermeio. Diuretics paradis num copo é motivis de denguis. A ordem dos tratores não altera o pão duris. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.</p>
         <Link to={`/event-page/${event.id}`}><button>Finalizar</button></Link>
       </div>
-      <div className="footer">
-        <div />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
-      </div>
+      
     </div>
   );
 }
