@@ -6,8 +6,6 @@ import '../CSS/Login.css';
 import ambev from '../images/ambev.png';
 import logo from '../images/logo.svg';
 
-const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
-
 function Login(props) {
   const { data } = props;
   const [email, setEmail] = useState('');
@@ -21,14 +19,16 @@ function Login(props) {
     // const checkPassword = (data)
     //   ? data.some((elem) => (elem.email === email && elem.password === password))
     //   : false;
+    const allDataOnLS= JSON.parse(localStorage.getItem('usersData') || '[]');
     const existLS = allDataOnLS.some((elem) => elem.email === email);
     const checkLSPassword = allDataOnLS.some((elem) => (elem.email === email && elem.password === password));
     if (checkLSPassword) {
       // const InfoUser = (checkLSPassword) 
       //   ? allDataOnLS.map((elem) => elem.email === email)
       //   : data.map((elem) => elem.email === email);
-      const InfoUser = allDataOnLS.map((elem) => elem.email === email);
-      localStorage.setItem('user', JSON.stringify({log: InfoUser.email, name: InfoUser.name, id: InfoUser.id}));
+      const InfoUser = allDataOnLS.filter((elem) => elem.email === email);
+      console.log(InfoUser);
+      localStorage.setItem('user', JSON.stringify({log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id}));
       history.push("/mainPurchase");
       return;
     }

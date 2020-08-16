@@ -93,7 +93,7 @@ export const userPessoalInfo = (email, password, id, name, CPF, birthDay, code, 
   phone,
 });
 
-export const userRegisterAndPassword = (
+export const userAdress = (
   CEP, street, adressNumber, complement, city,
 ) => ({
   type: SAVE_USER_REGISTRY_AND_ADRESS,

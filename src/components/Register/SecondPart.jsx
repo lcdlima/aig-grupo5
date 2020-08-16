@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { userRegisterAndPassword } from '../../actions/index';
+import { userAdress } from '../../actions/index';
 import { getAddressByCep } from '../../services/cep-api';
 import '../../CSS/SecondPart.css';
 import logo from '../../images/logo.svg';
@@ -31,11 +31,9 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState) {
 
 const clickToRegister = (
   CEP, street, adressNumber, complement, city,
-  stateLetters, saveUserRegistryAndAdress, history,
+  stateLetters, saveUserAdress, history,
 ) => {
-  saveUserRegistryAndAdress(
-    CEP, street, adressNumber, complement, city, stateLetters,
-  );
+  saveUserAdress(CEP, street, adressNumber, complement, city, stateLetters);
   history.push('/RegisterCard');
 };
 
@@ -143,9 +141,7 @@ const renderStateInput = (stateLetters, setStateLetters) => (
 );
 
 const isDisabled = (CEP, street, adressNumber, city, stateLetters) => {
-  // if (
-  //   CPF.length !== 11 && code.length !== 2 && phone.length !== 9 && CEP.length !== 8
-  //   && name && birthDay && street && adressNumber && city && stateLetters
+  // if (s
   // ) {
   //   alert('Verifique o CPF, DDD, Telefone e CEP')
   // }
@@ -157,15 +153,15 @@ const isDisabled = (CEP, street, adressNumber, city, stateLetters) => {
 
 const renderNextButtonInput = (
   CEP, street, adressNumber, complement, city,
-  stateLetters, saveUserRegistryAndAdress, history,
+  stateLetters, saveUserAdress, history,
 ) => (
     <div className="adress-register-div">
       <button
         className="buttonSP"
         type="button"
         onClick={() => clickToRegister(
-          street, adressNumber, complement, city,
-          stateLetters, saveUserRegistryAndAdress, history,
+          CEP, street, adressNumber, complement, city,
+          stateLetters, saveUserAdress, history,
         )}
         disabled={isDisabled(
           CEP, street, adressNumber, complement, city, stateLetters,
@@ -177,7 +173,7 @@ const renderNextButtonInput = (
   );
 
 function SecondPart(props) {
-  const { saveUserRegistryAndAdress } = props;
+  const { saveUserAdress } = props;
   const [CEP, setCEP] = useState('');
   const [street, setStreet] = useState('');
   const [neighbor, setNeighbor] = useState('');
@@ -204,7 +200,7 @@ function SecondPart(props) {
         </div>
         {renderNextButtonInput(
           CEP, street, adressNumber, complement, city,
-          stateLetters, saveUserRegistryAndAdress, history,
+          stateLetters, saveUserAdress, history,
         )}
       </div>
       <div className="footerSP"> </div>
@@ -213,17 +209,12 @@ function SecondPart(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveUserRegistryAndAdress: (
-    CEP, street, adressNumber, complement, city, stateLetters,
-  ) => dispatch(
-    userRegisterAndPassword(
-      CEP, street, adressNumber, complement, city, stateLetters,
-    ),
-  ),
+  saveUserAdress: (CEP, street, adressNumber, complement, city, stateLetters) => dispatch(
+    userAdress(CEP, street, adressNumber, complement, city, stateLetters)),
 });
 
 export default connect(null, mapDispatchToProps)(SecondPart);
 
 SecondPart.propTypes = {
-  saveUserRegistryAndAdress: PropTypes.func.isRequired,
+  saveUserAdress: PropTypes.func.isRequired,
 };

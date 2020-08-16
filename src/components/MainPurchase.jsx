@@ -9,7 +9,8 @@ import '../CSS/MainPurchase.css';
 import { userData, clearTemporaryData } from '../actions/index';
 
 class MainPurchase extends Component {
-  setUserDataToCart(obj, text) {
+  setUserDataToCart(obj, text, clearInProgress) {
+    clearInProgress();
     if(text === "none") {
       localStorage.setItem('dataToPurchase', JSON.stringify([obj]));
       return
@@ -20,11 +21,12 @@ class MainPurchase extends Component {
 
   componentDidMount() {
     const { data, temporaryData, saveUserData, clearInProgress } = this.props;
-    const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+    const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
     // const objInLocalStorage = allDataOnLS.some((elem) => elem.email === user.log);
     // const objInStore = data.some((elem) => elem.email === user.log);
     // if (!temporaryData) this.setUserSellDataWithRedux(temporaryData);
     // if (data) this.setUserSellDataWithLS(data);
+    console.log(temporaryData);
     const objTolocalStorage = {
       id: temporaryData.id,
       email: temporaryData.email,
@@ -49,12 +51,12 @@ class MainPurchase extends Component {
     if (allDataOnLS.length > 0 && temporaryData.email !== '') {
       const newData = [...allDataOnLS, temporaryData];
       localStorage.setItem('usersData', JSON.stringify(newData));
-      this.setUserDataToCart(objTolocalStorage, "some")
+      this.setUserDataToCart(objTolocalStorage, "some", clearInProgress)
       // saveUserData(newData);
     }
     if (allDataOnLS.length < 1 && temporaryData.email !== '') {
       localStorage.setItem('usersData', JSON.stringify([temporaryData]));
-      this.setUserDataToCart(objTolocalStorage, "none")
+      this.setUserDataToCart(objTolocalStorage, "none", clearInProgress)
       // saveUserData(temporaryData);
     }
   }

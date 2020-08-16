@@ -26,7 +26,8 @@ class Perfil extends Component {
   }
 
   componentDidMount() {
-    this.setState({ name: user.name, email: user.email });
+    console.log(user);
+    this.setState({ name: user.name, email: user.log });
     const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
     const purchase = shopstore.reduce((arr, e) => {
       if (e.buyerId === user.log) {
@@ -50,7 +51,6 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
-    console.log(obj);
     return (
       <div>
         {/* <img src={} alt="arrow" /> */}
@@ -144,11 +144,12 @@ class Perfil extends Component {
   }
 
   render() {
+    const { name } = this.state;
     return (
       <div>
         {this.renderPerfilHeader()}
         <div className="container">
-          <h3>{`Olá ${user.log}`}</h3>
+          <h3>{`Olá ${name}`}</h3>
           {this.renderIndividualPurchase()}
           {this.renderGroupPurchase()}
           {this.renderPreservedNature()}

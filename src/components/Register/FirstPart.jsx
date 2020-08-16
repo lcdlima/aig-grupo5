@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { userPessoalInfo } from '../../actions/index';
+import { userPessoalInfo} from '../../actions/index';
 import '../../CSS/FirstPart.css';
 import logo from '../../images/logo.svg';
 
@@ -138,7 +138,7 @@ const isDisabled = (
   const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
   const test = allDataOnLS.some((e) => e.email === email)
-  // if (test) alert('Email já cadastrado')
+  if (test) alert('Email já cadastrado')
   if (
     password === check && password !== '' && password.length > 7 && email.match(emailTest)
     && !test && CPF.length === 11 && code.length === 2 && phone.length === 9
@@ -170,7 +170,7 @@ const renderNextButtonInput = (
 }
 
 function FirstPart(props) {
-  const { saveUserPessoalInfo } = props;
+  const { saveUserPessoalInfo, cleardata } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
@@ -180,6 +180,15 @@ function FirstPart(props) {
   const [code, setCode] = useState('');
   const [phone, setPhone] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    setEmail('');
+    setCheck('');
+    setName('');
+    setCPF('');
+    setBirthDay('');
+    setPhone('');
+  }, []);
 
   return (
     <div>
@@ -212,16 +221,11 @@ const mapDispatchToProps = (dispatch) => ({
     userPessoalInfo(
       email, password, check, name, CPF, birthDay, code, phone,
     )
-  )
+  ),
 });
 
-const mapStateToProps = (state) => ({
-  actualID: state.IDRegister,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FirstPart);
+export default connect(null, mapDispatchToProps)(FirstPart);
 
 FirstPart.propTypes = {
   saveUserPessoalInfo: PropTypes.func.isRequired,
-  actualID: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

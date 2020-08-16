@@ -31,15 +31,15 @@ const inProgressRegister = (state = INITIAL_STATE, action) => {
         email: action.email,
         password: action.password,
         id: action.id,
-      };
-    case SAVE_USER_REGISTRY_AND_ADRESS:
-      return {
-        ...state,
         name: action.name,
         CPF: action.CPF,
         birthDay: action.birthDay,
         code: action.code,
         phone: action.phone,
+      };
+    case SAVE_USER_REGISTRY_AND_ADRESS:
+      return {
+        ...state,
         CEP: action.CEP,
         street: action.street,
         adressNumber: action.adressNumber,
