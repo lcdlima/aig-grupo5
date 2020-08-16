@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { userEmailAndPassword, incrementID } from '../../actions/index';
+import { userPessoalInfo } from '../../actions/index';
 import '../../CSS/FirstPart.css';
 import logo from '../../images/logo.svg';
 
 const renderEmailInput = (email, setEmail) => (
-  <div className="conteinerEmailFP">
+  <div className="initial-register-div">
     <label htmlFor="email">E-mail</label>
     <input
       type="email"
@@ -20,7 +20,7 @@ const renderEmailInput = (email, setEmail) => (
 );
 
 const renderPasswordInput = (password, setPassword) => (
-  <div className="conteinerPasswordFP">
+  <div className="initial-register-div">
     <label htmlFor="password">Senha</label>
     <input
       type="password"
@@ -34,7 +34,7 @@ const renderPasswordInput = (password, setPassword) => (
 );
 
 const renderCheckPasswordInput = (check, setCheck) => (
-  <div className="conteinerCheckFP">
+  <div className="initial-register-div">
     <label htmlFor="check">Confirme a Senha</label>
     <input
       type="password"
@@ -47,20 +47,101 @@ const renderCheckPasswordInput = (check, setCheck) => (
   </div>
 );
 
-const clickToRegister = (email, password, saveEmailAndPassword, history) => {
-  // increment();
+const renderNameInput = (name, setName) => (
+  <div className="initial-register-div">
+    <label htmlFor="name">Nome Completo</label>
+    <input
+      type="text"
+      id="name"
+      value={name}
+      onChange={(elem) => setName(elem.target.value)}
+      required
+    />
+  </div>
+);
+
+const renderCPFInput = (CPF, setCPF) => (
+  <div className="initial-register-cpf-birthday-div">
+    <label htmlFor="CPF">CPF</label>
+    <input
+      type="number"
+      id="CPF"
+      value={CPF}
+      onChange={(elem) => setCPF(elem.target.value)}
+      required
+      max="99999999999"
+      minLength="10000000000"
+    />
+  </div>
+);
+
+const renderBirthDayInput = (birthDay, setBirthDay) => (
+  <div className="initial-register-cpf-birthday-div">
+    <label htmlFor="birthDay">Nascimento</label>
+    <input
+      type="date"
+      id="birthDay"
+      value={birthDay}
+      onChange={(elem) => setBirthDay(elem.target.value)}
+      required
+      min="1920-01-01"
+      max="2020-01-01"
+    />
+  </div>
+);
+
+const renderPhoneInput = (code, setCode, phone, setPhone) => (
+  <div className="initial-make-flex">
+    <div className="initial-register-ddd-div">
+      <label htmlFor="code">DDD</label>
+      <input
+        type="number"
+        id="code"
+        value={code}
+        onChange={(elem) => setCode(elem.target.value)}
+        required
+        max="99"
+        min="10"
+      />
+    </div>
+    <div className="initial-register-phone-div">
+      <label htmlFor="phone">Celular</label>
+      <input
+        type="number"
+        id="phone"
+        value={phone}
+        onChange={(elem) => setPhone(elem.target.value)}
+        required
+        max="999999999"
+        minlength="100000000"
+      />
+    </div>
+  </div>
+);
+
+const clickToRegister = (
+  email, password, name, CPF, birthDay,
+  code, phone, saveUserPessoalInfo, history,
+) => {
   const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
   const newId = ( allDataOnLS.length +1 )
-  saveEmailAndPassword(email, password, newId);
+  saveUserPessoalInfo(
+    email, password, newId, name, CPF, birthDay,
+    code, phone, saveUserPessoalInfo, history,
+  );
   history.push("/RegisterAdress");
 }
 
-const isDisabled = (email, password, check) => {
+const isDisabled = (
+  email, password, check, name, CPF, birthDay, code, phone,
+) => {
   const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
   const test = allDataOnLS.some((e) => e.email === email)
+  // if (test) alert('Email já cadastrado')
   if (
-    password === check && password !== '' && password.length > 7 && email.match(emailTest) && !test
+    password === check && password !== '' && password.length > 7 && email.match(emailTest)
+    && !test && CPF.length === 11 && code.length === 2 && phone.length === 9
   ) {
     return false;
   }
@@ -68,18 +149,20 @@ const isDisabled = (email, password, check) => {
 };
 
 const renderNextButtonInput = (
-    email, password, check, saveEmailAndPassword, history, increment,
-  ) => {
+  email, password, check, name, CPF, birthDay, code, phone, saveUserPessoalInfo, history,
+) => {
   return (
-    <div className="conteinerButtonFP">
+    <div className="initial-register-div">
         <button
           className="buttonFP"
           type="button"
           onClick={() => clickToRegister(
-            email, password, saveEmailAndPassword, history, increment,
+            email, password, name, CPF, birthDay,
+            code, phone, saveUserPessoalInfo, history,
           )}
-          disabled={isDisabled(email, password, check)}
-        >
+          disabled={isDisabled(
+            email, password, check, name, CPF, birthDay, code, phone,
+          )}>
           Próximo
         </button>
     </div>
@@ -87,10 +170,15 @@ const renderNextButtonInput = (
 }
 
 function FirstPart(props) {
-  const { saveEmailAndPassword, increment } = props;
+  const { saveUserPessoalInfo } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
+  const [name, setName] = useState('');
+  const [CPF, setCPF] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+  const [code, setCode] = useState('');
+  const [phone, setPhone] = useState('');
   const history = useHistory();
 
   return (
@@ -98,22 +186,33 @@ function FirstPart(props) {
       <div className="products-page-nav">
         <img src={logo} alt="" width="100px" />
       </div>
-      <div className="conteinerCadastro1">
+      <div className="initial-conteiner">
         {renderEmailInput(email, setEmail)}
         {renderPasswordInput(password, setPassword)}
         {renderCheckPasswordInput(check, setCheck)}
-        {renderNextButtonInput(email, password, check, saveEmailAndPassword, history)}
-        <div className="footerFP"> </div>
+        {renderNameInput(name, setName)}
+        <div className="initial-make-flex">
+          {renderCPFInput(CPF, setCPF)}
+          {renderBirthDayInput(birthDay, setBirthDay)}
+        </div>
+        {renderPhoneInput(code, setCode, phone, setPhone)}
+        {renderNextButtonInput(
+          email, password, check, name, CPF, birthDay, code, phone, saveUserPessoalInfo, history,
+        )}
       </div>
+      <div className="footerFP"> </div>
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveEmailAndPassword: (email, password, id) => dispatch(
-    userEmailAndPassword(email, password, id)
-  ),
-  increment: () => dispatch(incrementID()),
+  saveUserPessoalInfo: (
+    email, password, check, name, CPF, birthDay, code, phone,
+  ) => dispatch(
+    userPessoalInfo(
+      email, password, check, name, CPF, birthDay, code, phone,
+    )
+  )
 });
 
 const mapStateToProps = (state) => ({
@@ -123,6 +222,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(FirstPart);
 
 FirstPart.propTypes = {
-  saveEmailAndPassword: PropTypes.func.isRequired,
+  saveUserPessoalInfo: PropTypes.func.isRequired,
   actualID: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

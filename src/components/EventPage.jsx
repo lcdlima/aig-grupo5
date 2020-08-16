@@ -5,6 +5,7 @@ import { chooseEvent } from '../actions';
 import '../CSS/EventPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+// copiar 6 e 7
 import logo from '../images/logo.svg';
 import user from '../images/user.svg';
 
