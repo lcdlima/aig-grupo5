@@ -7,8 +7,6 @@ import packageList from '../services/packageList';
 import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
 
-const user = JSON.parse(localStorage.getItem('user'));
-
 class Perfil extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +24,8 @@ class Perfil extends Component {
   }
 
   componentDidMount() {
-    this.setState({ name: user.name, email: user.email });
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.setState({ name: user.log, email: user.log });
     const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
     const purchase = shopstore.reduce((arr, e) => {
       if (e.buyerId === user.log) {
@@ -41,7 +40,7 @@ class Perfil extends Component {
   renderPerfilHeader() {
     return (
       <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
     );
   }
@@ -50,7 +49,6 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
-    console.log(obj);
     return (
       <div>
         {/* <img src={} alt="arrow" /> */}
@@ -58,7 +56,7 @@ class Perfil extends Component {
         <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
         {individualClicked && purchase.map((e, i) => (
           <div>
-            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
+            <h4 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h4>
             {
               obj[e] && (
                 <div>
@@ -144,15 +142,18 @@ class Perfil extends Component {
   }
 
   render() {
+    const { name } = this.state;
     return (
       <div>
         {this.renderPerfilHeader()}
         <div className="container">
-          <h3>{`Olá ${user.log}`}</h3>
-          {this.renderIndividualPurchase()}
-          {this.renderGroupPurchase()}
-          {this.renderPreservedNature()}
-          {this.renderMoneySaved()}
+          <div className="sub-container">
+            <h4>{`Olá ${name}`}</h4>
+            {this.renderIndividualPurchase()}
+            {this.renderGroupPurchase()}
+            {this.renderPreservedNature()}
+            {this.renderMoneySaved()}
+          </div>
         </div>
         {this.renderPerfilFooter()}
       </div>

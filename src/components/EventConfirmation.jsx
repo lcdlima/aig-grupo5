@@ -9,7 +9,7 @@ function EventConfirmation(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
       <div className="container">
         <h3>O seguinte evento foi criado:</h3>
@@ -27,7 +27,7 @@ function EventConfirmation(props) {
         <p>Mé faiz elementum girarzis, nisi eros vermeio. Diuretics paradis num copo é motivis de denguis. A ordem dos tratores não altera o pão duris. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.</p>
         <Link to={`/event-page/${event.id}`}><button>Finalizar</button></Link>
       </div>
-      
+
     </div>
   );
 }

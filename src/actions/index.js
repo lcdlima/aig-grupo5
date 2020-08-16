@@ -71,6 +71,14 @@ const selectCollect = () => ({
   type: 'SELECT_COLLECT',
 });
 
+const finishShopping = () => ({
+  type: 'FINISH_SHOPPING',
+});
+
+const finishShoppingFor = () => ({
+  type: 'FINISH_SHOPPING',
+});
+
 export const chooseEvent = (event) => ({
   type: EVENT_CHOOSED,
   event,
@@ -131,5 +139,5 @@ export const incrementID = () => ({
 
 
 export {
-  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect,
+  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect, finishShopping,
 };

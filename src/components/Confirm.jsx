@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BackToProductsList from './BackToProductsList';
@@ -6,6 +6,7 @@ import { calculateDiscount, calculatePlasticSaved } from './Cart';
 import productList from '../services/productList';
 import logo from '../images/logo.svg';
 import user from '../images/user.svg';
+import { finishShopping } from '../actions/index';
 
 function getNewDrink() {
   const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
@@ -33,14 +34,17 @@ function renderGift() {
 }
 
 function Confirm(props) {
-  const { packageTotal } = props;
+  const { packageTotal, finishShop } = props;
+  useEffect(() => () => {
+    finishShop();
+  }, []);
   const id = localStorage.getItem('userID');
   const discount = calculateDiscount(packageTotal);
   const plasticSaved = calculatePlasticSaved(packageTotal);
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Obrigado!</h1>
         <div />
       </div>
@@ -67,4 +71,8 @@ const mapStateToProps = (state) => ({
   cartItems: state.FinalCartReducer,
 });
 
-export default connect(mapStateToProps)(Confirm);
+const mapDispatchToProps = (dispatch) => ({
+  finishShop: () => dispatch(finishShopping()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Confirm);

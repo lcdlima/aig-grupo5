@@ -27,7 +27,7 @@ function Payment(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Pagamento</h1>
         <div />
       </div>
@@ -51,7 +51,7 @@ function Payment(props) {
             </div>
           </div>
         </div>
-        <Link to="/confirm"><button onClick={() => purchaseFinished()} type="button">Finalizar Compra</button></Link>
+        <Link to="/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
       </div>
       <div>
         <p>Encontre o ponto de coleta mais próximo de você</p>

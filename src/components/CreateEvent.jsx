@@ -90,7 +90,7 @@ function CreateEvent(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
+      <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
 
       <form className="form-div">
@@ -101,7 +101,7 @@ function CreateEvent(props) {
           onChange={(e) => setname(e.target.value)}
           size="300"
         />
-        <div className="date-and-time">
+        <div className="make-flex">
           <div className="time-div">
             <label htmlFor="date-field">Data do Evento</label>
             <input

@@ -113,7 +113,7 @@ class MainPurchase extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-container">
         <div className="products-page-nav">
           <div><img src={logo} alt="" width="100px" /></div>
           <h1 />

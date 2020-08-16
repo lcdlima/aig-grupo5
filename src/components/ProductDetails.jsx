@@ -44,7 +44,7 @@ function ProductDetails(props) {
     <div>
       <div>
         <div className="products-page-nav">
-          <div><img src={logo} alt="" width="100px" /></div>
+          <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
           <div className="cart-img">
             <p>{getTotalCart(cartState)}</p>
             <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>

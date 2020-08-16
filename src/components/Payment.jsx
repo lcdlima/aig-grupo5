@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { calculateDiscount, finalValue } from './Cart';
@@ -37,7 +37,7 @@ function Payment(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Pagamento</h1>
         <div />
       </div>
@@ -65,20 +65,20 @@ function Payment(props) {
             <button type="button" onClick={() => getAddressInfo(setAddressCep, setAddressComplement, setAddressNumber, setAddressState, setAddressStreet, setAddressCity)}>Usar dados de cadastro</button>
             <p>Endereço</p>
             <div className="address-field">
-              <input type="number" placeholder="cep" onChange={(e) => setAddressCep(e.target.value)} value={addressCep}/>
-              <input type="text" placeholder="rua" onChange={(e) => setAddressStreet(e.target.value)} value={addressStreet}/>
+              <input type="number" placeholder="cep" onChange={(e) => setAddressCep(e.target.value)} value={addressCep} />
+              <input type="text" placeholder="rua" onChange={(e) => setAddressStreet(e.target.value)} value={addressStreet} />
               <div className="address-number">
-                <input type="number" placeholder="número" onChange={(e) => setAddressNumber(e.target.value)} value={addressNumber}/>
-                <input type="text" placeholder="complemento" onChange={(e) => setAddressComplement(e.target.value)} value={addressComplement}/>
+                <input type="number" placeholder="número" onChange={(e) => setAddressNumber(e.target.value)} value={addressNumber} />
+                <input type="text" placeholder="complemento" onChange={(e) => setAddressComplement(e.target.value)} value={addressComplement} />
               </div>
               <div>
-                <input type="text" placeholder="cidade" onChange={(e) => setAddressCity(e.target.value)} value={addressCity}/>
-                <input type="text" placeholder="estado" onChange={(e) => setAddressState(e.target.value)} value={addressState}/>
+                <input type="text" placeholder="cidade" onChange={(e) => setAddressCity(e.target.value)} value={addressCity} />
+                <input type="text" placeholder="estado" onChange={(e) => setAddressState(e.target.value)} value={addressState} />
               </div>
             </div>
           </div>
         </div>
-        <Link to="/confirm"><button onClick={() => purchaseFinished()} type="button">Finalizar Compra</button></Link>
+        <Link to="/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
       </div>
       <div className="footer">
         <BackToProductsList />
