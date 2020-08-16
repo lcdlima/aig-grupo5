@@ -15,7 +15,6 @@ import logo from '../images/logo.svg';
 let list = productList;
 
 export function getTotalCart(cartState) {
-  console.log(cartState)
   return cartState.reduce((sum, e) => sum + e.total, 0);
 }
 

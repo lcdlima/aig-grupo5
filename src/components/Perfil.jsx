@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import productList from '../services/productList';
+import packageList from '../services/packageList';
+import userchar from '../images/user.svg';
+import logo from '../images/logo.svg';
 
 const user = JSON.parse(localStorage.getItem('user'));
-const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
 
 class Perfil extends Component {
   constructor(props) {
@@ -18,31 +20,31 @@ class Perfil extends Component {
       preservedClicked: false,
       moneyClicked: false,
       purchase: [],
+      shopstore: [],
     };
   }
 
   componentDidMount() {
     this.setState({ name: user.name, email: user.email });
+    const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
     const purchase = shopstore.reduce((arr, e) => {
       if (e.buyerId === user.log) {
         return [...arr, e.id_compra];
       } return arr;
     }, []);
-    this.setState({ purchase });
+    this.setState({ purchase, shopstore });
   }
 
   renderPerfilHeader() {
-    const { name } = this.state;
     return (
-      <div>
-        <img src="" alt="avatar" />
-        <h2>{name}</h2>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
       </div>
     );
   }
 
   renderIndividualPurchase() {
-    const { individualClicked, purchase } = this.state;
+    const { individualClicked, purchase, shopstore } = this.state;
     return (
       <div
         onClick={() => this.setState({ individualClicked: !individualClicked })}
@@ -50,7 +52,7 @@ class Perfil extends Component {
         {/* <img src={} alt="arrow" /> */}
         <h2>{(individualClicked) ? '⌄' : '›'}</h2>
         <h2>Meus Pedidos</h2>
-        {purchase.map((e, i) => (
+        {individualClicked && purchase.map((e, i) => (
           <div>
             <h2>{`Compra ${i + 1}`}</h2>
             <div>
@@ -58,13 +60,12 @@ class Perfil extends Component {
                 const products = (productList.filter((elll) => elll.id === ell.id)[0]);
                 return (
                   <div className="make-flex">
-                    <p>{products.productName}</p>
-                    <img width="40px" src={products.thumbnail} />
-                    <p>{`Quantidade: ${ell.total}`}</p>
+                    <p>{`${products.productName} ${products.package_volume}L`}</p>
+
+                    <p>{`x ${ell.total}`}</p>
                   </div>
                 );
               })}
-
             </div>
           </div>
         ))}
@@ -88,7 +89,7 @@ class Perfil extends Component {
   }
 
   renderPreservedNature() {
-    const { preservedClicked } = this.state;
+    const { preservedClicked, purchase, shopstore } = this.state;
     return (
       <div
         onClick={() => this.setState({ preservedClicked: !preservedClicked })}
@@ -96,13 +97,18 @@ class Perfil extends Component {
         {/* <img src={} alt="arrow" /> */}
         <h2>{(preservedClicked) ? '⌄' : '›'}</h2>
         <h2>Quantidade Preservada</h2>
+        {preservedClicked && `${purchase.reduce((summ, e) => {
+          const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
+          const total = packages.reduce((sum, ell) => sum + (packageList.filter((elll) => elll.id === ell.id)[0].weight * Number(ell.total)), 0);
+          return summ + total;
+        }, 0)}g de plástico reduzido`}
         {}
       </div>
     );
   }
 
   renderMoneySaved() {
-    const { moneyClicked } = this.state;
+    const { moneyClicked, shopstore, purchase } = this.state;
     return (
       <div
         onClick={() => this.setState({ moneyClicked: !moneyClicked })}
@@ -110,6 +116,11 @@ class Perfil extends Component {
         {/* <img src={} alt="arrow" /> */}
         <h2>{(moneyClicked) ? '⌄' : '›'}</h2>
         <h2>Dinheiro Economizado</h2>
+        {moneyClicked && `R$${(purchase.reduce((summ, e) => {
+          const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
+          const total = packages.reduce((sum, ell) => sum + (packageList.filter((elll) => elll.id === ell.id)[0].price * Number(ell.total)), 0);
+          return summ + total;
+        }, 0)).toFixed(2)} economizados`}
         {}
       </div>
     );
@@ -117,8 +128,9 @@ class Perfil extends Component {
 
   renderPerfilFooter() {
     return (
-      <div>
-        <Link to="/mainPurchase">Nova compra</Link>
+      <div className="footer">
+        <div />
+        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     );
   }
@@ -127,10 +139,13 @@ class Perfil extends Component {
     return (
       <div>
         {this.renderPerfilHeader()}
-        {this.renderIndividualPurchase()}
-        {this.renderGroupPurchase()}
-        {this.renderPreservedNature()}
-        {this.renderMoneySaved()}
+        <div className="container">
+          <h3>{`Olá ${user.log}`}</h3>
+          {this.renderIndividualPurchase()}
+          {this.renderGroupPurchase()}
+          {this.renderPreservedNature()}
+          {this.renderMoneySaved()}
+        </div>
         {this.renderPerfilFooter()}
       </div>
     );
