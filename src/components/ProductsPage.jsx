@@ -146,7 +146,8 @@ function ProductsPage(props) {
   const [searchBy, setSearchBy] = useState('');
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
+  let cartState = (JSON.parse(localStorage.getItem('temporaryStorage')));
+  if (!cartState) { cartState = []; } else { cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart; }
   return (
     <div className="products-page">
       <div className="products-page-nav">
