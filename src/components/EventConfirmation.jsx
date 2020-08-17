@@ -2,7 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
-import user from '../images/user.svg';
+import userchar from '../images/user.svg';
+
+function deleteEvent(event) {
+  const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
+  const newEventsList = storedEvents.reduce((acc, e) => {
+    if (event.id !== e.id) acc.push(e);
+    return acc;
+  }, []);
+  localStorage.setItem('storedEvents', JSON.stringify(newEventsList));
+}
 
 function EventConfirmation(props) {
   const { event } = props;
@@ -25,9 +34,13 @@ function EventConfirmation(props) {
         <p>Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.</p>
         <p>Delegadis gente finis, bibendum egestas augue arcu ut est. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis. Paisis, filhis, espiritis santis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis.</p>
         <p>Mé faiz elementum girarzis, nisi eros vermeio. Diuretics paradis num copo é motivis de denguis. A ordem dos tratores não altera o pão duris. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.</p>
-        <Link to={`/event-page/${event.id}`}><button>Finalizar</button></Link>
+        <Link to={`/event-page/${event.id}`}><button>Concordo</button></Link>
+        <Link to="/mainPurchase" onClick={() => deleteEvent(event)}><button>Discordo</button></Link>
       </div>
-
+      <div className="footer">
+        <div />
+        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+      </div>
     </div>
   );
 }

@@ -2,15 +2,14 @@
   color: #333333;
 }
 
-.event-page-div button {
-  background-color: white;
-  border: 2px solid black;
-  border-color: #333333;
-  color: black;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-size: 16px;
-  width: 200px;
+.buttons-div button {
+  margin: auto;
+  width: 50%;
+  border-radius: 30px;
+  height: 50px;
+  background-color: #616161;
+  color: white;
+  font-weight: 900;
 }
 
 .event-page-div button:hover {
@@ -18,11 +17,18 @@
   color: white;
 }
 
+.event-page-div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .buttons-div {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  height: 300px;
+  justify-content: center;
+  margin-top: 50px;
   width: 300px;
 }
 
@@ -37,6 +43,11 @@
   width: 350px;
 }
 
+.share-div{
+  text-align: center;
+  margin: 70px 0 20px 0;
+}
+
 .icon-text-div {
   align-items: center;
   display: flex;
@@ -44,5 +55,5 @@
 }
 
 .icon-text-div h3 {
-  margin-left: 5px;
+  margin: 0 0 0 10px;
 }
