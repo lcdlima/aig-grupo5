@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/aig-grupo5/static/css/main.83d44058.chunk.css",
-    "main.js": "/aig-grupo5/static/js/main.028976eb.chunk.js",
-    "main.js.map": "/aig-grupo5/static/js/main.028976eb.chunk.js.map",
+    "main.js": "/aig-grupo5/static/js/main.1883f631.chunk.js",
+    "main.js.map": "/aig-grupo5/static/js/main.1883f631.chunk.js.map",
     "runtime-main.js": "/aig-grupo5/static/js/runtime-main.70779631.js",
     "runtime-main.js.map": "/aig-grupo5/static/js/runtime-main.70779631.js.map",
     "static/js/2.26277251.chunk.js": "/aig-grupo5/static/js/2.26277251.chunk.js",
     "static/js/2.26277251.chunk.js.map": "/aig-grupo5/static/js/2.26277251.chunk.js.map",
     "index.html": "/aig-grupo5/index.html",
-    "precache-manifest.0df5a617a32423cc90e42e304c977c9d.js": "/aig-grupo5/precache-manifest.0df5a617a32423cc90e42e304c977c9d.js",
+    "precache-manifest.b15468e70595b4507396a8363d158553.js": "/aig-grupo5/precache-manifest.b15468e70595b4507396a8363d158553.js",
     "service-worker.js": "/aig-grupo5/service-worker.js",
     "static/css/main.83d44058.chunk.css.map": "/aig-grupo5/static/css/main.83d44058.chunk.css.map",
     "static/js/2.26277251.chunk.js.LICENSE.txt": "/aig-grupo5/static/js/2.26277251.chunk.js.LICENSE.txt",
@@ -26,6 +26,6 @@
     "static/js/runtime-main.70779631.js",
     "static/js/2.26277251.chunk.js",
     "static/css/main.83d44058.chunk.css",
-    "static/js/main.028976eb.chunk.js"
+    "static/js/main.1883f631.chunk.js"
   ]
 }
