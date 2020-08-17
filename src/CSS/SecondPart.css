@@ -11,7 +11,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 .footerSP {
   height: 60px;
   margin: 0;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background-image: url('../images/tela2R.png');

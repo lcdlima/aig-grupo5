@@ -99,8 +99,8 @@ function GroupProductDetails(props) {
       </div>
       <div className="footer">
         <GroupBackToProductsList />
-        <Link to={`/event-page/${event.id}`}><h3>{event.name}</h3></Link>
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+        <Link to={`/aig-grupo5/event-page/${event.id}`}><h3>{event.name}</h3></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

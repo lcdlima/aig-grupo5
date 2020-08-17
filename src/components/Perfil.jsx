@@ -42,7 +42,7 @@ class Perfil extends Component {
   renderPerfilHeader() {
     return (
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
     );
   }
@@ -152,7 +152,7 @@ class Perfil extends Component {
     return (
       <div className="footer">
         <div />
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     );
   }

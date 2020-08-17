@@ -92,7 +92,7 @@ function CreateEvent(props) {
   return (
     <div>
       <div className="products-page-nav">
-      <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+      <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
 
       <form className="form-div">
@@ -170,12 +170,12 @@ function CreateEvent(props) {
         >
           Próximo
         </button>
-        {redirect && <Redirect to="/event-confirmation" />}
+        {redirect && <Redirect to="/aig-grupo5/event-confirmation" />}
 
       </form>
       <div className="footer">
         <div />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

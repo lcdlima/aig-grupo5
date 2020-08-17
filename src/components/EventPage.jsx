@@ -114,10 +114,10 @@ function EventPage(props) {
 
           <div className="share-div">
             <h3>Compartilhe com Seus Amigos</h3>
-            <FacebookShareButton size="32" url="www.jao.com.br/event-choice" quote={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><FacebookIcon /></FacebookShareButton>
-            <WhatsappShareButton size="32" url="www.jao.com.br/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><WhatsappIcon /></WhatsappShareButton>
-            <TelegramShareButton size="32" url="www.jao.com.br/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TelegramIcon /></TelegramShareButton>
-            <TwitterShareButton size="32" url="www.jao.com.br/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TwitterIcon /></TwitterShareButton>
+            <FacebookShareButton size="32" url="https://lcdlima.github.io/aig-grupo5/event-choice" quote={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><FacebookIcon /></FacebookShareButton>
+            <WhatsappShareButton size="32" url="https://lcdlima.github.io/aig-grupo5/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><WhatsappIcon /></WhatsappShareButton>
+            <TelegramShareButton size="32" url="https://lcdlima.github.io/aig-grupo5/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TelegramIcon /></TelegramShareButton>
+            <TwitterShareButton size="32" url="https://lcdlima.github.io/aig-grupo5/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TwitterIcon /></TwitterShareButton>
           </div>
 
           <div className="icon-text-div">
@@ -128,24 +128,24 @@ function EventPage(props) {
 
           {open && (
             <div className="participants-div">
-              {event.participants.map((person) => <p>{person.log}</p>)}
+              {event.participants.map((person) => <p>{person.name}</p>)}
             </div>
           )}
 
-          <Link><h3>Carrinho do Evento</h3></Link>
+          <Link to="/aig-grupo5/group-cart"><h3>Carrinho do Evento</h3></Link>
 
           <div className="buttons-div">
             {user.log !== event.owner.log && !isParticipant && <button onClick={() => EventParticipation(isParticipant, setIsParticipant, props)}>Participar do Evento</button>}
             {user.log !== event.owner.log && isParticipant && <button onClick={() => EventParticipation(isParticipant, setIsParticipant, props)}>Deixar Evento</button>}
-            {isParticipant && <Link to="/group-products-list"><button>Adicionar Itens</button></Link>}
-            {user.log === event.owner.log && <Link to="/group-cart"><button>Finalizar Compra</button></Link>}
+            {isParticipant && <Link to="/aig-grupo5/group-products-list"><button>Adicionar Itens</button></Link>}
+            {user.log === event.owner.log && <Link to="/aig-grupo5/group-cart"><button>Finalizar Compra</button></Link>}
             {user.log === event.owner.log && <button onClick={() => deleteEvent(event, setRedirect)}>Excluir Evento</button>}
-            {redirect && <Redirect to="/mainPurchase" />}
+            {redirect && <Redirect to="/aig-grupo5/mainPurchase" />}
           </div>
         </div>
         <div className="footer">
           <div />
-          <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+          <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
         </div>
       </div>
     </div>

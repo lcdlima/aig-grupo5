@@ -8,7 +8,7 @@ function GroupCartIncon(props) {
   return (
     <div className="cart-img">
       <p>{event.products.length}</p>
-      <Link to="/group-cart"><img src={cart} alt="cart" width="30px" /></Link>
+      <Link to="/aig-grupo5/group-cart"><img src={cart} alt="cart" width="30px" /></Link>
     </div>
   )
 }

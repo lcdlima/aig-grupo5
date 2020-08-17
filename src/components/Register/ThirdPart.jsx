@@ -17,7 +17,7 @@ const clickToRegister = (
       id: temporaryData.id
     }
   ));
-  history.push('/mainPurchase');
+  history.push('/aig-grupo5/mainPurchase');
 };
 
 const renderCardNameInput = (cardName, setCardName) => (

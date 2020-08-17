@@ -91,7 +91,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
     <div className="products-container">
       {(selectedFilter === 'Todos') && list.map((e) => (
         <div>
-          <Link to={`/group-products-details/${e.id}`}>
+          <Link to={`/aig-grupo5/group-products-details/${e.id}`}>
             <div className="products-list">
               <img src={e.thumbnail} width="100px" alt="" />
               <p>{e.productName}</p>
@@ -104,7 +104,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
       {(selectedFilter !== 'Todos') && list.filter((e) => e.category === selectedFilter)
         .map((e) => (
           <div>
-            <Link to={`/group-products-details/${e.id}`}>
+            <Link to={`/aig-grupo5/group-products-details/${e.id}`}>
               <div className="products-list">
                 <img src={e.thumbnail} width="100px" alt="" />
                 <p>{e.productName}</p>
@@ -200,8 +200,8 @@ function GroupProductsPage(props) {
       </div>
       <div className="footer">
         <GroupBackToProductsList />
-        <Link to={`/event-page/${event.id}`}><h3>{event.name}</h3></Link>
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+        <Link to={`/aig-grupo5/event-page/${event.id}`}><h3>{event.name}</h3></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

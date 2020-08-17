@@ -1,7 +1,7 @@
 .footerFP{
   height: 50px;
   margin-top: 200;
-  position: absolute;
+  position: fixed;
   bottom:0;
   width: 100%;
   background-image: url('../images/tela1R.png');

@@ -29,7 +29,7 @@ function Login(props) {
       const InfoUser = allDataOnLS.filter((elem) => elem.email === email);
       console.log(InfoUser);
       localStorage.setItem('user', JSON.stringify({ log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id }));
-      history.push('/mainPurchase');
+      history.push("/aig-grupo5/mainPurchase");
       return;
     }
     if (existLS) {
@@ -85,7 +85,7 @@ function Login(props) {
         {renderEmailInput(email, setEmail)}
         {renderPasswordInput(password, setPassword)}
         {renderButtonInput(data, email, password, history)}
-        <Link to="/register" className="registeLink"> Ainda não sou cadastrado</Link>
+        <Link to="/aig-grupo5/register" className="registeLink"> Ainda não sou cadastrado</Link>
       </div>
       <div className="footerL">
         <img src={ambev} alt="ambevLogo" />
