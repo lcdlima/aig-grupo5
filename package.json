@@ -1,4 +1,5 @@
 {
+  "homepage": "http://lcdlima.github.io/aig-grupo5",
   "name": "aig-grupo5",
   "version": "0.1.0",
   "private": true,
@@ -21,6 +22,8 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -45,6 +48,7 @@
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
     "espree": "^7.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "gh-pages": "^3.1.0"
   }
 }
