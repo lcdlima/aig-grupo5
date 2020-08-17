@@ -6,12 +6,12 @@
 .address-number {
   display: flex;
   justify-content: space-between;
-  width: 94%;
+  width: 100%;
 }
 
 .address-field  input{
-  margin: 10px 0 0 10px;
-  width: 90%;
+  margin: 5px 0;
+  width: 99%;
 }
 
 .address-number input {
@@ -23,11 +23,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .card-details {
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -39,7 +40,7 @@
 }
 
 .card-field > input {
-  width: 90%;
+  width: 100%;
   margin-top: 10px;
   height: 30px;
   border-radius: 30px;
@@ -64,8 +65,25 @@
   margin-bottom: 60px;
 }
 
-.container a button{
-  margin: 20px auto;
+.collection-container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.collection-container p {
+  text-align: center;
+}
+
+.collection-container input {
+  border-radius: 30px;
+  height: 35px;
+}
+
+
+.payment-btns button, .card-field button, .collection-container button{
   display: block;
   width: 50%;
   border-radius: 30px;
@@ -73,4 +91,34 @@
   background-color: #616161;
   color: white;
   font-weight: 900;
+  width: 45%;
+  margin-top: 10px;
+}
+
+.payment-btns a button{
+  display: block;
+  width: 50%;
+  border-radius: 30px;
+  height: 50px;
+  background-color: #616161;
+  color: white;
+  font-weight: 900;
+  width: 100%;
+}
+
+.payment-btns a {
+  width: 45%;
+}
+
+.payment-btns {
+  padding-top: 20px;
+  display: flex;
+  width: 90%;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.container h2 {
+  text-align: center;
+  padding-top: 10px;
 }

@@ -6,8 +6,17 @@ import { userCard } from '../../actions/index';
 import '../../CSS/ThirdPart.css';
 import logo from '../../images/logo.svg';
 
-const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData) => {
+const clickToRegister = (
+    cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+  ) => {
   saveCard(cardName, cardNumber, dueDate, CVV);
+  localStorage.setItem('user', JSON.stringify(
+    {
+      log: temporaryData.email,
+      name: temporaryData.name,
+      id: temporaryData.id
+    }
+  ));
   history.push('/mainPurchase');
 };
 
@@ -75,13 +84,15 @@ const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
   return true;
 }
 
-const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, history) => (
+const renderFinishButtonInput = (
+  cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
+) => (
   <div className="card-register-div">
     <button
       className="buttonTP"
       type="button"
       onClick={() => clickToRegister(
-        cardName, cardNumber, dueDate, CVV, saveCard, history,
+        cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
       )}
       disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
     >
@@ -110,7 +121,9 @@ function ThirdPart(props) {
           {renderCVVInput(CVV, setCVV)}
           {renderDueDateInput(dueDate, setDueDate)}
           </div>
-          {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history)}
+          {renderFinishButtonInput(
+            cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+          )}
       </div>
       <div className="footerTP"> </div>
     </div>

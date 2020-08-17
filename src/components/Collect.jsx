@@ -33,14 +33,13 @@ function Payment(props) {
       </div>
       <div className="container">
         <div>
-          <div>
-            <h2>Detalhes do Pagamento</h2>
+          <div className="collection-container">
+            <h2 style={{textAlign: 'center', paddingTop: '10px'}}>Detalhes do Pagamento</h2>
             <div className="price">
               <p>Valor a pagar </p>
               <p>{`${(finalValue(items) - discount + deliverfee).toFixed(2)}`}</p>
             </div>
-            <p>Dados do Cartão</p>
-            <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
+            <p style={{fontWeight: 900}}>Dados do Cartão</p>
             <div className="card-field">
               <input type="text" placeholder="nome do comprador" onChange={(e) => setName(e.target.value)} value={name} />
               <input type="number" placeholder="numero do cartao" onChange={(e) => setNumber(e.target.value)} value={number} />
@@ -51,7 +50,10 @@ function Payment(props) {
             </div>
           </div>
         </div>
-        <Link to="/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
+        <div className="payment-btns">
+          <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
+          <Link to="/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
+        </div>
       </div>
       <div>
         <p>Encontre o ponto de coleta mais próximo de você</p>

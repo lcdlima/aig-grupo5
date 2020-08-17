@@ -1,43 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import productList from '../services/productList';
+import packageList from '../services/packageList';
 
 const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
+const extraInfo = JSON.parse(localStorage.getItem('extraPurchaseData'));
 
 class ResumeCard extends React.Component {
   render() {
-  const { purchaseList } = this.props;
-  return (
-    <div data-testid="movie-card">
-        <h2>Compra realizada em {title}</h2>
-        <p>Valor total de {storyline}</p>
-        <p>{(isDelivery) ? 'Delivery' : 'Retirada em loja'}</p>
-    </div>
-  );
+    const { purchaseList } = this.props;
     return (
-      {
-        purchaseList.map((initial) => (
-          shopstore.filter((middle) => middle.id_compra === initial)[0].map((Final) => {
-            return (
-              <div>
-                <p>Compra realizada em {title}</p>
-                <p>Valor total de {storyline}</p>
-                <p>{(Final.collection.isDelivery) ? 'Delivery' : 'Retirada em loja'}</p>
-                <p>{`${products.productName} ${products.package_volume}L`}</p>
-                <p>{`x ${ell.total}`}</p>
-                <Link to={`/movies/${id}`}>Veja em detalhes</Link>
-              </div>
-            );
-            const products = (productList.filter((elll) => elll.id === ell.id)[0]);
+      <div>
+        {
+          purchaseList.map((initial) => {
+            return shopstore.filter((middle) => middle.id_compra === initial).map((Final, index) => {
+              const somaProdutos = Final.cart.reduce((acc, elem) => {
+                return acc + (productList[elem.id].originalPrice * elem.total);
+              }, []);
+              const discount = Final.pack.reduce((acc, elem) => {
+                const mult = (elem.total === '') ? 0 : elem.total;
+                return acc + (packageList[(elem.id - 1)].price * mult);
+              }, []);
+              const total = somaProdutos - discount;
+              return (
+                <div>
+                  <p>Compra realizada em {extraInfo[index].day}</p>
+                  <p>Valor total de {total}</p>
+                  <p>{(Final.collection.isDelivery) ? 'Delivery' : 'Retirada em loja'}</p>
+                  <Link to={`/Detalhes/${Final.id}`}>detalhes</Link>
+                </div>
+              );
+            })
           })
-        ))
-      }
-    )
+        }
+      </div>
+    );
   }
-}
-
-MovieCard.propTypes = {
-    purchaseList: PropTypes.array.isRequired,
 };
 
-export default MovieCard;
+ResumeCard.propTypes = {
+  purchaseList: PropTypes.array.isRequired,
+};
+
+export default ResumeCard;
