@@ -8,14 +8,52 @@ import BackToProductsList from './BackToProductsList';
 import user from '../images/user.svg';
 import logo from '../images/logo.svg';
 
-function getCardInfo(setName, setNumber, setDate, setCvv) {
-  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
-  setName(storage.card.cardHolder); setNumber(storage.card.number); setDate(storage.card.dueDate); setCvv(storage.card.cvv);
+let today = new Date();
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const year = today.getFullYear();
+today = `${day} / ${month} / ${year}`;
+
+const finishThePurchaser = (
+  addressStreet, addressNumber, addressCity, addressState, purchaseFinished,
+) => {
+  const getID = JSON.parse(localStorage.getItem('dataToPurchase')) || [];
+  const extraData = JSON.parse(localStorage.getItem('extraPurchaseData'));
+  const newObj = {
+    id: getID.length,
+    day: today,
+    adress: addressStreet,
+    number: addressNumber,
+    city: addressCity,
+    state: addressState,
+  }
+  if (extraData === '' || !extraData) {
+    localStorage.setItem('extraPurchaseData', JSON.stringify([newObj]));
+  } else {
+    localStorage.setItem('extraPurchaseData', JSON.stringify([...extraData, newObj]));
+  }
+  purchaseFinished();
 }
 
-function getAddressInfo(setAddressCep, setAddressComplement, setAddressNumber, setAddressState, setAddressStreet, setAddressCity) {
+function getCardInfo(setName, setNumber, setDate, setCvv) {
   const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
-  setAddressCep(storage.address.cep); setAddressComplement(storage.address.complement); setAddressNumber(storage.address.addressNumber); setAddressState(storage.address.stateLetters); setAddressStreet(storage.address.street); setAddressCity(storage.address.city);
+  setName(storage.card.cardHolder);
+  setNumber(storage.card.number);
+  setDate(storage.card.dueDate);
+  setCvv(storage.card.cvv);
+}
+
+function getAddressInfo(
+    setAddressCep, setAddressComplement, setAddressNumber,
+    setAddressState, setAddressStreet, setAddressCity,
+  ) {
+  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
+  setAddressCep(storage.address.cep);
+  setAddressComplement(storage.address.complement);
+  setAddressNumber(storage.address.number);
+  setAddressState(storage.address.stateLetters);
+  setAddressStreet(storage.address.street);
+  setAddressCity(storage.address.city);
 }
 
 function Payment(props) {
@@ -34,6 +72,7 @@ function Payment(props) {
   const discount = calculateDiscount(packageTotal);
   let deliverfee;
   if (isDelivery) { deliverfee = 3; } else { deliverfee = 0; }
+  console.log(JSON.parse(localStorage.getItem('temporaryStorage')));
   return (
     <div>
       <div className="products-page-nav">
@@ -82,7 +121,16 @@ function Payment(props) {
             </div>
           </div>
         </div>
-        <Link to="/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
+        <Link to="/confirm">
+          <button
+            onClick={() => finishThePurchaser(
+              addressStreet, addressNumber, addressCity, addressState, purchaseFinished,
+            )}
+            type="button"
+          >
+            Finalizar Compra
+          </button>
+        </Link>
       </div>
       <div className="footer">
         <BackToProductsList />

@@ -6,13 +6,22 @@ import { userCard } from '../../actions/index';
 import '../../CSS/ThirdPart.css';
 import logo from '../../images/logo.svg';
 
-const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData) => {
+const clickToRegister = (
+    cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+  ) => {
   saveCard(cardName, cardNumber, dueDate, CVV);
+  localStorage.setItem('user', JSON.stringify(
+    {
+      log: temporaryData.email,
+      name: temporaryData.name,
+      id: temporaryData.id
+    }
+  ));
   history.push('/mainPurchase');
 };
 
 const renderCardNameInput = (cardName, setCardName) => (
-  <div className="conteinerCardNameTP">
+  <div className="card-register-div">
     <label htmlFor="cardName">Nome</label>
     <input
       type="text"
@@ -25,7 +34,7 @@ const renderCardNameInput = (cardName, setCardName) => (
 );
 
 const renderCardNumberInput = (cardNumber, setCardNumber) => (
-  <div className="conteinerCardNumberTP">
+  <div className="card-register-div">
     <label htmlFor="cardNumber">Numero do Cartão</label>
     <input
       type="number"
@@ -40,7 +49,7 @@ const renderCardNumberInput = (cardNumber, setCardNumber) => (
 );
 
 const renderDueDateInput = (dueDate, setDueDate) => (
-  <div className="conteinerDueDateTP">
+  <div className="card-register-due-div">
     <label htmlFor="dueDate">Vencimento</label>
     <input
       type="date"
@@ -54,7 +63,7 @@ const renderDueDateInput = (dueDate, setDueDate) => (
 );
 
 const renderCVVInput = (CVV, setCVV) => (
-  <div className="conteinerCVVTP">
+  <div className="card-register-cvv-div">
     <label htmlFor="CVV">CVV</label>
     <input
       type="number"
@@ -68,37 +77,24 @@ const renderCVVInput = (CVV, setCVV) => (
   </div>
 );
 
-// const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-//   if (!cardName && cardNumber.length !== 16 && !dueDate && (CVV.length !== 3 || CVV.length === 4)) {
-//     return true;
-//   }
-//   if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
-//     alert('Faltando preencher o campo do nome');
-//   }
-//   if (cardName && cardNumber.length !== 12 && dueDate && CVV.length === 3) {
-//     alert('Verifique o número do cartão');
-//   }
-//   if (cardName && cardNumber.length === 12 && !dueDate && CVV.length === 3) {
-//     alert('Falta preencher a data de vencimento');
-//   }
-//   if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
-//     alert('Verifir os números de segurança');
-//   }
-//   if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
-//     return false;
-//   }
-//   return true;
-// };
+const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
+  if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
+    return false;
+  }
+  return true;
+}
 
-const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, history) => (
-  <div className="conteinerButtonTP">
+const renderFinishButtonInput = (
+  cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
+) => (
+  <div className="card-register-div">
     <button
       className="buttonTP"
       type="button"
       onClick={() => clickToRegister(
-        cardName, cardNumber, dueDate, CVV, saveCard, history,
+        cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
       )}
-      // disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
+      disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
     >
       Próximo
     </button>
@@ -118,18 +114,18 @@ function ThirdPart(props) {
       <div className="products-page-nav">
         <img src={logo} alt="" width="100px" />
       </div>
-      <div className="conteinerCadastro3">
-        <div className="card-form">
+      <div className="card-conteiner">
           {renderCardNameInput(cardName, setCardName)}
           {renderCardNumberInput(cardNumber, setCardNumber)}
-          <div className="cityAndState">
-            {renderCVVInput(CVV, setCVV)}
-            {renderDueDateInput(dueDate, setDueDate)}
+          <div className="card-make-flex">
+          {renderCVVInput(CVV, setCVV)}
+          {renderDueDateInput(dueDate, setDueDate)}
           </div>
-        </div>
-        {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history)}
-        <div className="footerTP"> </div>
+          {renderFinishButtonInput(
+            cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+          )}
       </div>
+      <div className="footerTP"> </div>
     </div>
   );
 }

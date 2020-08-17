@@ -6,6 +6,9 @@ import productList from '../services/productList';
 import packageList from '../services/packageList';
 import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
+import ResumeCard from './ResumeCard';
+
+const user = JSON.parse(localStorage.getItem('user'));
 
 class Perfil extends Component {
   constructor(props) {
@@ -24,8 +27,8 @@ class Perfil extends Component {
   }
 
   componentDidMount() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    this.setState({ name: user.log, email: user.log });
+    console.log(user);
+    this.setState({ name: user.name, email: user.log });
     const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
     const purchase = shopstore.reduce((arr, e) => {
       if (e.buyerId === user.log) {
@@ -49,14 +52,28 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
+    let arrResume = []
+    if (purchase.length > 4) {
+      arrResume = purchase.reduce((arr, elem, index) => {
+        if(index > (purchase.length - 5)) {
+          return [...arr, elem.id_compra];
+        }
+        return arr;
+      },[]);
+    } else {
+      arrResume = purchase;
+    }
+    // console.log(arrResume)
     return (
       <div>
         {/* <img src={} alt="arrow" /> */}
         <h2>{(individualClicked) ? '⌄' : '›'}</h2>
         <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
+        {individualClicked && <ResumeCard purchaseList={arrResume} />}
+{/* 
         {individualClicked && purchase.map((e, i) => (
           <div>
-            <h4 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h4>
+            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
             {
               obj[e] && (
                 <div>
@@ -75,7 +92,7 @@ class Perfil extends Component {
             }
           </div>
         ))}
-        {}
+        {} */}
       </div>
     );
   }
@@ -146,14 +163,12 @@ class Perfil extends Component {
     return (
       <div>
         {this.renderPerfilHeader()}
-        <div className="container">
-          <div className="sub-container">
-            <h4>{`Olá ${name}`}</h4>
-            {this.renderIndividualPurchase()}
-            {this.renderGroupPurchase()}
-            {this.renderPreservedNature()}
-            {this.renderMoneySaved()}
-          </div>
+        <div className="sub-container">
+          <h4>{`Olá ${name}`}</h4>
+          {this.renderIndividualPurchase()}
+          {this.renderGroupPurchase()}
+          {this.renderPreservedNature()}
+          {this.renderMoneySaved()}
         </div>
         {this.renderPerfilFooter()}
       </div>

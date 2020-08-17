@@ -5,10 +5,16 @@ import { chooseEvent } from '../actions';
 import '../CSS/EventPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { chooseEvent } from '../actions';
 import logo from '../images/logo.svg';
 import userchar from '../images/user.svg';
 import { FacebookShareButton, FacebookIcon, TelegramShareButton, TelegramIcon, WhatsappShareButton, WhatsappIcon, TwitterShareButton, TwitterIcon } from "react-share";
+
+const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
+
+function copyToClipboard(setHide) {
+  navigator.clipboard.writeText(window.location.href);
+  setHide(false);
+}
 
 function deleteEvent(event, setRedirect) {
   const newEventsList = storedEvents.reduce((acc, e) => {

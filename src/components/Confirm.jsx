@@ -8,6 +8,7 @@ import logo from '../images/logo.svg';
 import user from '../images/user.svg';
 import { finishShopping } from '../actions/index';
 
+
 function getNewDrink() {
   const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
   const consumedProducts = cartState.map((e) => e.id);
@@ -35,7 +36,7 @@ function renderGift() {
 
 function Confirm(props) {
   const { packageTotal, finishShop } = props;
-  useEffect(() => () => {
+  useEffect(() => {
     finishShop();
   }, []);
   const id = localStorage.getItem('userID');

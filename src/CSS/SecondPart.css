@@ -8,245 +8,8 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
   margin: 0;
 }
 
-.conteinerCadastro2 {
-  align-items: center;
-  background-color: #FAFAFA;
-  display: flex;
-  flex-direction: column;
-  font-family: "Roboto";
-  justify-content: center;
-  width: 100%;
-  margin-top: 100px
-}
-
-.conteinerCadastro2 input {
-  border: #999999 solid 2px;
-  border-radius: 5px;
-  height: 25px;
-  width: 40vh;
-  text-align: center;
-  font-size: 15px;
-  color: #999999;
-}
-
-.conteinerNameSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 100%;
-}
-
-.conteinerCPFSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-}
-
-.conteinerCPFSP input {
-  width: 90%;
-}
-
-.conteinerBirthDaySP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 6px;
-  margin-left: 10px;
-}
-
-.conteinerBirthDaySP input {
-  height: 28px;
-  width: 90%;
-}
-
-.conteinerDDDSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: 8px;
-  width: 30%;
-}
-
-.conteinerDDDSP input {
-  width: 90%;
-}
-
-.conteinerPhoneSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 60%;
-}
-
-.conteinerPhoneSP input {
-  width: 90%;
-}
-
-.conteinerCEPSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-  width: 30%;
-}
-
-.conteinerCEPSP input {
-  width: 90%;
-}
-
-.conteinerStreetSP {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-  width: 60%;
-}
-
-.conteinerStreetSP input {
-  width: 100%;
-}
-
-.conteinerAdressNumberSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-  width: 20%;
-}
-
-.conteinerAdressNumberSP input {
-  width: 90%;
-}
-
-.conteinerComplementSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-  width: 70%;
-}
-
-.conteinerComplementSP input {
-  width: 100%;
-}
-
-.conteinerCitySP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-  width: 45%;
-}
-
-.conteinerCitySP input {
-  width: 90%;
-}
-
-.conteinerStateSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-  width: 45%;
-}
-
-.conteinerStateSP input {
-  width: 90%;
-}
-
-.BirthDayAndCPF {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 100%;
-}
-
-.conteinerCompletCellphoneSP {
-  align-items: center;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 100%;
-}
-
-.StreetAndCEP {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.adressAndComplement {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.cityAndState {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.buttonSP {
-  background-color: #F9C22F;
-  border: none;
-  border-radius: 30px;
-  font-size: 23px;
-  height: 50px;
-  width: 100%;
-}
-
-.conteinerButtonSP {
-  margin-top: 40px;
-  width: 50%;
-}
-
-.headerSP {
-  background-color: #333333;
-  height: 60px;
-  width: 100%;
-  margin-bottom: 1px;
-}
-
 .footerSP {
-  height: 90px;
+  height: 60px;
   margin: 0;
   position: absolute;
   bottom: 0;
@@ -256,14 +19,104 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
   background-position: bottom;
 }
 
-.register-form {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+.adress-conteiner {
+  margin-top:100px;
 }
 
-.conteinerCadastro2 input {
+.adress-register-div input {
+  border: 2px solid black;
   border-radius: 30px;
+  height: 35px;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.adress-register-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 5px auto;
+}
+
+.adress-register-div button {
+  align-self: center;
+  background-color: #333333;
+  border: 2px solid black;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 900;
+  height: 50px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  width: 50%;
+}
+
+.adress-register-div button:hover {
+  background: #333333;
+  color: white;
+}
+
+.adress-conteiner {
+  margin-top:100px;
+}
+
+.adress-make-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.adress-make-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.adress-register-ddd-div {
+  display: flex;
+  flex-direction: column;
+  width: 19%;
+  margin: 5px auto;
+}
+
+.adress-register-ddd-div input {
+  border: 2px solid black;
+  border-radius: 30px;
+  height: 35px;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.adress-register-city-div {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  margin: 5px auto;
+}
+
+.adress-register-city-div input {
+  border: 2px solid black;
+  border-radius: 30px;
+  height: 35px;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.adress-register-state-div {
+  display: flex;
+  flex-direction: column;
+  width: 24%;
+  margin: 5px auto;
+}
+
+.adress-register-state-div select {
+  border: 2px solid black;
+  margin-top: 5px;
+  height: 40px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
 }

@@ -6,8 +6,6 @@ import '../CSS/Login.css';
 import ambev from '../images/ambev.png';
 import logo from '../images/biglogo.png';
 
-const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
-
 function Login(props) {
   const { data } = props;
   const [email, setEmail] = useState('');
@@ -15,19 +13,27 @@ function Login(props) {
   const history = useHistory();
 
   const clickToEnter = (data, email, password, history) => {
-    const exist = (data)
-      ? data.some((elem) => elem.email === email)
-      : false;
-    const checkPassword = (data)
-      ? data.some((elem) => (elem.email === email && elem.password === password))
-      : false;
-    if (checkPassword) {
-      localStorage.setItem('user', JSON.stringify({ log: email }));
-      history.push('/mainPurchase');
+    // const exist = (data)
+    //   ? data.some((elem) => elem.email === email)
+    //   : false;
+    // const checkPassword = (data)
+    //   ? data.some((elem) => (elem.email === email && elem.password === password))
+    //   : false;
+    const allDataOnLS= JSON.parse(localStorage.getItem('usersData') || '[]');
+    const existLS = allDataOnLS.some((elem) => elem.email === email);
+    const checkLSPassword = allDataOnLS.some((elem) => (elem.email === email && elem.password === password));
+    if (checkLSPassword) {
+      // const InfoUser = (checkLSPassword) 
+      //   ? allDataOnLS.map((elem) => elem.email === email)
+      //   : data.map((elem) => elem.email === email);
+      const InfoUser = allDataOnLS.filter((elem) => elem.email === email);
+      console.log(InfoUser);
+      localStorage.setItem('user', JSON.stringify({log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id}));
+      history.push("/mainPurchase");
       return;
     }
-    if (exist) {
-      alert('Senha invalida');
+    if (existLS) {
+      alert("Senha invalida");
       return;
     }
     alert('Email não cadastrado!');
