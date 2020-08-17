@@ -66,7 +66,7 @@ class MainPurchase extends Component {
   renderindividualButton() {
     return (
       <div className="conteinerButtonMP">
-        <Link to="/products-list">
+        <Link to="/aig-grupo5/products-list">
           <button
             className="ButtonMainPurchase"
             type="button"
@@ -81,7 +81,7 @@ class MainPurchase extends Component {
   renderGroupButton() {
     return (
       <div className="conteinerButtonMP">
-        <Link to="/event-choice">
+        <Link to="/aig-grupo5/event-choice">
           <button
             className="ButtonMainPurchase"
             type="button"
@@ -107,7 +107,7 @@ class MainPurchase extends Component {
         </div>
         <div className="footer">
           <div />
-          <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+          <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
         </div>
       </div>
     );

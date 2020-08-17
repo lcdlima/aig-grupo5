@@ -180,7 +180,7 @@ function GroupCart(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <Link to="mainPurchase"><div><img src={logo} alt="" width="100px" /></div></Link>
+        <Link to="/aig-grupo5/mainPurchase"><div><img src={logo} alt="" width="100px" /></div></Link>
         <h1>Carrinho</h1>
         <div />
       </div>
@@ -209,13 +209,13 @@ function GroupCart(props) {
                 </div>
               </div>
             )}
-          {user.log === event.owner.log && <Link to="group-finish-order"><button className="finish-order" disabled={(event.products.length === 0)} type="button" onClick={() => changeDates(deliveryTime, pickupDate, pickupTime, props)}>Finalizar Pedido</button></Link>}
+          {user.log === event.owner.log && <Link to="/aig-grupo5/group-finish-order"><button className="finish-order" disabled={(event.products.length === 0)} type="button" onClick={() => changeDates(deliveryTime, pickupDate, pickupTime, props)}>Finalizar Pedido</button></Link>}
         </div>
       )}
       <div className="footer">
         <GroupBackToProductsList />
-        <Link to={`/event-page/${event.id}`}><h3>{event.name}</h3></Link>
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+        <Link to={`/aig-grupo5/event-page/${event.id}`}><h3>{event.name}</h3></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

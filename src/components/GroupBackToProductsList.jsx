@@ -5,7 +5,7 @@ import bottles from '../images/bottles.svg';
 function GroupBackToProductsList() {
   return (
     <div>
-      <Link to="/group-products-list"><img src={bottles} width="30pc" alt="" /></Link>
+      <Link to="/aig-grupo5/group-products-list"><img src={bottles} width="30pc" alt="" /></Link>
     </div>
   );
 }

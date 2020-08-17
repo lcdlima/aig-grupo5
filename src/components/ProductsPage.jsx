@@ -69,7 +69,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
     <div className="products-container">
       {(selectedFilter === 'Todos') && list.map((e) => (
         <div>
-          <Link to={`/productdetails/${e.id}`}>
+          <Link to={`/aig-grupo5/productdetails/${e.id}`}>
             <div className="products-list">
               <img src={e.thumbnail} width="100px" alt="" />
               <p>{e.productName}</p>
@@ -82,7 +82,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
       {(selectedFilter !== 'Todos') && list.filter((e) => e.category === selectedFilter)
         .map((e) => (
           <div>
-            <Link to={`/productdetails/${e.id}`}>
+            <Link to={`/aig-grupo5/productdetails/${e.id}`}>
               <div className="products-list">
                 <img src={e.thumbnail} width="100px" alt="" />
                 <p>{e.productName}</p>
@@ -151,11 +151,11 @@ function ProductsPage(props) {
   return (
     <div className="products-page">
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         {renderSearchInput(searchBy, setSearchBy)}
         <div className="cart-img">
           <p>{getTotalCart(cartState)}</p>
-          <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>
+          <Link to="/aig-grupo5/cart"><img src={cart} alt="cart" width="30px" /></Link>
         </div>
       </div>
       <div className="container">
@@ -168,7 +168,7 @@ function ProductsPage(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

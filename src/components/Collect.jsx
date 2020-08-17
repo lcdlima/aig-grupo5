@@ -28,7 +28,7 @@ function Payment(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Pagamento</h1>
         <div />
       </div>
@@ -53,7 +53,7 @@ function Payment(props) {
         </div>
         <div className="payment-btns">
           <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
-          <Link to="/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
+          <Link to="/aig-grupo5/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
         </div>
       </div>
       <div>
@@ -62,7 +62,7 @@ function Payment(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

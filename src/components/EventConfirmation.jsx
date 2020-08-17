@@ -18,7 +18,7 @@ function EventConfirmation(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
       <div className="container">
         <h3>O seguinte evento foi criado:</h3>
@@ -35,13 +35,13 @@ function EventConfirmation(props) {
         <p>Delegadis gente finis, bibendum egestas augue arcu ut est. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis. Paisis, filhis, espiritis santis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis.</p>
         <p>Mé faiz elementum girarzis, nisi eros vermeio. Diuretics paradis num copo é motivis de denguis. A ordem dos tratores não altera o pão duris. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.</p>
         <div className="agreement-buttons">
-          <Link to={`/event-page/${event.id}`}><button>Concordo</button></Link>
-          <Link to="/mainPurchase" onClick={() => deleteEvent(event)}><button>Discordo</button></Link>
+          <Link to={`/aig-grupo5/event-page/${event.id}`}><button>Concordo</button></Link>
+          <Link to="/aig-grupo5/mainPurchase" onClick={() => deleteEvent(event)}><button>Discordo</button></Link>
         </div>
       </div>
       <div className="footer">
         <div />
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ const clickToRegister = (
   stateLetters, saveUserAdress, history,
 ) => {
   saveUserAdress(CEP, street, adressNumber, complement, city, stateLetters);
-  history.push('/RegisterCard');
+  history.push('/aig-grupo5/RegisterCard');
 };
 
 const renderCEPInput = (

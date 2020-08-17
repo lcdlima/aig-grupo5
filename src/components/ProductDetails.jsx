@@ -44,10 +44,10 @@ function ProductDetails(props) {
     <div>
       <div>
         <div className="products-page-nav">
-          <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+          <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
           <div className="cart-img">
             <p>{getTotalCart(cartState)}</p>
-            <Link to="/cart"><img src={cart} alt="cart" width="30px" /></Link>
+            <Link to="/aig-grupo5/cart"><img src={cart} alt="cart" width="30px" /></Link>
           </div>
         </div>
         <div className="container">
@@ -64,7 +64,7 @@ function ProductDetails(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

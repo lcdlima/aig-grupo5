@@ -28,7 +28,7 @@ class ResumeCard extends React.Component {
                   <p>Compra realizada em {extraInfo[index].day}</p>
                   <p>Valor total de {total}</p>
                   <p>{(Final.collection.isDelivery) ? 'Delivery' : 'Retirada em loja'}</p>
-                  <Link to={`/Detalhes/${Final.id}`}>detalhes</Link>
+                  <Link to={`/aig-grupo5/Detalhes/${Final.id}`}>detalhes</Link>
                 </div>
               );
             })

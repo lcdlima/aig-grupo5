@@ -129,7 +129,7 @@ const clickToRegister = (
     email, password, newId, name, CPF, birthDay,
     code, phone, saveUserPessoalInfo, history,
   );
-  history.push("/RegisterAdress");
+  history.push("/aig-grupo5/RegisterAdress");
 }
 
 const isDisabled = (

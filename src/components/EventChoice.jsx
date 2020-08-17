@@ -52,15 +52,15 @@ function EventChoice(props) {
           Buscar
 
         </button>
-        <Link className="new-event" to="/create-event">
+        <Link className="new-event" to="/aig-grupo5/create-event">
           <p>Cadastrar Novo Evento</p>
 
         </Link>
-        {redirect && <Redirect to={`/event-page/${searchedID}`} />}
+        {redirect && <Redirect to={`/aig-grupo5/event-page/${searchedID}`} />}
       </div>
       <div className="footer">
         <div />
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
 

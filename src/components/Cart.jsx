@@ -133,7 +133,7 @@ function Cart(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Carrinho</h1>
         <div />
       </div>
@@ -144,12 +144,12 @@ function Cart(props) {
         {(items[0].cart.length > 0) && renderCollectionOptions(changeToDelivery, changeToCollect)}
         {renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal)}
         {isDelivery
-          ? <Link to="/payment"><button className="finish-order" disabled={((finalPrice < 0.01))} type="button">Finalizar Pedido</button></Link>
-          : <Link to="/collect"><button className="finish-order" type="button">Finalizar Pedido</button></Link>}
+          ? <Link to="/aig-grupo5/payment"><button className="finish-order" disabled={((finalPrice < 0.01))} type="button">Finalizar Pedido</button></Link>
+          : <Link to="/aig-grupo5/collect"><button className="finish-order" type="button">Finalizar Pedido</button></Link>}
       </div>
       <div className="footer">
         <BackToProductsList />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

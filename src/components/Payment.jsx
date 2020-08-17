@@ -78,7 +78,7 @@ function Payment(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Pagamento</h1>
         <div />
       </div>
@@ -123,7 +123,7 @@ function Payment(props) {
             </div>
           </div>
         </div>
-        <Link to="/confirm">
+        <Link to="/aig-grupo5/confirm">
           <button
             className="finish-shop-button"
             onClick={() => finishThePurchaser(
@@ -137,7 +137,7 @@ function Payment(props) {
       </div>
       <div className="footer">
         <BackToProductsList />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

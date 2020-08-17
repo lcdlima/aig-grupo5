@@ -28,7 +28,7 @@ function GroupFinishOrder(props) {
       </div>
       <div className="footer">
         <GroupBackToProductsList />
-        <Link to="/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );
