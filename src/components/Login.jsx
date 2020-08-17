@@ -19,7 +19,7 @@ function Login(props) {
     // const checkPassword = (data)
     //   ? data.some((elem) => (elem.email === email && elem.password === password))
     //   : false;
-    const allDataOnLS= JSON.parse(localStorage.getItem('usersData') || '[]');
+    const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
     const existLS = allDataOnLS.some((elem) => elem.email === email);
     const checkLSPassword = allDataOnLS.some((elem) => (elem.email === email && elem.password === password));
     if (checkLSPassword) {
@@ -28,7 +28,7 @@ function Login(props) {
       //   : data.map((elem) => elem.email === email);
       const InfoUser = allDataOnLS.filter((elem) => elem.email === email);
       console.log(InfoUser);
-      localStorage.setItem('user', JSON.stringify({log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id}));
+      localStorage.setItem('user', JSON.stringify({ log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id }));
       history.push("/aig-grupo5/mainPurchase");
       return;
     }
@@ -86,9 +86,9 @@ function Login(props) {
         {renderPasswordInput(password, setPassword)}
         {renderButtonInput(data, email, password, history)}
         <Link to="/aig-grupo5/register" className="registeLink"> Ainda não sou cadastrado</Link>
-        <div className="footerL">
-          <img src={ambev} alt="ambevLogo" />
-        </div>
+      </div>
+      <div className="footerL">
+        <img src={ambev} alt="ambevLogo" />
       </div>
     </div>
   );
