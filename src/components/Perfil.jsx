@@ -7,8 +7,7 @@ import packageList from '../services/packageList';
 import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
 import ResumeCard from './ResumeCard';
-
-const user = JSON.parse(localStorage.getItem('user'));
+import ResumeGroupCard from './ResumeGroupCard';
 
 class Perfil extends Component {
   constructor(props) {
@@ -21,23 +20,32 @@ class Perfil extends Component {
       preservedClicked: false,
       moneyClicked: false,
       purchase: [],
+      purchaseGroup: [],
       shopstore: [],
       obj: {},
     };
   }
 
   componentDidMount() {
-    console.log(user);
+    const user = JSON.parse(localStorage.getItem('user'));
     this.setState({ name: user.name, email: user.log });
-    const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
+    const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed')) || [];
     const purchase = shopstore.reduce((arr, e) => {
       if (e.buyerId === user.log) {
         return [...arr, e.id_compra];
       } return arr;
     }, []);
-    let obj = {};
+    const shopstoreGroup = JSON.parse(localStorage.getItem('storedEvents')) || [];
+    const purchaseGroup = shopstoreGroup.reduce((arr, first) => {
+      const existIn = first.participants.some((second) => second.log === user.log);
+      if (existIn) {
+        return [...arr, first.id];
+      }
+      return arr;
+    }, []);
+    let obj = {purchaseGroup};
     purchase.forEach((e) => obj = { ...obj, [e]: false });
-    this.setState({ purchase, shopstore, obj });
+    this.setState({ purchase, shopstore, obj, purchaseGroup });
   }
 
   renderPerfilHeader() {
@@ -52,24 +60,23 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
-    let arrResume = []
+    let arrInvidualResume = []
     if (purchase.length > 4) {
-      arrResume = purchase.reduce((arr, elem, index) => {
+      arrInvidualResume = purchase.reduce((arr, elem, index) => {
         if(index > (purchase.length - 5)) {
           return [...arr, elem.id_compra];
         }
         return arr;
       },[]);
     } else {
-      arrResume = purchase;
+      arrInvidualResume = purchase;
     }
-    // console.log(arrResume)
     return (
       <div>
         {/* <img src={} alt="arrow" /> */}
         <h2>{(individualClicked) ? '⌄' : '›'}</h2>
         <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
-        {individualClicked && <ResumeCard purchaseList={arrResume} />}
+        {individualClicked && <ResumeCard purchaseList={arrInvidualResume} />}
 {/* 
         {individualClicked && purchase.map((e, i) => (
           <div>
@@ -98,7 +105,18 @@ class Perfil extends Component {
   }
 
   renderGroupPurchase() {
-    const { groupClicked } = this.state;
+    const { groupClicked, purchaseGroup } = this.state;
+    let arrGroupResume = [];
+    if (purchaseGroup.length > 4) {
+      arrGroupResume = purchaseGroup.reduce((arr, elem, index) => {
+        if(index > (purchaseGroup.length - 5)) {
+          return [...arr, elem.id_compra];
+        }
+        return arr;
+      },[]);
+    } else {
+      arrGroupResume = purchaseGroup;
+    }
     return (
       <div
         onClick={() => this.setState({ groupClicked: !groupClicked })}
@@ -106,6 +124,7 @@ class Perfil extends Component {
         {/* <img src={} alt="arrow" /> */}
         <h2>{(groupClicked) ? '⌄' : '›'}</h2>
         <h2>Meus Eventos</h2>
+        {groupClicked && <ResumeGroupCard purchaseList={purchaseGroup} />}
         {}
       </div>
     );

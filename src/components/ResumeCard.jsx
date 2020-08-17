@@ -16,12 +16,13 @@ class ResumeCard extends React.Component {
           purchaseList.map((initial) => {
             return shopstore.filter((middle) => middle.id_compra === initial).map((Final, index) => {
               const somaProdutos = Final.cart.reduce((acc, elem) => {
-                return acc + (productList[elem.id].originalPrice * elem.total);
+                return acc + (productList[elem.id].originalPrice * elem.total).toFixed(2);
               }, []);
               const discount = Final.pack.reduce((acc, elem) => {
                 const mult = (elem.total === '') ? 0 : elem.total;
-                return acc + (packageList[(elem.id - 1)].price * mult);
+                return acc + (packageList[(elem.id - 1)].price * mult).toFixed(2);
               }, []);
+              console.log(discount);
               const total = somaProdutos - discount;
               return (
                 <div>

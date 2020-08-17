@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import productList from '../services/productList';
-import { decrease, increase, chooseEvent, sendToCart } from '../actions/index';
+import {
+  decrease, increase, chooseEvent, sendToCart,
+} from '../actions/index';
 import '../CSS/ProductDetails.css';
 import '../CSS/Footer.css';
 import GroupBackToProductsList from './GroupBackToProductsList';
@@ -21,16 +23,15 @@ function addToCart(id, qnt, props) {
           id,
           qnt: product.qnt + qnt,
           user,
-        })
-        return acc;
-      } else {
-        acc.push(product);
+        });
         return acc;
       }
-    }, [])
-    chooseEvent({...event, products: newCart});
+      acc.push(product);
+      return acc;
+    }, []);
+    chooseEvent({ ...event, products: newCart });
   } else {
-    chooseEvent({...event, products: [...event.products, {id, qnt, user}]});
+    chooseEvent({ ...event, products: [...event.products, { id, qnt, user }] });
   }
   sendToCart(id, qnt);
 }
@@ -54,7 +55,7 @@ function renderIncrementButton(id, props) {
           <button type="button" onClick={() => increment(id)}>+</button>
         </div>
       </div>
-      <button type="button" onClick={() => {addToCart(Number(id), detailsTotal, props)}} disabled={!((detailsTotal > 0))}>Adicionar ao Carrinho</button>
+      <button type="button" onClick={() => { addToCart(Number(id), detailsTotal, props); }} disabled={!((detailsTotal > 0))}>Adicionar ao Carrinho</button>
     </div>
   );
 }
@@ -65,26 +66,24 @@ function GroupProductDetails(props) {
   const product = productList.filter((e) => e.id === Number(id));
   const { event } = props;
 
-  useEffect(() => {
-    return () => {
-      const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
-      const newEvents = currentEvents.reduce((acc, e) => {
-        if (e.id !== event.id) {
-          acc.push(e)
-        } else {
-          acc.push(event)
-        }
-        return acc
-      }, [])
-      localStorage.setItem('storedEvents', JSON.stringify(newEvents));
-    }
+  useEffect(() => () => {
+    const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
+    const newEvents = currentEvents.reduce((acc, e) => {
+      if (e.id !== event.id) {
+        acc.push(e);
+      } else {
+        acc.push(event);
+      }
+      return acc;
+    }, []);
+    localStorage.setItem('storedEvents', JSON.stringify(newEvents));
   });
 
   return (
     <div>
       <div>
         <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+          <div><img src={logo} alt="" width="100px" /></div>
           <GroupCartIcon />
         </div>
         <div className="container">

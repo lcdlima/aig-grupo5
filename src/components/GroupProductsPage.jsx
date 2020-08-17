@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import productList from '../services/productList';
 import '../CSS/ProductsPage.css';
 import {
-  decrease, increase, chooseEvent, sendToCart
+  decrease, increase, chooseEvent, sendToCart,
 } from '../actions/index';
 import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
@@ -28,16 +28,15 @@ function addToCart(id, qnt, props) {
           id,
           qnt: product.qnt + qnt,
           user,
-        })
-        return acc;
-      } else {
-        acc.push(product);
+        });
         return acc;
       }
-    }, [])
-    chooseEvent({...event, products: newCart});
+      acc.push(product);
+      return acc;
+    }, []);
+    chooseEvent({ ...event, products: newCart });
   } else {
-    chooseEvent({...event, products: [...event.products, {id, qnt, user}]});
+    chooseEvent({ ...event, products: [...event.products, { id, qnt, user }] });
   }
   sendToCart(id, qnt);
 }
@@ -60,7 +59,7 @@ function renderFilter(selectedFilter, setSelectedFilter) {
 
 function renderAddButtons(id, props, setShowMessage, setPageHeight, setPageWidth) {
   const {
-    initialState, decrement, increment
+    initialState, decrement, increment,
   } = props;
   const total = initialState.filter((e) => e.id === id)[0].amount;
   return (
@@ -171,25 +170,23 @@ function GroupProductsPage(props) {
   const [pageWidth, setPageWidth] = useState(0);
   const { event } = props;
 
-  useEffect(() => {
-    return () => {
-      const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
-      const newEvents = currentEvents.reduce((acc, e) => {
-        if (e.id !== event.id) {
-          acc.push(e)
-        } else {
-          acc.push(event)
-        }
-        return acc
-      }, [])
-      localStorage.setItem('storedEvents', JSON.stringify(newEvents));
-    }
+  useEffect(() => () => {
+    const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
+    const newEvents = currentEvents.reduce((acc, e) => {
+      if (e.id !== event.id) {
+        acc.push(e);
+      } else {
+        acc.push(event);
+      }
+      return acc;
+    }, []);
+    localStorage.setItem('storedEvents', JSON.stringify(newEvents));
   });
 
   return (
     <div className="products-page">
       <div className="products-page-nav">
-      <div><img src={logo} alt="" width="100px" /></div>
+        <div><img src={logo} alt="" width="100px" /></div>
         {renderSearchInput(searchBy, setSearchBy)}
         <GroupCartIcon />
       </div>
