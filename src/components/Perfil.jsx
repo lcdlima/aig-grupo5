@@ -8,8 +8,6 @@ import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
 import ResumeCard from './ResumeCard';
 
-
-
 class Perfil extends Component {
   constructor(props) {
     super(props);
@@ -53,14 +51,14 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
-    let arrResume = []
+    let arrResume = [];
     if (purchase.length > 4) {
       arrResume = purchase.reduce((arr, elem, index) => {
-        if(index > (purchase.length - 5)) {
+        if (index > (purchase.length - 5)) {
           return [...arr, elem.id_compra];
         }
         return arr;
-      },[]);
+      }, []);
     } else {
       arrResume = purchase;
     }
@@ -71,7 +69,7 @@ class Perfil extends Component {
         <h2>{(individualClicked) ? '⌄' : '›'}</h2>
         <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
         {individualClicked && <ResumeCard purchaseList={arrResume} />}
-{/* 
+        {/*
         {individualClicked && purchase.map((e, i) => (
           <div>
             <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>

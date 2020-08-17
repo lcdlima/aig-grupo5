@@ -29,7 +29,7 @@ function EventChoice(props) {
   return (
     <div className="overall-div">
       <div className="products-page-nav">
-        <img src={logo} alt="" width="100px" />
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
       <div className="choive-div">
         <label htmlFor="id-field">ID do Evento</label>

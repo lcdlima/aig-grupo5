@@ -19,21 +19,21 @@ function Login(props) {
     // const checkPassword = (data)
     //   ? data.some((elem) => (elem.email === email && elem.password === password))
     //   : false;
-    const allDataOnLS= JSON.parse(localStorage.getItem('usersData') || '[]');
+    const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
     const existLS = allDataOnLS.some((elem) => elem.email === email);
     const checkLSPassword = allDataOnLS.some((elem) => (elem.email === email && elem.password === password));
     if (checkLSPassword) {
-      // const InfoUser = (checkLSPassword) 
+      // const InfoUser = (checkLSPassword)
       //   ? allDataOnLS.map((elem) => elem.email === email)
       //   : data.map((elem) => elem.email === email);
       const InfoUser = allDataOnLS.filter((elem) => elem.email === email);
       console.log(InfoUser);
-      localStorage.setItem('user', JSON.stringify({log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id}));
-      history.push("/mainPurchase");
+      localStorage.setItem('user', JSON.stringify({ log: InfoUser[0].email, name: InfoUser[0].name, id: InfoUser[0].id }));
+      history.push('/mainPurchase');
       return;
     }
     if (existLS) {
-      alert("Senha invalida");
+      alert('Senha invalida');
       return;
     }
     alert('Email não cadastrado!');
@@ -67,7 +67,7 @@ function Login(props) {
   const renderButtonInput = (data, email, password) => (
     <div className="conteinerButton">
       <button
-        style={{ marginBottom: '30px' }}
+        style={{ marginBottom: '10px' }}
         className="ButtonInput"
         type="button"
         onClick={() => clickToEnter(data, email, password, history)}
@@ -81,14 +81,14 @@ function Login(props) {
     <div>
       <div className="products-page-nav" />
       <div className="conteinerLogin">
-        <img src={logo} width="150px" style={{ marginBottom: '30px' }} alt="" />
+        <img src={logo} width="100px" style={{ marginBottom: '10px' }} alt="" />
         {renderEmailInput(email, setEmail)}
         {renderPasswordInput(password, setPassword)}
         {renderButtonInput(data, email, password, history)}
         <Link to="/register" className="registeLink"> Ainda não sou cadastrado</Link>
-        <div className="footerL">
-          <img src={ambev} alt="ambevLogo" />
-        </div>
+      </div>
+      <div className="footerL">
+        <img src={ambev} alt="ambevLogo" />
       </div>
     </div>
   );
