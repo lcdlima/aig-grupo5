@@ -79,7 +79,7 @@ button:focus {
 .footerL {
   height: 130px;
   margin: 0;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background-image: url('../images/maluma_baixo_desktop.png');
