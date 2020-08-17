@@ -29,3 +29,7 @@
 .icon-text-cart-div h3 {
   margin: 0 0 0 10px;
 }
+
+.footer a h3 {
+  margin: 0;
+}

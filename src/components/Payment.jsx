@@ -26,17 +26,18 @@ const finishThePurchaser = (
     number: addressNumber,
     city: addressCity,
     state: addressState,
-  }
+  };
   if (extraData === '' || !extraData) {
     localStorage.setItem('extraPurchaseData', JSON.stringify([newObj]));
   } else {
     localStorage.setItem('extraPurchaseData', JSON.stringify([...extraData, newObj]));
   }
   purchaseFinished();
-}
+};
 
 function getCardInfo(setName, setNumber, setDate, setCvv) {
-  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
+  const userid = JSON.parse(localStorage.getItem('user')).log;
+  const storage = JSON.parse(localStorage.getItem('dataToPurchase')).filter((e) => e.email === userid)[0];
   setName(storage.card.cardHolder);
   setNumber(storage.card.number);
   setDate(storage.card.dueDate);
@@ -44,10 +45,11 @@ function getCardInfo(setName, setNumber, setDate, setCvv) {
 }
 
 function getAddressInfo(
-    setAddressCep, setAddressComplement, setAddressNumber,
-    setAddressState, setAddressStreet, setAddressCity,
-  ) {
-  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
+  setAddressCep, setAddressComplement, setAddressNumber,
+  setAddressState, setAddressStreet, setAddressCity,
+) {
+  const userid = JSON.parse(localStorage.getItem('user')).log;
+  const storage = JSON.parse(localStorage.getItem('dataToPurchase')).filter((e) => e.email === userid)[0];
   setAddressCep(storage.address.cep);
   setAddressComplement(storage.address.complement);
   setAddressNumber(storage.address.number);
@@ -97,7 +99,7 @@ function Payment(props) {
                   <input type="month" min="2020-08" placeholder="data de vencimento" onChange={(e) => setDate(e.target.value)} value={date} />
                   <input type="text" placeholder="cvv" onChange={(e) => setCvv(e.target.value)} value={cvv} />
                 </div>
-              <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
+                <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
               </div>
             </div>
           </div>
@@ -123,6 +125,7 @@ function Payment(props) {
         </div>
         <Link to="/confirm">
           <button
+            className="finish-shop-button"
             onClick={() => finishThePurchaser(
               addressStreet, addressNumber, addressCity, addressState, purchaseFinished,
             )}

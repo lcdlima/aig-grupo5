@@ -10,7 +10,8 @@ import MapComponent from './MapComponent';
 import logo from '../images/logo.svg';
 
 function getCardInfo(setName, setNumber, setDate, setCvv) {
-  const storage = JSON.parse(localStorage.getItem('dataToPurchase'))[0];
+  const userid = JSON.parse(localStorage.getItem('user')).log;
+  const storage = JSON.parse(localStorage.getItem('dataToPurchase')).filter(e => e.email === userid)[0];
   setName(storage.card.cardHolder); setNumber(storage.card.number); setDate(storage.card.dueDate); setCvv(storage.card.cvv);
 }
 
@@ -34,12 +35,12 @@ function Payment(props) {
       <div className="container">
         <div>
           <div className="collection-container">
-            <h2 style={{textAlign: 'center', paddingTop: '10px'}}>Detalhes do Pagamento</h2>
+            <h2 style={{ textAlign: 'center', paddingTop: '10px' }}>Detalhes do Pagamento</h2>
             <div className="price">
               <p>Valor a pagar </p>
               <p>{`${(finalValue(items) - discount + deliverfee).toFixed(2)}`}</p>
             </div>
-            <p style={{fontWeight: 900}}>Dados do Cartão</p>
+            <p style={{ fontWeight: 900 }}>Dados do Cartão</p>
             <div className="card-field">
               <input type="text" placeholder="nome do comprador" onChange={(e) => setName(e.target.value)} value={name} />
               <input type="number" placeholder="numero do cartao" onChange={(e) => setNumber(e.target.value)} value={number} />

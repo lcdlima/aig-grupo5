@@ -21,7 +21,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .buttons-div {
@@ -32,26 +32,34 @@
   width: 300px;
 }
 
+.buttons-div a{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+
+}
+
 .info-div {
   align-items: center;
-  background-color: #FFCD02;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 200px;
-  padding: 30px;
   width: 350px;
 }
 
 .share-div{
   text-align: center;
-  margin: 70px 0 20px 0;
+  margin: 10px 0 20px 0;
 }
 
 .icon-text-div {
   align-items: center;
   display: flex;
   flex-direction: row;
+}
+
+.info-div h3 {
+  margin: 0;
 }
 
 .icon-text-div h3 {

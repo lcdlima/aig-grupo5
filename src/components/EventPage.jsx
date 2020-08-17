@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import logo from '../images/logo.svg';
 import userchar from '../images/user.svg';
-import { FacebookShareButton, FacebookIcon, TelegramShareButton, TelegramIcon, WhatsappShareButton, WhatsappIcon, TwitterShareButton, TwitterIcon } from "react-share";
+import {
+  FacebookShareButton, FacebookIcon, TelegramShareButton, TelegramIcon, WhatsappShareButton, WhatsappIcon, TwitterShareButton, TwitterIcon,
+} from 'react-share';
 
 const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
 
@@ -30,10 +32,10 @@ function deleteNonParticipantProducts(props) {
   const user = JSON.parse(localStorage.getItem('user'));
   const newProducts = event.products.reduce((acc, p) => {
     if (p.user.log !== user.log) {
-      acc.push(p)
+      acc.push(p);
     }
-    return acc
-  }, [])
+    return acc;
+  }, []);
   chooseEvent({ ...event, products: newProducts });
 }
 
@@ -42,12 +44,12 @@ function updateLocalStorage(props) {
   const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   const newEvents = currentEvents.reduce((acc, e) => {
     if (e.id !== event.id) {
-      acc.push(e)
+      acc.push(e);
     } else {
-      acc.push(event)
+      acc.push(event);
     }
-    return acc
-  }, [])
+    return acc;
+  }, []);
   localStorage.setItem('storedEvents', JSON.stringify(newEvents));
 }
 
@@ -74,10 +76,8 @@ function EventParticipation(isParticipant, setIsParticipant, props) {
 }
 
 function rearrangeDate(dateString) {
-
-  var numbers = dateString.substring(0,4);
-
-  return dateString.substring(5) + '-' + numbers
+  const numbers = dateString.substring(0, 4);
+  return `${dateString.substring(5)}-${numbers}`;
 }
 
 function EventPage(props) {
@@ -93,7 +93,7 @@ function EventPage(props) {
       if (p.log === user.log) {
         setIsParticipant(true);
       }
-    })
+    });
   }, []);
 
   return (
@@ -103,8 +103,6 @@ function EventPage(props) {
       </div>
       <div className="container">
         <div className="event-page-div">
-          <h2>{event.name}</h2>
-
           <div className="info-div">
             <h3>Informações do Evento</h3>
             <h2>{event.name}</h2>
@@ -116,10 +114,10 @@ function EventPage(props) {
 
           <div className="share-div">
             <h3>Compartilhe com Seus Amigos</h3>
-            <FacebookShareButton size={"32"} url={"www.jao.com.br/event-choice"} quote={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><FacebookIcon /></FacebookShareButton>
-            <WhatsappShareButton size={"32"} url={"www.jao.com.br/event-choice"} title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><WhatsappIcon /></WhatsappShareButton>
-            <TelegramShareButton size={"32"} url={"www.jao.com.br/event-choice"} title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TelegramIcon /></TelegramShareButton>
-            <TwitterShareButton size={"32"} url={"www.jao.com.br/event-choice"} title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TwitterIcon /></TwitterShareButton>
+            <FacebookShareButton size="32" url="www.jao.com.br/event-choice" quote={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><FacebookIcon /></FacebookShareButton>
+            <WhatsappShareButton size="32" url="www.jao.com.br/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><WhatsappIcon /></WhatsappShareButton>
+            <TelegramShareButton size="32" url="www.jao.com.br/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TelegramIcon /></TelegramShareButton>
+            <TwitterShareButton size="32" url="www.jao.com.br/event-choice" title={`Participe de ${event.name}. Só entrar no Jao e digitar Id: ${event.id} e Senha: ${event.password}`}><TwitterIcon /></TwitterShareButton>
           </div>
 
           <div className="icon-text-div">

@@ -68,3 +68,27 @@
   height: 40px;
   border-radius: 30px;
 }
+
+.agreement-buttons {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.agreement-buttons a {
+  width: 45%;
+}
+
+.agreement-buttons a button {
+  background-color: #666666;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 900;
+  height: 50px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  width: 100%;
+}

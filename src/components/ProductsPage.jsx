@@ -135,7 +135,7 @@ function changeProductList(e) {
 
 function renderSearchInput(searchBy, setSearchBy) {
   return (
-    <input placeholder="Pesquisar Produto" onChange={(e) => { setSearchBy(e.target.value); changeProductList(e.target.value); }} value={searchBy} />
+    <input placeholder="Pesquisar Produto" style={{ position: 'relative', left: '-5%' }} onChange={(e) => { setSearchBy(e.target.value); changeProductList(e.target.value); }} value={searchBy} />
   );
 }
 

@@ -12,11 +12,21 @@ h3 {
 
 h4 {
   padding-top: 10px;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 1.25rem;
   color: #FFCD00;
+  text-align: center;
 }
 
 select:focus {
   outline: none;
 }
+
+body {
+  font-family: 'Roboto';
+}
+
+button {
+  font-family: 'Roboto';
+}
+

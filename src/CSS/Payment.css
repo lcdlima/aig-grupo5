@@ -122,3 +122,15 @@
   text-align: center;
   padding-top: 10px;
 }
+
+.finish-shop-button {
+  display: block;
+  width: 50%;
+  border-radius: 30px;
+  height: 50px;
+  background-color: #616161;
+  color: white;
+  font-weight: 900;
+  width: 45%;
+  margin: 20px auto;
+}

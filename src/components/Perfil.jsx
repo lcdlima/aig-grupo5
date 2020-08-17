@@ -161,7 +161,7 @@ class Perfil extends Component {
   render() {
     const { name } = this.state;
     return (
-      <div>
+      <div className="container">
         {this.renderPerfilHeader()}
         <div className="sub-container">
           <h4>{`Olá ${name}`}</h4>

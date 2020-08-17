@@ -34,8 +34,10 @@ function EventConfirmation(props) {
         <p>Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.</p>
         <p>Delegadis gente finis, bibendum egestas augue arcu ut est. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis. Paisis, filhis, espiritis santis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis.</p>
         <p>Mé faiz elementum girarzis, nisi eros vermeio. Diuretics paradis num copo é motivis de denguis. A ordem dos tratores não altera o pão duris. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.</p>
-        <Link to={`/event-page/${event.id}`}><button>Concordo</button></Link>
-        <Link to="/mainPurchase" onClick={() => deleteEvent(event)}><button>Discordo</button></Link>
+        <div className="agreement-buttons">
+          <Link to={`/event-page/${event.id}`}><button>Concordo</button></Link>
+          <Link to="/mainPurchase" onClick={() => deleteEvent(event)}><button>Discordo</button></Link>
+        </div>
       </div>
       <div className="footer">
         <div />

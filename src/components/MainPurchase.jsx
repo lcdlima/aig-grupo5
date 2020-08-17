@@ -11,16 +11,18 @@ import { userData, clearTemporaryData } from '../actions/index';
 class MainPurchase extends Component {
   setUserDataToCart(obj, text, clearInProgress) {
     clearInProgress();
-    if(text === "none") {
+    if (text === 'none') {
       localStorage.setItem('dataToPurchase', JSON.stringify([obj]));
-      return
+      return;
     }
     const oldData = JSON.parse(localStorage.getItem('dataToPurchase') || '[]');
     localStorage.setItem('dataToPurchase', JSON.stringify([...oldData, obj]));
   }
 
   componentDidMount() {
-    const { data, temporaryData, saveUserData, clearInProgress } = this.props;
+    const {
+      data, temporaryData, saveUserData, clearInProgress,
+    } = this.props;
     const allDataOnLS = JSON.parse(localStorage.getItem('usersData') || '[]');
     // const objInLocalStorage = allDataOnLS.some((elem) => elem.email === user.log);
     // const objInStore = data.some((elem) => elem.email === user.log);
@@ -42,21 +44,21 @@ class MainPurchase extends Component {
 
       },
       card: {
-        number: temporaryData.cardName,
-        cvv: temporaryData.cardNumber,
-        cardHolder: temporaryData.CVV,
+        number: temporaryData.cardNumber,
+        cvv: temporaryData.CVV,
+        cardHolder: temporaryData.cardName,
         dueDate: temporaryData.dueDate,
       },
     };
     if (allDataOnLS.length > 0 && temporaryData.email !== '') {
       const newData = [...allDataOnLS, temporaryData];
       localStorage.setItem('usersData', JSON.stringify(newData));
-      this.setUserDataToCart(objTolocalStorage, "some", clearInProgress)
+      this.setUserDataToCart(objTolocalStorage, 'some', clearInProgress);
       // saveUserData(newData);
     }
     if (allDataOnLS.length < 1 && temporaryData.email !== '') {
       localStorage.setItem('usersData', JSON.stringify([temporaryData]));
-      this.setUserDataToCart(objTolocalStorage, "none", clearInProgress)
+      this.setUserDataToCart(objTolocalStorage, 'none', clearInProgress);
       // saveUserData(temporaryData);
     }
   }
