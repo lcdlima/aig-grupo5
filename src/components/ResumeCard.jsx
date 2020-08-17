@@ -10,26 +10,30 @@ const extraInfo = JSON.parse(localStorage.getItem('extraPurchaseData'));
 class ResumeCard extends React.Component {
   render() {
     const { purchaseList } = this.props;
+    console.log(purchaseList);
     return (
       <div>
         {
           purchaseList.map((initial) => {
             return shopstore.filter((middle) => middle.id_compra === initial).map((Final, index) => {
               const somaProdutos = Final.cart.reduce((acc, elem) => {
-                return acc + (productList[elem.id].originalPrice * elem.total).toFixed(2);
+                acc = parseInt(acc + parseInt(parseInt(productList[elem.id].originalPrice) * elem.total)).toFixed(2);
+                return acc;
               }, []);
+              console.log(Final.pack);
               const discount = Final.pack.reduce((acc, elem) => {
                 const mult = (elem.total === '') ? 0 : elem.total;
-                return acc + (packageList[(elem.id - 1)].price * mult).toFixed(2);
+                const acount = (acc === Number) ? acc : 0;
+                acc = acount + parseInt(packageList[(elem.id - 1)].price * mult);
+                return acc;
               }, []);
-              console.log(discount);
               const total = somaProdutos - discount;
               return (
-                <div>
+                <div className="perfil-elements-info">
                   <p>Compra realizada em {extraInfo[index].day}</p>
                   <p>Valor total de {total}</p>
                   <p>{(Final.collection.isDelivery) ? 'Delivery' : 'Retirada em loja'}</p>
-                  <Link to={`/Detalhes/${Final.id}`}>detalhes</Link>
+                  {/* <Link to={`/Detalhes/${Final.id}`}>detalhes</Link> */}
                 </div>
               );
             })

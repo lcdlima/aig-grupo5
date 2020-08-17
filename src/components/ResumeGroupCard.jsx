@@ -20,20 +20,24 @@ class ResumeGroupCard extends React.Component {
         {
           purchaseList.map((initial) => {
             return shopstoreGroup.filter((middle) => middle.id === initial).map((Final, index) => {
+              console.log(Final);
               const somaProdutos = Final.products.reduce((acc, elem) => {
                 if ( elem.user.log === user.log ) {
-                  console.log(acc);
-                  return acc + (productList[(elem.id -1)].originalPrice* elem.qnt);
+                  acc = parseInt(acc + parseInt(productList[(elem.id -1)].originalPrice * elem.qnt)).toFixed(2);
                 }
                 return acc;
               }, []);
               const total = somaProdutos;
               return (
-                <div>
+                <div className="perfil-elements-info">
+                  <p>Evento: {Final.name}</p>
                   <p>Compra realizada em {shopstoreGroup[index].date}</p>
                   <p>Valor total de {total}</p>
-                  <p>{(shopstoreGroup[index].date === today) ? 'O evento já foi realizado' : 'Oevento ainda vai acontecer'}</p>
-                  <Link to={`/DetalhesGroup/${Final.id}`}>detalhes</Link>
+                  <p>{(shopstoreGroup[index].date === today)
+                    ? 'O evento já foi realizado'
+                    : 'O evento ainda vai acontecer'}
+                  </p>
+                  {/* <Link to={`/DetalhesGroup/${Final.id}`}>detalhes</Link> */}
                 </div>
               );
             })

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import productList from '../services/productList';
 import packageList from '../services/packageList';
 import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
 import ResumeCard from './ResumeCard';
 import ResumeGroupCard from './ResumeGroupCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight, faCaretDown, faHome } from '@fortawesome/free-solid-svg-icons';
+import '../CSS/Perfil.css';
 
 class Perfil extends Component {
   constructor(props) {
@@ -72,34 +74,18 @@ class Perfil extends Component {
       arrInvidualResume = purchase;
     }
     return (
-      <div>
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(individualClicked) ? '⌄' : '›'}</h2>
-        <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
+      <div className="perfil-principal-div">
+        <div className="perfil-make-flex">
+          {individualClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!individualClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2 onClick={() => this.setState(
+            { individualClicked: !individualClicked }
+          )}
+          >
+            Meus Pedidos
+          </h2>
+        </div>
         {individualClicked && <ResumeCard purchaseList={arrInvidualResume} />}
-{/* 
-        {individualClicked && purchase.map((e, i) => (
-          <div>
-            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
-            {
-              obj[e] && (
-                <div>
-                  {shopstore.filter((el) => el.id_compra === e)[0].cart.map((ell) => {
-                    const products = (productList.filter((elll) => elll.id === ell.id)[0]);
-                    return (
-                      <div className="make-flex">
-                        <p>{`${products.productName} ${products.package_volume}L`}</p>
-
-                        <p>{`x ${ell.total}`}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              )
-            }
-          </div>
-        ))}
-        {} */}
       </div>
     );
   }
@@ -119,13 +105,15 @@ class Perfil extends Component {
     }
     return (
       <div
+        className="perfil-principal-div"
         onClick={() => this.setState({ groupClicked: !groupClicked })}
       >
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(groupClicked) ? '⌄' : '›'}</h2>
-        <h2>Meus Eventos</h2>
+        <div className="perfil-make-flex">
+          {groupClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!groupClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2>Meus Eventos</h2>
+        </div>
         {groupClicked && <ResumeGroupCard purchaseList={purchaseGroup} />}
-        {}
       </div>
     );
   }
@@ -134,17 +122,22 @@ class Perfil extends Component {
     const { preservedClicked, purchase, shopstore } = this.state;
     return (
       <div
+        className="perfil-principal-div"
         onClick={() => this.setState({ preservedClicked: !preservedClicked })}
       >
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(preservedClicked) ? '⌄' : '›'}</h2>
-        <h2>Quantidade Preservada</h2>
-        {preservedClicked && `${purchase.reduce((summ, e) => {
-          const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
-          const total = packages.reduce((sum, ell) => sum + (packageList.filter((elll) => elll.id === ell.id)[0].weight * Number(ell.total)), 0);
-          return summ + total;
-        }, 0)}g de plástico reduzido`}
-        {}
+        <div className="perfil-make-flex">
+          {preservedClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!preservedClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2>Consumo reduzido</h2>
+        </div>
+        <div className="text-perfil">
+          {preservedClicked && `${purchase.reduce((summ, e) => {
+            const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
+            const total = packages.reduce((sum, ell) => {
+              return sum + (packageList.filter((elll) => elll.id === ell.id)[0].weight * Number(ell.total))}, 0);
+            return summ + total;
+          }, 0)}g de plástico reduzido`}
+        </div>
       </div>
     );
   }
@@ -153,26 +146,31 @@ class Perfil extends Component {
     const { moneyClicked, shopstore, purchase } = this.state;
     return (
       <div
+        className="perfil-principal-div"
         onClick={() => this.setState({ moneyClicked: !moneyClicked })}
       >
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(moneyClicked) ? '⌄' : '›'}</h2>
-        <h2>Dinheiro Economizado</h2>
-        {moneyClicked && `R$${(purchase.reduce((summ, e) => {
-          const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
-          const total = packages.reduce((sum, ell) => sum + (packageList.filter((elll) => elll.id === ell.id)[0].price * Number(ell.total)), 0);
-          return summ + total;
-        }, 0)).toFixed(2)} economizados`}
-        {}
+        <div  className="perfil-make-flex">
+          {moneyClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!moneyClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2>Quantidade economizada</h2>
+        </div>
+        <div className="text-perfil">
+          {moneyClicked && `R$${(purchase.reduce((summ, e) => {
+            const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
+            const total = packages.reduce((sum, ell) => {
+              return sum + (packageList.filter((elll) => elll.id === ell.id)[0].price * Number(ell.total))
+            }, 0);
+            return summ + total;
+          }, 0)).toFixed(2)} economizados`}
+        </div>
       </div>
     );
   }
 
   renderPerfilFooter() {
     return (
-      <div className="footer">
+      <div className="footer" style={{height: "50px"}}>
         <div />
-        <Link to="/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     );
   }
@@ -182,6 +180,7 @@ class Perfil extends Component {
     return (
       <div>
         {this.renderPerfilHeader()}
+      <div className="conteiner-perfil">
         <div className="sub-container">
           <h4>{`Olá ${name}`}</h4>
           {this.renderIndividualPurchase()}
@@ -190,6 +189,7 @@ class Perfil extends Component {
           {this.renderMoneySaved()}
         </div>
         {this.renderPerfilFooter()}
+      </div>
       </div>
     );
   }
