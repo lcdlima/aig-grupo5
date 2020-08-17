@@ -8,7 +8,7 @@ import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
 import ResumeCard from './ResumeCard';
 
-const user = JSON.parse(localStorage.getItem('user'));
+
 
 class Perfil extends Component {
   constructor(props) {
@@ -27,6 +27,7 @@ class Perfil extends Component {
   }
 
   componentDidMount() {
+    const user = JSON.parse(localStorage.getItem('user'));
     console.log(user);
     this.setState({ name: user.name, email: user.log });
     const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));

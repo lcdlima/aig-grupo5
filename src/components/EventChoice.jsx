@@ -11,9 +11,9 @@ function searchEvent(id, password, setRedirect, chooseEvent) {
   const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   let eventExist = [];
   if (currentEvents !== null) {
-    eventExist = currentEvents.filter((event) => event.id === (id));
+    eventExist = currentEvents.filter((event) => event.id === id);
   }
-  if (eventExist.length === 0 || (eventExist[0].password) !== (password)) {
+  if (eventExist.length === 0 || eventExist[0].password !== password) {
     alert('Id ou Senha inválida');
   } else {
     chooseEvent(eventExist[0]);
@@ -29,7 +29,7 @@ function EventChoice(props) {
   return (
     <div className="overall-div">
       <div className="products-page-nav">
-        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <img src={logo} alt="" width="100px" />
       </div>
       <div className="choive-div">
         <label htmlFor="id-field">ID do Evento</label>

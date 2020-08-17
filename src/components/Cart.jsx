@@ -126,7 +126,7 @@ function Cart(props) {
   const {
     packageTotal, changeInput, changeToDelivery, changeToCollect, isDelivery,
   } = props;
-  const items = JSON.parse(localStorage.getItem('temporaryStorage'));
+  const items = JSON.parse(localStorage.getItem('temporaryStorage')) || [];
   const purchaseTotal = finalValue(items[0].cart).toFixed(2);
   const discount = calculateDiscount(packageTotal).toFixed(2);
   const finalPrice = purchaseTotal - discount;

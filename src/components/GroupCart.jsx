@@ -180,7 +180,7 @@ function GroupCart(props) {
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="mainPurchase"><div><img src={logo} alt="" width="100px" /></div></Link>
         <h1>Carrinho</h1>
         <div />
       </div>
