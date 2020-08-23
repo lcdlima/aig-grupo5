@@ -1,31 +1,30 @@
 {
   "files": {
-    "main.css": "/aig-grupo5/static/css/main.b778abf8.chunk.css",
-    "main.js": "/aig-grupo5/static/js/main.1883f631.chunk.js",
-    "main.js.map": "/aig-grupo5/static/js/main.1883f631.chunk.js.map",
+    "main.css": "/aig-grupo5/static/css/main.562c5f61.chunk.css",
+    "main.js": "/aig-grupo5/static/js/main.c9406091.chunk.js",
+    "main.js.map": "/aig-grupo5/static/js/main.c9406091.chunk.js.map",
     "runtime-main.js": "/aig-grupo5/static/js/runtime-main.70779631.js",
     "runtime-main.js.map": "/aig-grupo5/static/js/runtime-main.70779631.js.map",
-    "static/js/2.26277251.chunk.js": "/aig-grupo5/static/js/2.26277251.chunk.js",
-    "static/js/2.26277251.chunk.js.map": "/aig-grupo5/static/js/2.26277251.chunk.js.map",
+    "static/js/2.39149906.chunk.js": "/aig-grupo5/static/js/2.39149906.chunk.js",
+    "static/js/2.39149906.chunk.js.map": "/aig-grupo5/static/js/2.39149906.chunk.js.map",
     "index.html": "/aig-grupo5/index.html",
-    "precache-manifest.a61b68cd085f957c8effbf284109bb61.js": "/aig-grupo5/precache-manifest.a61b68cd085f957c8effbf284109bb61.js",
+    "precache-manifest.182b08f0cf394476e044ed14421b22b3.js": "/aig-grupo5/precache-manifest.182b08f0cf394476e044ed14421b22b3.js",
     "service-worker.js": "/aig-grupo5/service-worker.js",
-    "static/css/main.b778abf8.chunk.css.map": "/aig-grupo5/static/css/main.b778abf8.chunk.css.map",
-    "static/js/2.26277251.chunk.js.LICENSE.txt": "/aig-grupo5/static/js/2.26277251.chunk.js.LICENSE.txt",
+    "static/css/main.562c5f61.chunk.css.map": "/aig-grupo5/static/css/main.562c5f61.chunk.css.map",
+    "static/js/2.39149906.chunk.js.LICENSE.txt": "/aig-grupo5/static/js/2.39149906.chunk.js.LICENSE.txt",
     "static/media/Login.css": "/aig-grupo5/static/media/Roboto-LightItalic.c57ede1d.ttf",
     "static/media/biglogo.png": "/aig-grupo5/static/media/biglogo.7e4af5d0.png",
     "static/media/bottles.svg": "/aig-grupo5/static/media/bottles.51615cc1.svg",
     "static/media/cart.svg": "/aig-grupo5/static/media/cart.a240077c.svg",
     "static/media/logo.svg": "/aig-grupo5/static/media/logo.3d733ec5.svg",
-    "static/media/rubish.svg": "/aig-grupo5/static/media/rubish.b550c33e.svg",
     "static/media/ThirdPart.css": "/aig-grupo5/static/media/tela1R.a75c4d09.png",
     "static/media/SecondPart.css": "/aig-grupo5/static/media/tela2R.204ec350.png",
     "static/media/user.svg": "/aig-grupo5/static/media/user.228cd08f.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.70779631.js",
-    "static/js/2.26277251.chunk.js",
-    "static/css/main.b778abf8.chunk.css",
-    "static/js/main.1883f631.chunk.js"
+    "static/js/2.39149906.chunk.js",
+    "static/css/main.562c5f61.chunk.css",
+    "static/js/main.c9406091.chunk.js"
   ]
 }
