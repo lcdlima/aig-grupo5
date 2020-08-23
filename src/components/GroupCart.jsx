@@ -199,7 +199,7 @@ function GroupCart(props) {
                     <input type="time" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)} />
                   </div>
                 </div>
-                <div className="pickup-dates">
+                <div>
                   <label htmlFor="pickup-date">Agende a Busca das Embalagens:</label>
                   <div id="pickup-date">
                     <input type="date" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} />
@@ -208,7 +208,7 @@ function GroupCart(props) {
                 </div>
               </div>
             )}
-          {user.log === event.owner.log && <Link to="/aig-grupo5/group-finish-order"><button className="finish-order" disabled={(event.products.length === 0)} type="button" onClick={() => changeDates(deliveryTime, pickupDate, pickupTime, props)}>Finalizar Pedido</button></Link>}
+          {user.log === event.owner.log && <Link to="/aig-grupo5/group-finish-order"><button className="finish-order finish-button" disabled={(event.products.length === 0)} type="button" onClick={() => changeDates(deliveryTime, pickupDate, pickupTime, props)}>Finalizar Pedido</button></Link>}
         </div>
       )}
       <div className="footer">

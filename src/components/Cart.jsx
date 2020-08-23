@@ -125,7 +125,7 @@ function Cart(props) {
   const {
     packageTotal, changeInput, changeToDelivery, changeToCollect, isDelivery,
   } = props;
-  const items = JSON.parse(localStorage.getItem('temporaryStorage')) || [];
+  const items = JSON.parse(localStorage.getItem('temporaryStorage')) || [{cart: []}];
   const purchaseTotal = finalValue(items[0].cart).toFixed(2);
   const discount = calculateDiscount(packageTotal).toFixed(2);
   const finalPrice = purchaseTotal - discount;
@@ -144,7 +144,7 @@ function Cart(props) {
         {renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal)}
         {isDelivery
           ? <Link to="/aig-grupo5/payment"><button className="finish-order" disabled={((finalPrice < 0.01))} type="button">Finalizar Pedido</button></Link>
-          : <Link to="/aig-grupo5/collect"><button className="finish-order" type="button">Finalizar Pedido</button></Link>}
+          : <Link to="/aig-grupo5/collect"><button className="finish-order" type="button" disabled={(finalPrice < 0.01)}>Finalizar Pedido</button></Link>}
       </div>
       <div className="footer">
         <BackToProductsList />
