@@ -38,7 +38,8 @@ input[type="number"]::-webkit-inner-spin-button {
 .card-register-div {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  max-width: 500px;
+  padding: 0 15px;
   margin: 5px auto;
 }
 
@@ -69,6 +70,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .card-make-flex {
   display: flex;
   justify-content: space-between;
+  margin: auto;
+  max-width: 500px;
+  padding: 0 15px;
 }
 
 .card-make-flex-column {
@@ -79,7 +83,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .card-register-due-div {
   display: flex;
   flex-direction: column;
-  width: 55%;
+  width: 62%;
   margin: 5px auto;
 }
 
@@ -95,7 +99,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .card-register-cvv-div {
   display: flex;
   flex-direction: column;
-  width: 24%;
+  width: 34%;
   margin: 5px auto;
 }
 

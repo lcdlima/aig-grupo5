@@ -52,7 +52,7 @@ const renderDueDateInput = (dueDate, setDueDate) => (
   <div className="card-register-due-div">
     <label htmlFor="dueDate">Vencimento</label>
     <input
-      type="date"
+      type="month"
       id="dueDate"
       value={dueDate}
       onChange={(elem) => setDueDate(elem.target.value)}

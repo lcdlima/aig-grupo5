@@ -23,7 +23,8 @@
 .initial-register-div {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  max-width: 500px;
+  padding: 0 15px;
   margin: 5px auto;
 }
 
@@ -54,6 +55,9 @@
 .initial-make-flex {
   display: flex;
   justify-content: space-between;
+  max-width: 500px;
+  margin: auto;
+  padding: 0 15px;
 }
 
 .initial-make-flex-column {
@@ -78,7 +82,7 @@
 .initial-register-phone-div {
   display: flex;
   flex-direction: column;
-  width: 59%;
+  width: 77%;
   margin: 5px auto;
 }
 
@@ -92,7 +96,7 @@
 .initial-register-cpf-birthday-div {
   display: flex;
   flex-direction: column;
-  width: 39%;
+  width: 49%;
   margin: 5px auto;
 }
 
