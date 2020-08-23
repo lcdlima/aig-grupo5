@@ -62,18 +62,26 @@ class Perfil extends Component {
     const {
       individualClicked, purchase, shopstore, obj,
     } = this.state;
+<<<<<<< HEAD
     let arrInvidualResume = []
     if (purchase.length > 4) {
       arrInvidualResume = purchase.reduce((arr, elem, index) => {
         if(index > (purchase.length - 5)) {
+=======
+    let arrResume = [];
+    if (purchase.length > 4) {
+      arrResume = purchase.reduce((arr, elem, index) => {
+        if (index > (purchase.length - 5)) {
+>>>>>>> 12e28295fe6de70df04173edd8b8549e36161046
           return [...arr, elem.id_compra];
         }
         return arr;
-      },[]);
+      }, []);
     } else {
       arrInvidualResume = purchase;
     }
     return (
+<<<<<<< HEAD
       <div className="perfil-principal-div">
         <div className="perfil-make-flex">
           {individualClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
@@ -86,6 +94,36 @@ class Perfil extends Component {
           </h2>
         </div>
         {individualClicked && <ResumeCard purchaseList={arrInvidualResume} />}
+=======
+      <div>
+        {/* <img src={} alt="arrow" /> */}
+        <h2>{(individualClicked) ? '⌄' : '›'}</h2>
+        <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
+        {individualClicked && <ResumeCard purchaseList={arrResume} />}
+        {/*
+        {individualClicked && purchase.map((e, i) => (
+          <div>
+            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
+            {
+              obj[e] && (
+                <div>
+                  {shopstore.filter((el) => el.id_compra === e)[0].cart.map((ell) => {
+                    const products = (productList.filter((elll) => elll.id === ell.id)[0]);
+                    return (
+                      <div className="make-flex">
+                        <p>{`${products.productName} ${products.package_volume}L`}</p>
+
+                        <p>{`x ${ell.total}`}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )
+            }
+          </div>
+        ))}
+        {} */}
+>>>>>>> 12e28295fe6de70df04173edd8b8549e36161046
       </div>
     );
   }

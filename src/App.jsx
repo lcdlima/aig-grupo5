@@ -24,7 +24,7 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Switch>
         <Route exact path="/aig-grupo5/products-list" component={ProductsPage} />
         <Route exact path="/aig-grupo5/event-choice" component={EventChoice} />
