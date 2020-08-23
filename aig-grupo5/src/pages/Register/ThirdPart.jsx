@@ -76,22 +76,22 @@ const renderCVVInput = (CVV, setCVV) => {
 }
 
 const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-  if (!cardName && cardNumber.length !== 12 && !dueDate && CVV.length !== 3) {
+  if (!cardName && cardNumber.length !== 16 && !dueDate && CVV.length !== 3) {
     return true;
   }
-  if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+  if (!cardName && cardNumber.length === 16 && dueDate && CVV.length === 3) {
     alert("Faltando preencher o campo do nome")
   } 
-  if (cardName && cardNumber.length !== 12 && dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length !== 16 && dueDate && CVV.length === 3) {
     alert("Verifique o número do cartão")
   }
-  if (cardName && cardNumber.length === 12 && !dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && !dueDate && CVV.length === 3) {
     alert("Falta preencher a data de vencimento")
   }
-  if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && dueDate && !CVV.length === 3) {
     alert("Verifir os números de segurança")
   }
-  if (cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && dueDate && CVV.length === 3) {
     return false;
   }
   return true;

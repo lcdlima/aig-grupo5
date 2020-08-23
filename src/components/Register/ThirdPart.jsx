@@ -4,118 +4,105 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { userCard } from '../../actions/index';
 import '../../CSS/ThirdPart.css';
+import logo from '../../images/logo.svg';
 
-const clickToRegister = (cardName, cardNumber, dueDate, CVV, saveCard, history) => {
+const clickToRegister = (
+    cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+  ) => {
   saveCard(cardName, cardNumber, dueDate, CVV);
-  history.push("/mainPurchase");
-}
+  localStorage.setItem('user', JSON.stringify(
+    {
+      log: temporaryData.email,
+      name: temporaryData.name,
+      id: temporaryData.id
+    }
+  ));
+  history.push('/aig-grupo5/mainPurchase');
+};
 
-const renderCardNameInput = (cardName, setCardName) => {
-  return (
-    <div className="conteinerCardNameTP">
-      <label htmlFor="cardName">Nome</label>
-      <input
-        type="text"
-        id="cardName"
-        value={cardName}
-        onChange={(elem) => setCardName(elem.target.value)}
-        required
-      />
-    </div>
-  );
-}
+const renderCardNameInput = (cardName, setCardName) => (
+  <div className="card-register-div">
+    <label htmlFor="cardName">Nome</label>
+    <input
+      type="text"
+      id="cardName"
+      value={cardName}
+      onChange={(elem) => setCardName(elem.target.value)}
+      required
+    />
+  </div>
+);
 
-const renderCardNumberInput = (cardNumber, setCardNumber) => {
-  return (
-    <div className="conteinerCardNumberTP">
-      <label htmlFor="cardNumber">Numero do Cartão</label>
-      <input
-        type="number"
-        id="cardNumber"
-        value={cardNumber}
-        onChange={(elem) => setCardNumber(elem.target.value)}
-        required
-        minlength="12"
-        maxlength="12"
-      />
-    </div>
-  );
-}
+const renderCardNumberInput = (cardNumber, setCardNumber) => (
+  <div className="card-register-div">
+    <label htmlFor="cardNumber">Numero do Cartão</label>
+    <input
+      type="number"
+      id="cardNumber"
+      value={cardNumber}
+      onChange={(elem) => setCardNumber(elem.target.value)}
+      required
+      minLength="12"
+      maxLength="12"
+    />
+  </div>
+);
 
-const renderDueDateInput = (dueDate, setDueDate) => {
-  return (
-    <div className="conteinerDueDateTP">
-      <label htmlFor="dueDate">Vencimento</label>
-      <input
-        type="date"
-        id="dueDate"
-        value={dueDate}
-        onChange={(elem) => setDueDate(elem.target.value)}
-        required
-        min="2020-10-01"
-      />
-    </div>
-  );
-}
+const renderDueDateInput = (dueDate, setDueDate) => (
+  <div className="card-register-due-div">
+    <label htmlFor="dueDate">Vencimento</label>
+    <input
+      type="date"
+      id="dueDate"
+      value={dueDate}
+      onChange={(elem) => setDueDate(elem.target.value)}
+      required
+      min="2020-10-01"
+    />
+  </div>
+);
 
-const renderCVVInput = (CVV, setCVV) => {
-  return (
-    <div className="conteinerCVVTP">
-      <label htmlFor="CVV">CVV</label>
-      <input
-        type="number"
-        id="CVV"
-        value={CVV}
-        onChange={(elem) => setCVV(elem.target.value)}
-        required
-        maxlength="3"
-        minlength="3"
-      />
-    </div>
-  );
-}
+const renderCVVInput = (CVV, setCVV) => (
+  <div className="card-register-cvv-div">
+    <label htmlFor="CVV">CVV</label>
+    <input
+      type="number"
+      id="CVV"
+      value={CVV}
+      onChange={(elem) => setCVV(elem.target.value)}
+      required
+      maxLength="3"
+      minLength="3"
+    />
+  </div>
+);
 
 const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-  if (!cardName && cardNumber.length !== 12 && !dueDate && CVV.length !== 3) {
-    return true;
-  }
-  if (!cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
-    alert("Faltando preencher o campo do nome")
-  } 
-  if (cardName && cardNumber.length !== 12 && dueDate && CVV.length === 3) {
-    alert("Verifique o número do cartão")
-  }
-  if (cardName && cardNumber.length === 12 && !dueDate && CVV.length === 3) {
-    alert("Falta preencher a data de vencimento")
-  }
-  if (cardName && cardNumber.length === 12 && dueDate && !CVV.length === 3) {
-    alert("Verifir os números de segurança")
-  }
-  if (cardName && cardNumber.length === 12 && dueDate && CVV.length === 3) {
+  if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
     return false;
   }
   return true;
 }
 
-const renderFinishButtonInput = (cardName, cardNumber, dueDate, CVV, saveCard, history) => {
-  return (
-    <div className="conteinerButtonTP">
-        <button
-          className="buttonTP"
-          type="button"
-          onClick={() => clickToRegister(
-            cardName, cardNumber, dueDate, CVV, saveCard, history
-          )}
-          disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
-        >
-          Próximo
-        </button>
-    </div>
-  );
-}
+const renderFinishButtonInput = (
+  cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
+) => (
+  <div className="card-register-div">
+    <button
+      className="buttonTP"
+      type="button"
+      onClick={() => clickToRegister(
+        cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
+      )}
+      disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
+    >
+      Próximo
+    </button>
+  </div>
+);
 
 function ThirdPart(props) {
-  const { saveCard } = props;
+  const { saveCard, temporaryData } = props;
   const [cardName, setCardName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -123,15 +110,21 @@ function ThirdPart(props) {
   const history = useHistory();
 
   return (
-    <div className="conteinerCadastro3">
-      <div className="headerTP"></div>
-      {renderCardNameInput(cardName, setCardName)}
-      {renderCardNumberInput(cardNumber, setCardNumber)}
-      <div className="cityAndState">
-      {renderCVVInput(CVV, setCVV)}
-      {renderDueDateInput(dueDate, setDueDate)}
+    <div>
+      <div className="products-page-nav">
+        <img src={logo} alt="" width="100px" />
       </div>
-      {renderFinishButtonInput(cardName, cardNumber, dueDate, CVV, saveCard, history)}
+      <div className="card-conteiner">
+          {renderCardNameInput(cardName, setCardName)}
+          {renderCardNumberInput(cardNumber, setCardNumber)}
+          <div className="card-make-flex">
+          {renderCVVInput(CVV, setCVV)}
+          {renderDueDateInput(dueDate, setDueDate)}
+          </div>
+          {renderFinishButtonInput(
+            cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
+          )}
+      </div>
       <div className="footerTP"> </div>
     </div>
   );
@@ -139,12 +132,17 @@ function ThirdPart(props) {
 
 const mapDispatchToProps = (dispatch) => ({
   saveCard: (cardName, cardNumber, dueDate, CVV) => dispatch(
-    userCard(cardName, cardNumber, dueDate, CVV)
+    userCard(cardName, cardNumber, dueDate, CVV),
   ),
 });
 
-export default connect(null, mapDispatchToProps)(ThirdPart);
+const mapStateToProps = (state) => ({
+  temporaryData: state.inProgressRegister,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThirdPart);
 
 ThirdPart.propTypes = {
   saveCard: PropTypes.func.isRequired,
+  temporaryData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

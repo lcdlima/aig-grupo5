@@ -1,22 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import productList from '../services/productList';
 import '../CSS/ProductsPage.css';
 import {
-  decrease, increase, sendToCart,
+  decrease, increase, chooseEvent, sendToCart,
 } from '../actions/index';
-import cart from '../images/cart.svg';
-import { updateLocalStorage } from '../store';
-import user from '../images/user.svg';
-import BackToProductsList from './BackToProductsList';
+import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
+import GroupCartIcon from './GroupCartIncon';
+import GroupBackToProductsList from './GroupBackToProductsList';
 
 let list = productList;
 
 export function getTotalCart(cartState) {
-  console.log(cartState);
   return cartState.reduce((sum, e) => sum + e.total, 0);
+}
+
+function addToCart(id, qnt, props) {
+  const { event, chooseEvent, sendToCart } = props;
+  const user = JSON.parse(localStorage.getItem('user'));
+  const answer = event.products.some((product) => parseInt(product.id) === parseInt(id) && product.user.log === user.log);
+  if (answer) {
+    const newCart = event.products.reduce((acc, product) => {
+      if (parseInt(product.id) === parseInt(id) && product.user.log === user.log) {
+        acc.push({
+          id,
+          qnt: product.qnt + qnt,
+          user,
+        });
+        return acc;
+      }
+      acc.push(product);
+      return acc;
+    }, []);
+    chooseEvent({ ...event, products: newCart });
+  } else {
+    chooseEvent({ ...event, products: [...event.products, { id, qnt, user }] });
+  }
+  sendToCart(id, qnt);
 }
 
 function renderFilter(selectedFilter, setSelectedFilter) {
@@ -37,7 +59,7 @@ function renderFilter(selectedFilter, setSelectedFilter) {
 
 function renderAddButtons(id, props, setShowMessage, setPageHeight, setPageWidth) {
   const {
-    initialState, decrement, increment, addToCart,
+    initialState, decrement, increment,
   } = props;
   const total = initialState.filter((e) => e.id === id)[0].amount;
   return (
@@ -53,8 +75,7 @@ function renderAddButtons(id, props, setShowMessage, setPageHeight, setPageWidth
         onClick={(e) => {
           setPageHeight(e.pageY);
           setPageWidth(e.pageX);
-          addToCart(id, total);
-          updateLocalStorage();
+          addToCart(id, total, props);
           setShowMessage(() => true);
           setTimeout(() => { setShowMessage(false); }, 1000);
         }}
@@ -70,7 +91,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
     <div className="products-container">
       {(selectedFilter === 'Todos') && list.map((e) => (
         <div>
-          <Link to={`/aig-grupo5/productdetails/${e.id}`}>
+          <Link to={`/aig-grupo5/group-products-details/${e.id}`}>
             <div className="products-list">
               <img src={e.thumbnail} width="100px" alt="" />
               <p>{e.productName}</p>
@@ -83,7 +104,7 @@ function filterProducts(selectedFilter, props, setShowMessage, setPageHeight, se
       {(selectedFilter !== 'Todos') && list.filter((e) => e.category === selectedFilter)
         .map((e) => (
           <div>
-            <Link to={`/aig-grupo5/productdetails/${e.id}`}>
+            <Link to={`/aig-grupo5/group-products-details/${e.id}`}>
               <div className="products-list">
                 <img src={e.thumbnail} width="100px" alt="" />
                 <p>{e.productName}</p>
@@ -136,40 +157,51 @@ function changeProductList(e) {
 
 function renderSearchInput(searchBy, setSearchBy) {
   return (
-    <input placeholder="Pesquisar Produto" style={{ position: 'relative', left: '-5%' }} onChange={(e) => { setSearchBy(e.target.value); changeProductList(e.target.value); }} value={searchBy} />
+    <input placeholder="Pesquisar Produto" onChange={(e) => { setSearchBy(e.target.value); changeProductList(e.target.value); }} value={searchBy} />
   );
 }
 
-function ProductsPage(props) {
+function GroupProductsPage(props) {
   const [selectedFilter, setSelectedFilter] = useState('Todos');
   const [showMessage, setShowMessage] = useState(false);
   const [orderBy, setOrderBy] = useState('');
   const [searchBy, setSearchBy] = useState('');
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const initialtemporaryStorage = JSON.parse(localStorage.getItem('temporaryStorage')) || [{total: 0}];
-  const cartState = initialtemporaryStorage[0].cart || [{total: 0}];
+  const { event } = props;
+
+  useEffect(() => () => {
+    const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
+    const newEvents = currentEvents.reduce((acc, e) => {
+      if (e.id !== event.id) {
+        acc.push(e);
+      } else {
+        acc.push(event);
+      }
+      return acc;
+    }, []);
+    localStorage.setItem('storedEvents', JSON.stringify(newEvents));
+  });
+
   return (
     <div className="products-page">
       <div className="products-page-nav">
-        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+        <div><img src={logo} alt="" width="100px" /></div>
         {renderSearchInput(searchBy, setSearchBy)}
-        <div className="cart-img">
-          <p>{getTotalCart(cartState)}</p>
-          <Link to="/aig-grupo5/cart"><img src={cart} alt="cart" width="30px" /></Link>
-        </div>
+        <GroupCartIcon />
       </div>
       <div className="container">
         <div className="filter-sorter">
           {renderFilter(selectedFilter, setSelectedFilter)}
           {renderSortButton(orderBy, setOrderBy)}
         </div>
-        {showMessage && <p className="added-product" style={{ top: `${pageHeight + 10}px`, left: `${pageWidth - 90}px` }}>Produto Adcionado</p>}
+        {showMessage && <p className="added-product" style={{ top: `${pageHeight + 10}px`, left: `${pageWidth - 90}px` }}>Produto Adicionado</p>}
         {filterProducts(selectedFilter, props, setShowMessage, setPageHeight, setPageWidth)}
       </div>
       <div className="footer">
-        <BackToProductsList />
-        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
+        <GroupBackToProductsList />
+        <Link to={`/aig-grupo5/event-page/${event.id}`}><h3>{event.name}</h3></Link>
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
   );
@@ -178,12 +210,14 @@ function ProductsPage(props) {
 const mapStateToPros = (state) => ({
   initialState: state.CartReducer,
   cartState: state.FinalCartReducer,
+  event: state.eventReducer.event,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   decrement: (id) => dispatch(decrease(id)),
   increment: (id) => dispatch(increase(id)),
-  addToCart: (id, total) => dispatch(sendToCart(id, total)),
+  chooseEvent: (e) => dispatch(chooseEvent(e)),
+  sendToCart: (id, total) => dispatch(sendToCart(id, total)),
 });
 
-export default connect(mapStateToPros, mapDispatchToProps)(ProductsPage);
+export default connect(mapStateToPros, mapDispatchToProps)(GroupProductsPage);

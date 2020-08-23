@@ -7,6 +7,7 @@ import finishedUserData from './finishedUserData';
 import inProgressRegister from './inProgressRegister';
 import inProgressGroupEvent from './inProgressGroupEvent';
 import eventReducer from './eventReducer';
+import IDRegister from './IDRegister';
 
 const rootReducer = combineReducers({
   CartReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   inProgressRegister,
   inProgressGroupEvent,
   eventReducer,
+  IDRegister,
 });
 
 export default rootReducer;

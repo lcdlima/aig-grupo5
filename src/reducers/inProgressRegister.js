@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   cardNumber: '',
   dueDate: '',
   CVV: '',
+  id: '',
 };
 
 const inProgressRegister = (state = INITIAL_STATE, action) => {
@@ -29,15 +30,16 @@ const inProgressRegister = (state = INITIAL_STATE, action) => {
         ...state,
         email: action.email,
         password: action.password,
-      };
-    case SAVE_USER_REGISTRY_AND_ADRESS:
-      return {
-        ...state,
+        id: action.id,
         name: action.name,
         CPF: action.CPF,
         birthDay: action.birthDay,
         code: action.code,
         phone: action.phone,
+      };
+    case SAVE_USER_REGISTRY_AND_ADRESS:
+      return {
+        ...state,
         CEP: action.CEP,
         street: action.street,
         adressNumber: action.adressNumber,

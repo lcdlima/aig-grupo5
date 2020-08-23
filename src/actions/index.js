@@ -14,6 +14,8 @@ export const CLEAR_TEMPORARY_EVENT = 'CLEAR_TEMPORARY_EVENT';
 
 export const EVENT_CHOOSED = 'EVENT_CHOOSED';
 
+export const ADD_ID = 'ADD_ID';
+
 const increase = (id) => ({
   type: 'INCREASE_CART',
   id,
@@ -69,6 +71,14 @@ const selectCollect = () => ({
   type: 'SELECT_COLLECT',
 });
 
+const finishShopping = () => ({
+  type: 'FINISH_SHOPPING',
+});
+
+const finishShoppingFor = () => ({
+  type: 'FINISH_SHOPPING',
+});
+
 export const chooseEvent = (event) => ({
   type: EVENT_CHOOSED,
   event,
@@ -79,26 +89,28 @@ export const userData = (obj) => ({
   obj,
 });
 
-export const userEmailAndPassword = (email, password) => ({
+export const userPessoalInfo = (email, password, id, name, CPF, birthDay, code, phone) => ({
   type: SAVE_USER_EMAIL_AND_PASSWORD,
   email,
   password,
-});
-
-export const userRegisterAndPassword = (
-  name, CPF, birthDay, code, phone, CEP, street, adressNumber, complement, city,
-) => ({
-  type: SAVE_USER_REGISTRY_AND_ADRESS,
+  id,
   name,
   CPF,
   birthDay,
   code,
   phone,
+});
+
+export const userAdress = (
+  CEP, street, adressNumber, complement, city, stateLetters,
+) => ({
+  type: SAVE_USER_REGISTRY_AND_ADRESS,
   CEP,
   street,
   adressNumber,
   complement,
   city,
+  stateLetters,
 });
 
 export const userCard = (cardName, cardNumber, dueDate, CVV) => ({
@@ -122,6 +134,10 @@ export const clearTemporaryEvent = () => ({
   type: CLEAR_TEMPORARY_EVENT,
 });
 
+export const incrementID = () => ({
+  type: ADD_ID,
+});
+
 export {
-  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect,
+  increase, decrease, sendToCart, switchPackage, decreaseToCart, increaseToCart, removeFromCart, changeInput, sortProducts, selectDelivery, selectCollect, finishShopping,
 };

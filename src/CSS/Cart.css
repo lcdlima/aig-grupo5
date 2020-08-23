@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: 50%;
 }
 
@@ -27,7 +27,6 @@
   margin: 0;
   font-size: 1.0rem;
 }
-
 
 .products-cart-list {
   display: flex;
@@ -93,6 +92,7 @@ padding: 0;
   width: 90%;
   margin: 20px auto;
   justify-content: space-around;
+  align-items: center;
 }
 
 .collection-options button {
@@ -105,4 +105,23 @@ padding: 0;
   background-color: #4D4D4D;
   color: white;
   outline: none;
+}
+
+.p-container {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #FFCD00;
+  font-weight: 900;
+}
+
+.sub-container {
+  width: 90%;
+  margin: auto;
+}
+
+.date-time-div {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
 }

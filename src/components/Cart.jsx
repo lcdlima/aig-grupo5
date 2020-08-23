@@ -10,7 +10,6 @@ import '../CSS/Cart.css';
 import BackToProductsList from './BackToProductsList';
 import { updateLocalStorage } from '../store';
 import user from '../images/user.svg';
-import rubish from '../images/rubish.svg';
 import logo from '../images/logo.svg';
 
 export function calculateDiscount(packageTotal) {
@@ -82,18 +81,17 @@ function renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal) {
         <p>Total</p>
         <p>{`R$${(purchaseTotal - discount + deliveryFee).toFixed(2)}`}</p>
       </div>
+      {((purchaseTotal - discount + deliveryFee) < 0) && <p style={{ textAlign: 'center', color: 'red' }}>Valor da Compra não pode ser negativo. Adicione mais produtos para retornar suas embalagens</p>}
     </div>
   );
 }
 
 function renderCollectionOptions(changeToDelivery, changeToCollect) {
   return (
-    <div>
+    <div className="collection-options">
       <p>Retirada do Produto</p>
-      <div className="collection-options">
-        <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
-        <button type="button" onClick={() => changeToCollect()}>Retirada</button>
-      </div>
+      <button type="button" onClick={() => changeToDelivery()}>Delivery</button>
+      <button type="button" onClick={() => changeToCollect()}>Retirada</button>
     </div>
   );
 }
@@ -112,10 +110,10 @@ function renderCartItensSection(items, props) {
             </div>
             <div className="product-cart-info">
               <p>{`${e.total} X R$${product[0].originalPrice}`}</p>
-              <p>{`Total: R$${e.total * product[0].originalPrice}`}</p>
+              <p>{`Total: R$${(e.total * product[0].originalPrice).toFixed(2)}`}</p>
               {renderIncrementButton(e.id, props)}
             </div>
-            <button onClick={() => { deleteProduct(e.id); updateLocalStorage(); }} type="button"><img src={rubish} alt="" /></button>
+            <button onClick={() => { deleteProduct(e.id); updateLocalStorage(); }} type="button"> X </button>
           </div>
         );
       })}
@@ -127,30 +125,30 @@ function Cart(props) {
   const {
     packageTotal, changeInput, changeToDelivery, changeToCollect, isDelivery,
   } = props;
-  const items = JSON.parse(localStorage.getItem('temporaryStorage'));
+  const items = JSON.parse(localStorage.getItem('temporaryStorage')) || [];
   const purchaseTotal = finalValue(items[0].cart).toFixed(2);
   const discount = calculateDiscount(packageTotal).toFixed(2);
   const finalPrice = purchaseTotal - discount;
   return (
     <div>
       <div className="products-page-nav">
-        <div><img src={logo} alt="" width="100px" /></div>
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
         <h1>Carrinho</h1>
         <div />
       </div>
       <div className="container">
-        {(items[0].cart.length < 1) && <p>Nenhum produto adicionado</p>}
+        {(items[0].cart.length < 1) && <p className="p-container">Nenhum produto adicionado</p>}
         {renderCartItensSection(items, props)}
-        {renderPackageSection(packageTotal, changeInput)}
-        {renderCollectionOptions(changeToDelivery, changeToCollect)}
+        {(items[0].cart.length > 0) && renderPackageSection(packageTotal, changeInput)}
+        {(items[0].cart.length > 0) && renderCollectionOptions(changeToDelivery, changeToCollect)}
         {renderFinalValues(finalPrice, discount, isDelivery, purchaseTotal)}
         {isDelivery
-          ? <Link to="/payment"><button className="finish-order" disabled={((finalPrice < 0.01))} type="button">Finalizar Pedido</button></Link>
-          : <Link to="/collect"><button className="finish-order" type="button">Finalizar Pedido</button></Link>}
+          ? <Link to="/aig-grupo5/payment"><button className="finish-order" disabled={((finalPrice < 0.01))} type="button">Finalizar Pedido</button></Link>
+          : <Link to="/aig-grupo5/collect"><button className="finish-order" type="button">Finalizar Pedido</button></Link>}
       </div>
       <div className="footer">
         <BackToProductsList />
-        <img src={user} alt="" width="20px" />
+        <Link to="/aig-grupo5/Perfil"><img src={user} alt="" width="30px" /></Link>
       </div>
     </div>
   );

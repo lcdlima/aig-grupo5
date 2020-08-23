@@ -27,6 +27,7 @@ const FinalCartReducer = (state = INITIAL_STATE, action) => {
       return e;
     });
     case 'REMOVE_ITEM': return state.filter((e) => e.id !== action.id);
+    case 'FINISH_SHOPPING': return INITIAL_STATE;
     default: return state;
   }
 };

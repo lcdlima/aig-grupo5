@@ -5,7 +5,7 @@ import bottles from '../images/bottles.svg';
 function BackToProductsList() {
   return (
     <div>
-      <Link to="/products-list"><img src={bottles} width="30pc" alt="" /></Link>
+      <Link to="/aig-grupo5/products-list"><img src={bottles} width="30pc" alt="" /></Link>
     </div>
   );
 }

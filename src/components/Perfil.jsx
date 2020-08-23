@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-import { userData, clearTemporaryData } from '../actions/index';
+import packageList from '../services/packageList';
+import userchar from '../images/user.svg';
+import logo from '../images/logo.svg';
+import ResumeCard from './ResumeCard';
+import ResumeGroupCard from './ResumeGroupCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight, faCaretDown, faHome } from '@fortawesome/free-solid-svg-icons';
+import '../CSS/Perfil.css';
 
 class Perfil extends Component {
   constructor(props) {
@@ -15,94 +21,213 @@ class Perfil extends Component {
       groupClicked: false,
       preservedClicked: false,
       moneyClicked: false,
+      purchase: [],
+      purchaseGroup: [],
+      shopstore: [],
+      obj: {},
     };
   }
 
+  componentDidMount() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.setState({ name: user.name, email: user.log });
+    const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed')) || [];
+    const purchase = shopstore.reduce((arr, e) => {
+      if (e.buyerId === user.log) {
+        return [...arr, e.id_compra];
+      } return arr;
+    }, []);
+    const shopstoreGroup = JSON.parse(localStorage.getItem('storedEvents')) || [];
+    const purchaseGroup = shopstoreGroup.reduce((arr, first) => {
+      const existIn = first.participants.some((second) => second.log === user.log);
+      if (existIn) {
+        return [...arr, first.id];
+      }
+      return arr;
+    }, []);
+    let obj = {purchaseGroup};
+    purchase.forEach((e) => obj = { ...obj, [e]: false });
+    this.setState({ purchase, shopstore, obj, purchaseGroup });
+  }
+
   renderPerfilHeader() {
-    const { name } = this.state;
     return (
-      <div>
-        <img src="" alt="avatar" />
-        <h2>{name}</h2>
+      <div className="products-page-nav">
+        <Link to="/aig-grupo5/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
       </div>
     );
   }
 
   renderIndividualPurchase() {
-    const { individualClicked } = this.state;
+    const {
+      individualClicked, purchase, shopstore, obj,
+    } = this.state;
+<<<<<<< HEAD
+    let arrInvidualResume = []
+    if (purchase.length > 4) {
+      arrInvidualResume = purchase.reduce((arr, elem, index) => {
+        if(index > (purchase.length - 5)) {
+=======
+    let arrResume = [];
+    if (purchase.length > 4) {
+      arrResume = purchase.reduce((arr, elem, index) => {
+        if (index > (purchase.length - 5)) {
+>>>>>>> 12e28295fe6de70df04173edd8b8549e36161046
+          return [...arr, elem.id_compra];
+        }
+        return arr;
+      }, []);
+    } else {
+      arrInvidualResume = purchase;
+    }
     return (
-      <div
-        onClick={() => this.setState({ "individualClicked": !individualClicked })}
-      >
+<<<<<<< HEAD
+      <div className="perfil-principal-div">
+        <div className="perfil-make-flex">
+          {individualClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!individualClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2 onClick={() => this.setState(
+            { individualClicked: !individualClicked }
+          )}
+          >
+            Meus Pedidos
+          </h2>
+        </div>
+        {individualClicked && <ResumeCard purchaseList={arrInvidualResume} />}
+=======
+      <div>
         {/* <img src={} alt="arrow" /> */}
-        <h2>{(individualClicked) ? "⌄" : "›" }</h2>
-        <h2>Meus Pedidos</h2>
-        {}
+        <h2>{(individualClicked) ? '⌄' : '›'}</h2>
+        <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
+        {individualClicked && <ResumeCard purchaseList={arrResume} />}
+        {/*
+        {individualClicked && purchase.map((e, i) => (
+          <div>
+            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
+            {
+              obj[e] && (
+                <div>
+                  {shopstore.filter((el) => el.id_compra === e)[0].cart.map((ell) => {
+                    const products = (productList.filter((elll) => elll.id === ell.id)[0]);
+                    return (
+                      <div className="make-flex">
+                        <p>{`${products.productName} ${products.package_volume}L`}</p>
+
+                        <p>{`x ${ell.total}`}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )
+            }
+          </div>
+        ))}
+        {} */}
+>>>>>>> 12e28295fe6de70df04173edd8b8549e36161046
       </div>
     );
   }
 
   renderGroupPurchase() {
-    const { groupClicked } = this.state;
+    const { groupClicked, purchaseGroup } = this.state;
+    let arrGroupResume = [];
+    if (purchaseGroup.length > 4) {
+      arrGroupResume = purchaseGroup.reduce((arr, elem, index) => {
+        if(index > (purchaseGroup.length - 5)) {
+          return [...arr, elem.id_compra];
+        }
+        return arr;
+      },[]);
+    } else {
+      arrGroupResume = purchaseGroup;
+    }
     return (
       <div
-        onClick={() => this.setState({ "groupClicked": !groupClicked })}
+        className="perfil-principal-div"
+        onClick={() => this.setState({ groupClicked: !groupClicked })}
       >
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(groupClicked) ? "⌄" : "›" }</h2>
-        <h2>Meus Eventos</h2>
-        {}
+        <div className="perfil-make-flex">
+          {groupClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!groupClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2>Meus Eventos</h2>
+        </div>
+        {groupClicked && <ResumeGroupCard purchaseList={purchaseGroup} />}
       </div>
     );
   }
 
   renderPreservedNature() {
-    const { preservedClicked } = this.state;
+    const { preservedClicked, purchase, shopstore } = this.state;
     return (
       <div
-        onClick={() => this.setState({ "preservedClicked": !preservedClicked })}
+        className="perfil-principal-div"
+        onClick={() => this.setState({ preservedClicked: !preservedClicked })}
       >
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(preservedClicked) ? "⌄" : "›" }</h2>
-        <h2>Quantidade Preservada</h2>
-        {}
+        <div className="perfil-make-flex">
+          {preservedClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!preservedClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2>Consumo reduzido</h2>
+        </div>
+        <div className="text-perfil">
+          {preservedClicked && `${purchase.reduce((summ, e) => {
+            const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
+            const total = packages.reduce((sum, ell) => {
+              return sum + (packageList.filter((elll) => elll.id === ell.id)[0].weight * Number(ell.total))}, 0);
+            return summ + total;
+          }, 0)}g de plástico reduzido`}
+        </div>
       </div>
     );
   }
 
   renderMoneySaved() {
-    const { moneyClicked } = this.state;
+    const { moneyClicked, shopstore, purchase } = this.state;
     return (
       <div
-        onClick={() => this.setState({ "moneyClicked": !moneyClicked })}
+        className="perfil-principal-div"
+        onClick={() => this.setState({ moneyClicked: !moneyClicked })}
       >
-        {/* <img src={} alt="arrow" />*/}
-        <h2>{(moneyClicked) ? "⌄" : "›" }</h2>
-        <h2>Dinheiro Economizado</h2>
-        {}
+        <div  className="perfil-make-flex">
+          {moneyClicked && <FontAwesomeIcon icon={faCaretDown} size="2x" />}
+          {!moneyClicked && <FontAwesomeIcon icon={faCaretRight} size="2x" />}
+          <h2>Quantidade economizada</h2>
+        </div>
+        <div className="text-perfil">
+          {moneyClicked && `R$${(purchase.reduce((summ, e) => {
+            const packages = shopstore.filter((el) => el.id_compra === e)[0].pack;
+            const total = packages.reduce((sum, ell) => {
+              return sum + (packageList.filter((elll) => elll.id === ell.id)[0].price * Number(ell.total))
+            }, 0);
+            return summ + total;
+          }, 0)).toFixed(2)} economizados`}
+        </div>
       </div>
     );
   }
 
   renderPerfilFooter() {
     return (
-      <div>
-        <Link to="/mainPurchase">Nova compra</Link>
+      <div className="footer" style={{height: "50px"}}>
+        <div />
       </div>
     );
   }
 
   render() {
-    const { temporaryData } = this.props;
-    console.log(temporaryData)
+    const { name } = this.state;
     return (
-      <div>
+      <div className="container">
         {this.renderPerfilHeader()}
-        {this.renderIndividualPurchase()}
-        {this.renderGroupPurchase()}
-        {this.renderPreservedNature()}
-        {this.renderMoneySaved()}
+      <div className="conteiner-perfil">
+        <div className="sub-container">
+          <h4>{`Olá ${name}`}</h4>
+          {this.renderIndividualPurchase()}
+          {this.renderGroupPurchase()}
+          {this.renderPreservedNature()}
+          {this.renderMoneySaved()}
+        </div>
         {this.renderPerfilFooter()}
+      </div>
       </div>
     );
   }
@@ -110,12 +235,10 @@ class Perfil extends Component {
 
 const mapStateToProps = (state) => ({
   data: state.finishedUserData,
-  temporaryData: state.inProgressRegister,
 });
 
 export default connect(mapStateToProps, null)(Perfil);
 
 Perfil.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  temporaryData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

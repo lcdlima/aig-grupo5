@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { chooseEvent } from '../actions';
-import "../CSS/EventChoice.css";
+import '../CSS/EventChoice.css';
+import logo from '../images/logo.svg';
+import userchar from '../images/user.svg';
 
 function searchEvent(id, password, setRedirect, chooseEvent) {
   const currentEvents = JSON.parse(localStorage.getItem('storedEvents'));
   let eventExist = [];
   if (currentEvents !== null) {
-    eventExist = currentEvents.filter(event => event.id === parseInt(id));
+    eventExist = currentEvents.filter((event) => event.id === id);
   }
-  if (eventExist.length === 0 || parseInt(eventExist[0].password) !== parseInt(password)) {
-    alert("Id ou Senha inválida");
+  if (eventExist.length === 0 || eventExist[0].password !== password) {
+    alert('Id ou Senha inválida');
   } else {
     chooseEvent(eventExist[0]);
     setRedirect(true);
@@ -26,6 +28,9 @@ function EventChoice(props) {
   const { chooseEvent } = props;
   return (
     <div className="overall-div">
+      <div className="products-page-nav">
+        <Link to="/mainPurchase"><img src={logo} alt="" width="100px" /></Link>
+      </div>
       <div className="choive-div">
         <label htmlFor="id-field">ID do Evento</label>
         <input
@@ -43,10 +48,19 @@ function EventChoice(props) {
         />
         <button
           onClick={() => searchEvent(searchedID, password, setRedirect, chooseEvent)}
-        >Buscar</button>
-        <Link className="new-event" to="/create-event">
-          <p>Cadastrar Novo Evento</p></Link>
-        {redirect && <Redirect to={`/event-page/${searchedID}`} />}
+        >
+          Buscar
+
+        </button>
+        <Link className="new-event" to="/aig-grupo5/create-event">
+          <p>Cadastrar Novo Evento</p>
+
+        </Link>
+        {redirect && <Redirect to={`/aig-grupo5/event-page/${searchedID}`} />}
+      </div>
+      <div className="footer">
+        <div />
+        <Link to="/aig-grupo5/Perfil"><img src={userchar} alt="" width="30px" /></Link>
       </div>
     </div>
 

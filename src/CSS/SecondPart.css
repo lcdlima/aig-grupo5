@@ -3,238 +3,120 @@
   src: url(../fonte/Roboto-LightItalic.ttf);
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.conteinerCadastro2 {
-  align-items: center;
-  background-color: #FAFAFA;
-  display: flex;
-  flex-direction: column;
-  font-family: "Roboto";
-  justify-content: center;
-  width: 100%;
-}
-
-.conteinerCadastro2 input {
-  border: #999999 solid 2px;
-  border-radius: 5px;
-  height: 25px;
-  width: 40vh;
-  text-align: center;
-  font-size: 15px;
-  color: #999999;
-}
-
-.conteinerNameSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-}
-
-.conteinerCPFSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-}
-
-.conteinerCPFSP input {
-  width: 20vh;
-}
-
-.conteinerBirthDaySP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 6px;
-  margin-left: 10px;
-}
-
-.conteinerBirthDaySP input {
-  height: 28px;
-  width: 20vh;
-}
-
-.conteinerDDDSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: 8px;
-  margin-right: 10px;
-}
-
-.conteinerDDDSP input {
-  width: 7vh;
-}
-
-.conteinerPhoneSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-}
-
-.conteinerPhoneSP input {
-  width: 26vh;
-}
-
-.conteinerCEPSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-}
-
-.conteinerCEPSP input {
-  width: 20vh;
-}
-
-.conteinerStreetSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-}
-
-.conteinerStreetSP input {
-  width: 26vh;
-}
-
-.conteinerAdressNumberSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-}
-
-.conteinerAdressNumberSP input {
-  width: 7vh;
-}
-
-.conteinerComplementSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-}
-
-.conteinerComplementSP input {
-  width: 26vh;
-}
-
-.conteinerCitySP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-right: 10px;
-}
-
-.conteinerCitySP input {
-  width: 22vh;
-}
-
-.conteinerStateSP {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-top: 8px;
-  margin-left: 10px;
-}
-
-.conteinerStateSP input {
-  width: 22vh;
-}
-
-.BirthDayAndCPF {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-}
-
-.conteinerCompletCellphoneSP {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-}
-
-.StreetAndCEP {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-}
-
-.adressAndComplement {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-}
-
-.cityAndState {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  margin-top: 8px;
-}
-
-.buttonSP {
-  background-color: #F9C22F;
-  border: none;
-  border-radius: 30px;
-  font-size: 23px;
-  height: 50px;
-  width: 100%;
-}
-
-.conteinerButtonSP {
-  margin-top: 40px;
-  width: 35vh;
-}
-
-.headerSP {
-  background-color: #333333;
+.footerSP {
   height: 60px;
-  width: 100%;
-  margin-bottom: 1px;
-}
-
-.footerSP{
-  height: 90px;
   margin: 0;
-  position:absolute;
-  bottom:0;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   background-image: url('../images/tela2R.png');
-  background-size:110% 100%;
+  background-size: 110% 100%;
   background-position: bottom;
+}
+
+.adress-conteiner {
+  margin-top:100px;
+}
+
+.adress-register-div input {
+  border: 2px solid black;
+  border-radius: 30px;
+  height: 35px;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.adress-register-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 5px auto;
+}
+
+.adress-register-div button {
+  align-self: center;
+  background-color: #333333;
+  border: 2px solid black;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 900;
+  height: 50px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  width: 50%;
+}
+
+.adress-register-div button:hover {
+  background: #333333;
+  color: white;
+}
+
+.adress-conteiner {
+  margin-top:100px;
+}
+
+.adress-make-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.adress-make-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.adress-register-ddd-div {
+  display: flex;
+  flex-direction: column;
+  width: 19%;
+  margin: 5px auto;
+}
+
+.adress-register-ddd-div input {
+  border: 2px solid black;
+  border-radius: 30px;
+  height: 35px;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.adress-register-city-div {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  margin: 5px auto;
+}
+
+.adress-register-city-div input {
+  border: 2px solid black;
+  border-radius: 30px;
+  height: 35px;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.adress-register-state-div {
+  display: flex;
+  flex-direction: column;
+  width: 24%;
+  margin: 5px auto;
+}
+
+.adress-register-state-div select {
+  border: 2px solid black;
+  margin-top: 5px;
+  height: 40px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 20px;
 }
