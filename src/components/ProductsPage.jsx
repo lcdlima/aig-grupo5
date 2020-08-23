@@ -15,6 +15,7 @@ import logo from '../images/logo.svg';
 let list = productList;
 
 export function getTotalCart(cartState) {
+  console.log(cartState);
   return cartState.reduce((sum, e) => sum + e.total, 0);
 }
 
@@ -146,8 +147,8 @@ function ProductsPage(props) {
   const [searchBy, setSearchBy] = useState('');
   const [pageHeight, setPageHeight] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const initialtemporaryStorage = JSON.parse(localStorage.getItem('temporaryStorage')) || [{}];
-  const cartState = initialtemporaryStorage[0].cart || [{}];
+  const initialtemporaryStorage = JSON.parse(localStorage.getItem('temporaryStorage')) || [{total: 0}];
+  const cartState = initialtemporaryStorage[0].cart || [{total: 0}];
   return (
     <div className="products-page">
       <div className="products-page-nav">

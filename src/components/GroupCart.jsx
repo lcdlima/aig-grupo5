@@ -7,7 +7,6 @@ import productList from '../services/productList';
 import '../CSS/GroupCart.css';
 import GroupBackToProductsList from './GroupBackToProductsList';
 import userchar from '../images/user.svg';
-import rubish from '../images/rubish.svg';
 import logo from '../images/logo.svg';
 import { chooseEvent } from '../actions/index';
 
@@ -43,7 +42,7 @@ function increment(id, props) {
 
 function renderIncrementButton(id, props) {
   return (
-    <div className="increment-buttons-cart">
+    <div className="increment-buttons">
       <button type="button" onClick={() => { decrement(id, props); }}>-</button>
       <button type="button" onClick={() => { increment(id, props); }}>+</button>
     </div>
@@ -140,7 +139,7 @@ function renderCartItensSection(props) {
                 <p>{`Total: R$${(e.qnt * product[0].originalPrice).toFixed(2)}`}</p>
                 {renderIncrementButton(e.id, props)}
               </div>
-              <button onClick={() => { deleteProduct(e, props); }} type="button"><img src={rubish} alt="" /></button>
+              <button onClick={() => { deleteProduct(e, props); }} type="button"><img alt="" /> X </button>
             </div>
           );
         }
@@ -200,7 +199,7 @@ function GroupCart(props) {
                     <input type="time" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)} />
                   </div>
                 </div>
-                <div>
+                <div className="pickup-dates">
                   <label htmlFor="pickup-date">Agende a Busca das Embalagens:</label>
                   <div id="pickup-date">
                     <input type="date" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} />

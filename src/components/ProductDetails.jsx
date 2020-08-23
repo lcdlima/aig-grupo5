@@ -38,7 +38,8 @@ function renderIncrementButton(id, props) {
 
 function ProductDetails(props) {
   const { props: { match: { params: { id } } } } = props;
-  const cartState = (JSON.parse(localStorage.getItem('temporaryStorage')))[0].cart;
+  const initialtemporaryStorage = JSON.parse(localStorage.getItem('temporaryStorage')) || [{total: 0}];
+  const cartState = initialtemporaryStorage[0].cart || [{total: 0}];
   const product = productList.filter((e) => e.id === Number(id));
   return (
     <div>
