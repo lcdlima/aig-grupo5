@@ -17,8 +17,7 @@ a {
   max-width: 500px;
   height: 80vh;
   margin: auto;
-  margin-top: 80px;
-  margin-bottom: 100px;
+  margin-top: 60px;
 }
 
 .conteinerLogin input {
@@ -80,7 +79,7 @@ button:focus {
 }
 
 .footerL {
-  height: 100px;
+  height: 70px;
   margin: 0;
   position: fixed;
   bottom: 0;
