@@ -14,8 +14,11 @@ a {
   flex-direction: column;
   font-family: "Roboto";
   justify-content: center;
-  width: 100%;
-  height: 60vh;
+  max-width: 500px;
+  height: 80vh;
+  margin: auto;
+  margin-top: 80px;
+  margin-bottom: 100px;
 }
 
 .conteinerLogin input {

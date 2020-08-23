@@ -13,11 +13,6 @@ import {
 
 const storedEvents = JSON.parse(localStorage.getItem('storedEvents'));
 
-function copyToClipboard(setHide) {
-  navigator.clipboard.writeText(window.location.href);
-  setHide(false);
-}
-
 function deleteEvent(event, setRedirect) {
   const newEventsList = storedEvents.reduce((acc, e) => {
     if (event.id !== e.id) acc.push(e);

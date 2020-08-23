@@ -1,0 +1,49 @@
+.perfil-principal-div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 5px auto;
+}
+
+.perfil-make-flex {
+  align-items: center;
+  display: inline-flex;
+  justify-content: space-between;
+  margin: 5px auto;
+}
+
+.perfil-elements-list{
+  display: flex;
+  border: 1px solid black;
+  justify-content: space-around;
+  width: 90%;
+  margin: 5px auto 0;
+}
+
+.perfil-elements-info {
+  display: flex;
+  background-color: #FFFDCC;
+  border: 2px #333333 solid;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10px auto 0;
+  width: 100%;
+}
+
+.perfil-elements-info p {
+  margin: 0;
+  font-size: 1.0rem;
+}
+
+.text-perfil {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.sub-container {
+  margin-top: 80px;
+  margin-bottom: 60px;
+}
