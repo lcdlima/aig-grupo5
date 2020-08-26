@@ -120,10 +120,27 @@ const renderPhoneInput = (code, setCode, phone, setPhone) => (
 );
 
 const clickToRegister = (
-  email, password, name, CPF, birthDay,
+  email, password, name, CPF, birthDay, check,
   code, phone, saveUserPessoalInfo, history,
 ) => {
+  const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
+  const test = allDataOnLS.some((e) => e.email === email)
+  if (test) return alert('Email já cadastrado');
+  if (
+    password !== check && password.length < 8 && !email.match(emailTest) && birthDay === '' && name === ''
+    && test && CPF.length !== 11 && code.length !== 2 && phone.length !== 9
+  ) {
+    return alert('Confira todos os campos');
+  }
+  if (password.length < 8) return alert('A senha deve ter no mínimo 8 dígitos');
+  if (password !== check) return alert('Senhas estão diferentes');
+  if (!email.match(emailTest)) return alert('Email não válido');
+  if (name === '') return alert('Nome não preenchido');
+  if (CPF.length !== 11) return alert('CPF deve ter 11 dígitos');
+  if (birthDay === '') return alert('Data de nascimento não preenchido');
+  if (code.length !== 2) return alert('DDD deve ter 2 dígitos');
+  if (phone.length !== 9) return alert('O número de celular deve ter 9 dígitos');
   const newId = ( allDataOnLS.length +1 )
   saveUserPessoalInfo(
     email, password, newId, name, CPF, birthDay,
@@ -131,22 +148,6 @@ const clickToRegister = (
   );
   history.push("/aig-grupo5/RegisterAdress");
 }
-
-const isDisabled = (
-  email, password, check, name, CPF, birthDay, code, phone,
-) => {
-  const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-  const allDataOnLS=  JSON.parse(localStorage.getItem('usersData') || '[]');
-  const test = allDataOnLS.some((e) => e.email === email)
-  if (test) alert('Email já cadastrado')
-  if (
-    password === check && password !== '' && password.length > 7 && email.match(emailTest)
-    && !test && CPF.length === 11 && code.length === 2 && phone.length === 9
-  ) {
-    return false;
-  }
-  return true;
-};
 
 const renderNextButtonInput = (
   email, password, check, name, CPF, birthDay, code, phone, saveUserPessoalInfo, history,
@@ -157,12 +158,10 @@ const renderNextButtonInput = (
           className="buttonFP"
           type="button"
           onClick={() => clickToRegister(
-            email, password, name, CPF, birthDay,
+            email, password, name, CPF, birthDay, check,
             code, phone, saveUserPessoalInfo, history,
           )}
-          disabled={isDisabled(
-            email, password, check, name, CPF, birthDay, code, phone,
-          )}>
+          >
           Próximo
         </button>
     </div>

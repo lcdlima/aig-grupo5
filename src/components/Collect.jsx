@@ -9,11 +9,32 @@ import user from '../images/user.svg';
 import MapComponent from './MapComponent';
 import logo from '../images/logo.svg';
 
+let today = new Date();
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const year = today.getFullYear();
+today = `${day} / ${month} / ${year}`;
+
 function getCardInfo(setName, setNumber, setDate, setCvv) {
   const userid = JSON.parse(localStorage.getItem('user')).log;
   const storage = JSON.parse(localStorage.getItem('dataToPurchase')).filter(e => e.email === userid)[0];
   setName(storage.card.cardHolder); setNumber(storage.card.number); setDate(storage.card.dueDate); setCvv(storage.card.cvv);
 }
+
+const finishThePurchaser = () => {
+  const getID = JSON.parse(localStorage.getItem('purchaseFineshed')) || [];
+  const extraData = JSON.parse(localStorage.getItem('extraPurchaseData'));
+  const newObj = {
+    id: (getID.length + 1),
+    day: today,
+  };
+  if (extraData === '' || !extraData) {
+    localStorage.setItem('extraPurchaseData', JSON.stringify([newObj]));
+  } else {
+    localStorage.setItem('extraPurchaseData', JSON.stringify([...extraData, newObj]));
+  }
+  purchaseFinished();
+};
 
 function Payment(props) {
   const { packageTotal, isDelivery } = props;
@@ -53,7 +74,7 @@ function Payment(props) {
         </div>
         <div className="payment-btns">
           <button type="button" onClick={() => getCardInfo(setName, setNumber, setDate, setCvv)}>Usar dados de cadastro</button>
-          <Link to="/aig-grupo5/confirm"><button onClick={() => { purchaseFinished(); }} type="button">Finalizar Compra</button></Link>
+          <Link to="/aig-grupo5/confirm"><button onClick={() => { finishThePurchaser() }} type="button">Finalizar Compra</button></Link>
         </div>
       </div>
       <div>
