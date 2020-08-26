@@ -13,11 +13,11 @@ a {
   display: flex;
   flex-direction: column;
   font-family: "Roboto";
-  justify-content: center;
+  justify-content: flex-start;
   max-width: 500px;
   height: 80vh;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .conteinerLogin input {

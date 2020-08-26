@@ -20,6 +20,8 @@ import GroupProductsPage from './components/GroupProductsPage';
 import GroupProductsDetails from './components/GroupProductDetails';
 import GroupCart from './components/GroupCart';
 import GroupFinishOrder from './components/GroupFinishOrder';
+import IndividualDetail from './components/IndividualDetail';
+import GroupDetail from './components/GroupDetail';
 import './App.css';
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
         <Route exact path="/aig-grupo5/group-products-details/:id" render={(props) => <GroupProductsDetails props={props} />} />
         <Route exact path="/aig-grupo5/group-cart" component={GroupCart} />
         <Route exact path="/aig-grupo5/group-finish-order" component={GroupFinishOrder} />
+        <Route exact path="/aig-grupo5/individual-purchase/:id" component={IndividualDetail}/>
+        <Route exact path="/aig-grupo5/group-purchase/:id" component={GroupDetail}/>
       </Switch>
     </BrowserRouter>
   );
