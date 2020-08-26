@@ -17,10 +17,10 @@ today = `${day} / ${month} / ${year}`;
 const finishThePurchaser = (
   addressStreet, addressNumber, addressCity, addressState, purchaseFinished,
 ) => {
-  const getID = JSON.parse(localStorage.getItem('dataToPurchase')) || [];
+  const getID = JSON.parse(localStorage.getItem('purchaseFineshed')) || [];
   const extraData = JSON.parse(localStorage.getItem('extraPurchaseData'));
   const newObj = {
-    id: getID.length,
+    id: (getID.length + 1),
     day: today,
     adress: addressStreet,
     number: addressNumber,

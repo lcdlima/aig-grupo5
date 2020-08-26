@@ -4,24 +4,8 @@ import productList from '../services/productList';
 import packageList from '../services/packageList';
 import userchar from '../images/user.svg';
 import logo from '../images/logo.svg';
-import { useParams } from 'react-router-dom';
-
-const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
-const extraInfo = JSON.parse(localStorage.getItem('extraPurchaseData'));
 
 class IndividualDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: ''
-    };
-  }
-
-  componentDidMount() {
-    const { id } = useParams();
-    this.setState({ id });
-  }
-
   renderPerfilHeader() {
     return (
       <div className="products-page-nav">
@@ -31,82 +15,96 @@ class IndividualDetail extends Component {
   }
 
   renderListOfProducts(arr) {
-    
-  }
-
-  renderIndividualPurchase() {
-    const { id } = this.state;
-    const objWanted = shopstore.filter((elem) => elem.id_compra === id);
-    const somaProdutos = objWanted.cart.reduce((acc, elem) => {
-        return acc + (productList[elem.id].originalPrice * elem.total);
-    }, []);
-    const discount = objWanted.pack.reduce((acc, elem) => {
-      const mult = (elem.total === '') ? 0 : elem.total;
-      return acc + (packageList[(elem.id - 1)].price * mult);
-    }, []);
-    const total = somaProdutos - discount;
-    const ObjExtra = extraInfo.filter((elem) => elem.id === id);
-  return (
-      <div>
-        <p>Ola {ObjExtra.nome}</p>
-        <p>A compra foi realizada no dia {ObjExtra.day}</p>
-        {this.renderListOfProducts(objWanted.cart)}
-        {this.renderReturnedRecipient()}
-        <p>Valor total foi de {total}</p>
-        <p>A compra foi {(objWanted.collection.isDelivery)
-          ? 'entregue via Delivery'
-          : 'Retirada em loja'}
-        </p>
-        {objWanted.collection.isDelivery && this.renderDeliveryAdress(ObjExtra)}
-        <Link to={`/Detalhes/${Final.id}`}>detalhes</Link>
+    return (
+      <div className="products">
+        <h4>Produtos comprados:</h4>
+        {arr.map((e) => {
+          const product = productList.filter((el) => el.id === Number(e.id));
+          return (
+            <div className="products-cart-list">
+              <div>
+                <img src={product[0].thumbnail} width="50px" alt="" />
+                <p>{product[0].productName}</p>
+              </div>
+              <div className="product-cart-info">
+                <p>{`${e.total} X R$${product[0].originalPrice}`}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
 
-  bla() {
-    const {
-      
-    } = this.state;
-    let arrInvidualResume = []
-    if (purchase.length > 4) {
-      arrInvidualResume = purchase.reduce((arr, elem, index) => {
-        if(index > (purchase.length - 5)) {
-          return [...arr, elem.id_compra];
-        }
-        return arr;
-      },[]);
-    } else {
-      arrInvidualResume = purchase;
-    }
+  renderReturnedRecipient(arr) {
+    const packedNumbers = arr.reduce((acc, elem) => {
+      const mult = (elem.total === '') ? 0 : elem.total;
+      return (parseInt(acc) + parseInt(mult));
+    }, 0);
+    if (packedNumbers === 0) return <h4>Nenhuma embalagem foi devolvida</h4>;
+    return (
+      <div className="products">
+        <h4>Devolvidos:</h4>
+        {arr.map((e) => {
+          const product = packageList.filter((el) => el.id === Number(e.id));
+          const eco = (e.total * e.price)
+          if(e.total > 0) {
+            return (
+              <div>
+                <p>
+                  {e.total} recipientes de {e.type}
+                </p>
+                <p>
+                  gerando uma economia de R${eco}
+                </p>
+              </div>
+            );
+          }
+          return;
+        })}
+      </div>
+    );
+  }
+
+  renderDeliveryAdress(obj) {
     return (
       <div>
-        {/* <img src={} alt="arrow" /> */}
-        <h2>{(individualClicked) ? '⌄' : '›'}</h2>
-        <h2 onClick={() => this.setState({ individualClicked: !individualClicked })}>Meus Pedidos</h2>
-        {individualClicked && <ResumeCard purchaseList={arrInvidualResume} />}
-{/* 
-        {individualClicked && purchase.map((e, i) => (
-          <div>
-            <h2 onClick={() => { this.setState((state) => ({ obj: { ...state.obj, [e]: !state.obj[e] } })); }}>{`Compra ${i + 1}`}</h2>
-            {
-              obj[e] && (
-                <div>
-                  {shopstore.filter((el) => el.id_compra === e)[0].cart.map((ell) => {
-                    const products = (productList.filter((elll) => elll.id === ell.id)[0]);
-                    return (
-                      <div className="make-flex">
-                        <p>{`${products.productName} ${products.package_volume}L`}</p>
+        <h4>Entregue em:</h4>
+        <p>{obj.adress} número {obj.number}, {obj.city}</p>
+      </div>
+    );
+  }
 
-                        <p>{`x ${ell.total}`}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              )
-            }
-          </div>
-        ))}
-        {} */}
+  renderIndividualPurchase() {
+    const { id } = this.props.match.params;
+    const shopstore = JSON.parse(localStorage.getItem('purchaseFineshed'));
+    const extraInfo = JSON.parse(localStorage.getItem('extraPurchaseData'));
+    const user = JSON.parse(localStorage.getItem('user'));
+    const objWanted = shopstore.filter((elem) => elem.id_compra === parseInt(id));
+    const somaProdutos = objWanted[0].cart.reduce((acc, elem) => {
+      return (parseInt(acc) + parseFloat(productList[(elem.id - 1)].originalPrice) * elem.total).toFixed(2);
+    }, 0);
+    const discount = objWanted[0].pack.reduce((acc, elem) => {
+      const mult = (elem.total === '') ? 0 : elem.total;
+      return (parseFloat(acc) + parseFloat(packageList[(elem.id - 1)].price * mult)).toFixed(2);
+    }, 0);
+    const total = (somaProdutos - discount).toFixed(2);
+    console.log(extraInfo);
+    const ObjExtra = extraInfo.filter((elem) => elem.id === parseInt(id));
+    console.log(ObjExtra);
+    const DeliveryOrNot = objWanted[0].collection.isDelivery;
+    return (
+      <div>
+        <h4>Compra foi realizada em</h4><p>{ObjExtra[0].day}</p>
+        {this.renderListOfProducts(objWanted[0].cart)}
+        {this.renderReturnedRecipient(objWanted[0].pack)}
+        <h4>Valor final de:</h4> 
+        <p>R${total}</p>
+        {(DeliveryOrNot)
+          ? <h4>A compra foi entregue via delivery</h4>
+          : <h4>A compra foi retirada em loja</h4>
+        }
+        {DeliveryOrNot && this.renderDeliveryAdress(ObjExtra[0])}
       </div>
     );
   }
@@ -125,7 +123,6 @@ class IndividualDetail extends Component {
       <div>
         {this.renderPerfilHeader()}
         <div className="sub-container">
-          <h4>{`Olá ${name}`}</h4>
           {this.renderIndividualPurchase()}
         </div>
         {this.renderPerfilFooter()}
@@ -134,4 +131,4 @@ class IndividualDetail extends Component {
   }
 }
 
-export default Perfil;
+export default IndividualDetail;

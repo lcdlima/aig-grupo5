@@ -60,9 +60,9 @@ class Perfil extends Component {
 
   renderIndividualPurchase() {
     const {
-      individualClicked, purchase, shopstore, obj,
+      individualClicked, purchase,
     } = this.state;
-    let arrInvidualResume = []
+    let arrInvidualResume = [];
     if (purchase.length > 4) {
       arrInvidualResume = purchase.reduce((arr, elem, index) => {
         if(index > (purchase.length - 5)) {
@@ -70,7 +70,8 @@ class Perfil extends Component {
         }
         return arr;
       },[]);
-    } else {
+    }
+    if (purchase.length > 0) {
       arrInvidualResume = purchase;
     }
     return (

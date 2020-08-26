@@ -9,6 +9,13 @@ import logo from '../../images/logo.svg';
 const clickToRegister = (
     cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData
   ) => {
+  if (cardName === '' && cardNumber.length !== 16 && dueDate === '' && (CVV.length !== 3 || CVV.length !== 4)) {
+    return alert('Confira se todos os campos foram preencidos corretamente');
+  }
+  if (cardName === '') return alert('O nome do titular não foi preenchido');
+  if (cardNumber.length !== 16) return alert('O número do cartão deve ter 16 dígitos');
+  if (dueDate === '') return alert('Data de vencimento não foi preenchido');
+  if (dueDate === '') return alert('Confira os dígitos de segurança');
   saveCard(cardName, cardNumber, dueDate, CVV);
   localStorage.setItem('user', JSON.stringify(
     {
@@ -52,7 +59,7 @@ const renderDueDateInput = (dueDate, setDueDate) => (
   <div className="card-register-due-div">
     <label htmlFor="dueDate">Vencimento</label>
     <input
-      type="date"
+      type="month"
       id="dueDate"
       value={dueDate}
       onChange={(elem) => setDueDate(elem.target.value)}
@@ -77,13 +84,6 @@ const renderCVVInput = (CVV, setCVV) => (
   </div>
 );
 
-const isDisabled = (cardName, cardNumber, dueDate, CVV) => {
-  if (cardName && cardNumber.length === 16 && dueDate && (CVV.length === 3 || CVV.length === 4)) {
-    return false;
-  }
-  return true;
-}
-
 const renderFinishButtonInput = (
   cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
 ) => (
@@ -94,7 +94,6 @@ const renderFinishButtonInput = (
       onClick={() => clickToRegister(
         cardName, cardNumber, dueDate, CVV, saveCard, history, temporaryData,
       )}
-      disabled={isDisabled(cardName, cardNumber, dueDate, CVV)}
     >
       Próximo
     </button>

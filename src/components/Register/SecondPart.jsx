@@ -30,10 +30,22 @@ function searchCep(cep, setCep, setAdd, setNeig, setCity, setState) {
 }
 
 const clickToRegister = (
-  CEP, street, adressNumber, complement, city,
+  CEP, street, adressNumber, neighbor, complement, city,
   stateLetters, saveUserAdress, history,
 ) => {
-  saveUserAdress(CEP, street, adressNumber, complement, city, stateLetters);
+  if (
+    CEP.length !== 8 && street === '' && neighbor === ''
+    && adressNumber === '' && city === '' && stateLetters === ''
+  ) {
+    return alert('Confira se todos os campos foram preencidos corretamente');
+  }
+  if (CEP.length !== 8) return alert('CEP deve ter 8 dígitos');
+  if (street === '') return alert('Rua não preechida');
+  if (adressNumber === '') return alert('Número não preenchido');
+  if (neighbor === '') return alert('Bairro não preenchido');
+  if (city === '') return alert('Cidade não preenchida');
+  if (stateLetters === '') return alert('Estado não preenchido');
+  saveUserAdress(CEP, street, adressNumber, neighbor, complement, city, stateLetters);
   history.push('/RegisterCard');
 };
 
@@ -140,19 +152,8 @@ const renderStateInput = (stateLetters, setStateLetters) => (
   </div>
 );
 
-const isDisabled = (CEP, street, adressNumber, city, stateLetters) => {
-  // if (s
-  // ) {
-  //   alert('Verifique o CPF, DDD, Telefone e CEP')
-  // }
-  if (CEP.length === 8 && street && adressNumber && city && stateLetters) {
-    return false;
-  }
-  return true;
-}
-
 const renderNextButtonInput = (
-  CEP, street, adressNumber, complement, city,
+  CEP, street, adressNumber, neighbor, complement, city,
   stateLetters, saveUserAdress, history,
 ) => (
     <div className="adress-register-div">
@@ -160,11 +161,8 @@ const renderNextButtonInput = (
         className="buttonSP"
         type="button"
         onClick={() => clickToRegister(
-          CEP, street, adressNumber, complement, city,
+          CEP, street, adressNumber, neighbor, complement, city,
           stateLetters, saveUserAdress, history,
-        )}
-        disabled={isDisabled(
-          CEP, street, adressNumber, city, stateLetters,
         )}
       >
         Próximo
@@ -199,7 +197,7 @@ function SecondPart(props) {
           {renderStateInput(stateLetters, setStateLetters)}
         </div>
         {renderNextButtonInput(
-          CEP, street, adressNumber, complement, city,
+          CEP, street, adressNumber, neighbor, complement, city,
           stateLetters, saveUserAdress, history,
         )}
       </div>
@@ -209,8 +207,8 @@ function SecondPart(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveUserAdress: (CEP, street, adressNumber, complement, city, stateLetters) => dispatch(
-    userAdress(CEP, street, adressNumber, complement, city, stateLetters)),
+  saveUserAdress: (CEP, street, adressNumber, neighbor, complement, city, stateLetters) => dispatch(
+    userAdress(CEP, street, adressNumber, neighbor, complement, city, stateLetters)),
 });
 
 export default connect(null, mapDispatchToProps)(SecondPart);

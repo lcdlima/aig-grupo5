@@ -102,12 +102,13 @@ export const userPessoalInfo = (email, password, id, name, CPF, birthDay, code, 
 });
 
 export const userAdress = (
-  CEP, street, adressNumber, complement, city, stateLetters,
+  CEP, street, adressNumber, neighbor, complement, city, stateLetters,
 ) => ({
   type: SAVE_USER_REGISTRY_AND_ADRESS,
   CEP,
   street,
   adressNumber,
+  neighbor,
   complement,
   city,
   stateLetters,
